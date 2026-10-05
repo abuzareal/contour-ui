@@ -1,0 +1,178 @@
+/* Shared UI patterns: brand mark, section scaffolding, links, disclosures, and reveal animations. */
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.brand > span {
+  color: var(--olive);
+}
+
+.section-space {
+  padding-block: 104px;
+}
+
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  text-transform: uppercase;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.text-link {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  border-bottom: 1px solid currentColor;
+  padding-block: 8px;
+  transition: gap 300ms var(--ease);
+}
+
+.text-link:hover {
+  gap: 26px;
+}
+
+/* Disclosure: native details/summary with a plus icon that rotates into a cross. */
+.disclosure > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure-icon {
+  transition: transform 300ms;
+}
+
+.disclosure[open] .disclosure-icon {
+  transform: rotate(45deg);
+}
+
+/* Two-column intro + content layout used by Experience and Expertise. */
+.split-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 90px;
+  padding-top: 52px;
+}
+
+.section-intro h2 {
+  font-size: 60px;
+  line-height: 1.07;
+}
+
+.section-intro h2 .type-accent {
+  color: var(--heading-soft);
+}
+
+.section-intro > p {
+  margin-top: 27px;
+  font-size: 14px;
+  color: var(--intro-text);
+  line-height: 1.8;
+}
+
+.section-intro > .text-link {
+  margin-top: 24px;
+}
+
+/* Reveal: content fades up once, and heading lines slide up inside a clip. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease),
+    transform 700ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.type-line {
+  display: block;
+  overflow: clip;
+  padding-block: 0.09em;
+  margin-block: -0.09em;
+}
+
+.type-run {
+  display: block;
+  opacity: 0;
+  transform: translateY(105%);
+  transition:
+    transform 850ms var(--ease),
+    opacity 650ms ease;
+}
+
+.type-line:nth-child(2) .type-run {
+  transition-delay: 110ms;
+}
+
+.type-line:nth-child(3) .type-run {
+  transition-delay: 220ms;
+}
+
+.reveal.is-visible .type-run {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1023px) {
+  .split-layout {
+    gap: 45px;
+  }
+
+  .section-intro h2 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .brand {
+    font-size: 30px;
+  }
+
+  .section-space {
+    padding-block: 64px;
+  }
+
+  .section-label {
+    padding-bottom: 19px;
+  }
+
+  .section-label > span:last-child {
+    display: none;
+  }
+
+  .split-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding-top: 33px;
+  }
+
+  .section-intro h2 {
+    font-size: 44px;
+  }
+}

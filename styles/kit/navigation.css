@@ -1,0 +1,262 @@
+/* Kit — navigation: tabs, breadcrumbs, pagination, and stepper. */
+
+.tabs {
+  display: grid;
+  gap: 24px;
+}
+
+.tabs-list {
+  position: relative;
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-list::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: var(--indicator-left);
+  width: var(--indicator-width);
+  height: 2px;
+  background: var(--fg);
+  transition:
+    left var(--duration-base) var(--ease),
+    width var(--duration-base) var(--ease);
+}
+
+.tabs-tab {
+  flex-shrink: 0;
+  padding: 12px 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color var(--duration-fast);
+}
+
+.tabs-tab:hover,
+.tabs-tab[aria-selected="true"] {
+  color: var(--fg);
+}
+
+.tabs-tab:focus-visible {
+  outline-offset: -2px;
+}
+
+.tabs-panel {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.tabs-panel:focus-visible {
+  outline-offset: 4px;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+}
+
+.breadcrumbs li + li::before {
+  content: "/";
+  margin-inline: 10px;
+  color: var(--line-strong);
+}
+
+.breadcrumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.breadcrumbs a:hover {
+  color: var(--fg);
+  border-color: currentColor;
+}
+
+.breadcrumbs [aria-current="page"] {
+  color: var(--fg);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination-page,
+.pagination-step {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.pagination-page {
+  color: var(--muted);
+}
+
+.pagination-page:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+}
+
+.pagination-page[aria-current="page"] {
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.pagination-step {
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+}
+
+.pagination-step:hover:not(:disabled) {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+}
+
+.pagination-step:disabled {
+  opacity: 0.35;
+}
+
+.pagination-gap {
+  min-width: 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.stepper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}
+
+.stepper-step {
+  position: relative;
+  display: grid;
+  gap: 12px;
+}
+
+.stepper-step:not(:last-child) {
+  padding-right: 12px;
+}
+
+/* Connector rule from this marker to the next, kept inside the step. */
+.stepper-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 40px;
+  right: 8px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.stepper-complete:not(:last-child)::after {
+  background: var(--fg);
+}
+
+.stepper-marker {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--muted);
+}
+
+.stepper-complete .stepper-marker {
+  background: var(--invert-bg);
+  border-color: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.stepper-current .stepper-marker {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+}
+
+.stepper-text {
+  display: grid;
+  gap: 2px;
+}
+
+.stepper-label {
+  font-size: 14px;
+}
+
+.stepper-upcoming .stepper-label {
+  color: var(--muted);
+}
+
+.stepper-description {
+  color: var(--muted);
+}
+
+@media (max-width: 639px) {
+  .stepper {
+    grid-auto-flow: row;
+    gap: 12px;
+  }
+
+  .stepper-step {
+    grid-template-columns: 32px 1fr;
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .stepper-step:not(:last-child)::after {
+    top: 40px;
+    left: 16px;
+    right: auto;
+    width: 1px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 479px) {
+  .pagination {
+    gap: 6px;
+  }
+
+  .pagination ol {
+    gap: 2px;
+  }
+
+  .pagination-page,
+  .pagination-step {
+    min-width: 30px;
+    height: 30px;
+  }
+
+  .pagination-gap {
+    min-width: 14px;
+  }
+}

@@ -1,0 +1,209 @@
+/* Kit — actions: buttons, icon buttons, segmented control, and the magnetic wrapper. */
+
+.button {
+  --button-bg: var(--invert-bg);
+  --button-fg: var(--invert-fg);
+  --button-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding-inline: 22px;
+  border: 1px solid var(--button-border);
+  border-radius: var(--radius-pill);
+  background: var(--button-bg);
+  color: var(--button-fg);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast),
+    border-color var(--duration-fast),
+    transform var(--duration-base) var(--ease);
+}
+
+.button:hover:not(:disabled) {
+  --button-bg: var(--acid);
+  --button-fg: var(--ink);
+  --button-border: var(--acid);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.45;
+}
+
+/* Link inside running text: a hairline that thickens into an acid underline on hover. */
+.inline-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition:
+    text-decoration-color var(--duration-fast),
+    text-decoration-thickness var(--duration-fast);
+}
+
+.inline-link:hover {
+  text-decoration-color: var(--olive);
+  text-decoration-thickness: 3px;
+}
+
+.button[aria-busy="true"] {
+  opacity: 0.8;
+}
+
+.button-icon {
+  display: inline-flex;
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.button:hover:not(:disabled) .button-icon {
+  transform: translateX(3px);
+}
+
+.button-accent {
+  --button-bg: var(--acid);
+  --button-fg: var(--ink);
+}
+
+.button-accent:hover:not(:disabled) {
+  --button-bg: var(--invert-bg);
+  --button-fg: var(--invert-fg);
+  --button-border: var(--invert-bg);
+}
+
+.button-secondary {
+  --button-bg: transparent;
+  --button-fg: var(--fg);
+  --button-border: color-mix(in srgb, currentColor 32%, transparent);
+}
+
+.button-ghost {
+  --button-bg: transparent;
+  --button-fg: var(--fg);
+}
+
+.button-danger {
+  --button-bg: var(--danger);
+  --button-fg: var(--bg);
+}
+
+.button-danger:hover:not(:disabled) {
+  --button-bg: var(--fg);
+  --button-fg: var(--bg);
+  --button-border: var(--fg);
+}
+
+.button-sm {
+  height: 34px;
+  padding-inline: 16px;
+  font-size: 12px;
+}
+
+.button-lg {
+  height: 54px;
+  padding-inline: 28px;
+  font-size: 14px;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-radius: 50%;
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast),
+    border-color var(--duration-fast),
+    transform var(--duration-base) var(--ease);
+}
+
+.icon-button:hover:not(:disabled) {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+}
+
+.icon-button:disabled {
+  opacity: 0.45;
+}
+
+.icon-button-spin:hover:not(:disabled) {
+  transform: rotate(45deg);
+}
+
+.icon-button-solid {
+  background: var(--invert-bg);
+  border-color: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.icon-button-accent {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+}
+
+.icon-button-accent:hover:not(:disabled) {
+  background: var(--invert-bg);
+  border-color: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.icon-button-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-button-lg {
+  width: 56px;
+  height: 56px;
+}
+
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.segmented-option {
+  height: 32px;
+  padding-inline: 16px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  color: var(--muted);
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.segmented-option:hover {
+  color: var(--fg);
+}
+
+.segmented-option[aria-checked="true"] {
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.segmented-option:focus-visible {
+  outline-offset: 2px;
+}
+
+.magnetic {
+  display: inline-block;
+  transform: translate(var(--magnet, 0, 0));
+  transition: transform 450ms var(--ease);
+}

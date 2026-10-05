@@ -1,0 +1,316 @@
+/* Kit — feedback: alerts, toasts, progress, spinner, and skeletons. */
+
+.alert {
+  --alert-accent: var(--fg);
+  --alert-bg: var(--surface);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-left: 3px solid var(--alert-accent);
+  background: var(--alert-bg);
+}
+
+.alert-accent {
+  --alert-accent: var(--olive);
+  --alert-bg: color-mix(in srgb, var(--acid) 22%, var(--surface));
+}
+
+.alert-success {
+  --alert-accent: var(--success);
+  --alert-bg: var(--success-soft);
+}
+
+.alert-info {
+  --alert-accent: var(--info);
+  --alert-bg: var(--info-soft);
+}
+
+.alert-warning {
+  --alert-accent: var(--warning);
+  --alert-bg: var(--warning-soft);
+}
+
+.alert-danger {
+  --alert-accent: var(--danger);
+  --alert-bg: var(--danger-soft);
+}
+
+.alert-icon {
+  display: inline-flex;
+  margin-top: 1px;
+  color: var(--alert-accent);
+}
+
+.alert-content {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.alert-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alert-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--fg) 80%, transparent);
+}
+
+.alert-action {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.alert-dismiss {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin: -4px -6px 0 0;
+  border-radius: 50%;
+  color: var(--muted);
+  transition:
+    background var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.alert-dismiss:hover {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+/* Banner: one-line announcement strip on the inverted surface. */
+.alert-banner {
+  --alert-accent: var(--acid);
+  --alert-bg: var(--invert-bg);
+  align-items: center;
+  border-left: 0;
+  color: var(--invert-fg);
+}
+
+.alert-banner .alert-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.alert-banner .alert-body,
+.alert-banner .alert-dismiss {
+  color: color-mix(in srgb, var(--invert-fg) 72%, transparent);
+}
+
+:root[data-theme="dark"] .alert-banner {
+  --alert-accent: #5a7210;
+}
+
+.toast-viewport {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 80;
+  display: grid;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 16px 16px 0;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--shadow-floating);
+  animation: toast-in var(--duration-slow) var(--ease) both;
+}
+
+:root[data-theme="dark"] .toast {
+  border: 1px solid #353733;
+}
+
+.toast-bar {
+  align-self: stretch;
+  width: 3px;
+  margin-block: -16px;
+  background: var(--acid);
+}
+
+.toast-success .toast-bar {
+  background: #b5d33f;
+}
+
+.toast-info .toast-bar {
+  background: #8fc0d6;
+}
+
+.toast-warning .toast-bar {
+  background: #f0c063;
+}
+
+.toast-danger .toast-bar {
+  background: #ff8a70;
+}
+
+.toast-content {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+}
+
+.toast-content strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.toast-content p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #c0c5b8;
+}
+
+.toast-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -4px;
+  border-radius: 50%;
+  color: #c0c5b8;
+}
+
+.toast-close:hover {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+.progress {
+  display: grid;
+  gap: 10px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.progress-track {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--progress);
+  background: var(--fg);
+  transition: width var(--duration-slow) var(--ease);
+}
+
+.progress-accent .progress-fill {
+  background: var(--olive);
+}
+
+.progress-success .progress-fill {
+  background: var(--success);
+}
+
+.progress-danger .progress-fill {
+  background: var(--danger);
+}
+
+.progress-indeterminate .progress-fill {
+  width: 35%;
+  animation: progress-sweep 1.3s var(--ease) infinite;
+}
+
+@keyframes progress-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+.spinner {
+  display: inline-grid;
+  place-items: center;
+  color: var(--olive);
+}
+
+.spinner svg {
+  animation: spin 1.1s linear infinite;
+}
+
+.button .spinner {
+  color: inherit;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.skeleton {
+  display: block;
+  background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in srgb, var(--bg) 70%, transparent) 50%,
+      transparent 70%
+    )
+    var(--surface-sunken);
+  background-size: 220% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 12px;
+}
+
+.skeleton-block {
+  width: 100%;
+  height: 120px;
+}
+
+.skeleton-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .toast-viewport {
+    right: 16px;
+    bottom: 16px;
+  }
+}

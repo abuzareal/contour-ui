@@ -1,0 +1,101 @@
+{
+  "name": "@abuzareal/contour-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "RELEASING.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./three": {
+      "types": "./dist/three.d.ts",
+      "import": "./dist/three.js"
+    },
+    "./scroll": {
+      "types": "./dist/scroll.d.ts",
+      "import": "./dist/scroll.js"
+    },
+    "./theme-bootstrap": {
+      "types": "./dist/lib/themeBootstrap.d.ts",
+      "import": "./dist/lib/themeBootstrap.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./reset.css": "./dist/reset.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint src --deny-warnings",
+    "test": "node --test tests/*.test.mjs",
+    "check:package": "node scripts/check-package.mjs",
+    "validate": "npm run typecheck && npm run lint && npm run build && npm test && npm run check:package",
+    "prepublishOnly": "npm run validate",
+    "test:consumer": "node scripts/test-consumer.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0",
+    "lucide-react": "^1.49.0"
+  },
+  "peerDependencies": {
+    "lenis": "^1.3.26",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.186.1"
+  },
+  "peerDependenciesMeta": {
+    "three": {
+      "optional": true
+    },
+    "lenis": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.186.0",
+    "jsdom": "^30.1.2",
+    "lenis": "^1.3.26",
+    "oxlint": "^1.81.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "^0.186.1",
+    "typescript": "^5.5.3",
+    "vite": "^8.3.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abuzareal/contour-ui.git"
+  },
+  "homepage": "https://github.com/abuzareal/contour-ui#readme",
+  "bugs": {
+    "url": "https://github.com/abuzareal/contour-ui/issues"
+  }
+}

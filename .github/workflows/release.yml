@@ -1,0 +1,48 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Existing package version and vVERSION tag to release"
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'abuzareal/contour-ui' && github.event.repository.private == false && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Validate version input
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: node -e 'if (!/^\d+\.\d+\.\d+$/.test(process.env.RELEASE_VERSION)) process.exit(1)'
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: v${{ inputs.version }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Validate release identity
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module -e 'import assert from "node:assert/strict"; import {readFileSync} from "node:fs"; const p=JSON.parse(readFileSync("package.json")); assert.match(process.env.RELEASE_VERSION, /^\d+\.\d+\.\d+$/); assert.equal(p.version,process.env.RELEASE_VERSION); assert.equal(p.name,"@abuzareal/contour-ui"); assert.equal(p.private,false);'
+          git merge-base --is-ancestor HEAD origin/main
+      - run: npm ci --ignore-scripts
+      - run: npm run validate
+      - run: npm run test:consumer
+      - run: npm audit --audit-level=low
+      - name: Publish with trusted identity and provenance
+        run: npm publish --access public --provenance

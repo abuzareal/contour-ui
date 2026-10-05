@@ -1,0 +1,299 @@
+/* Kit — overlays: tooltip, dialog and drawer, dropdown menu, and popover. */
+
+.tooltip-anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 40;
+  width: max-content;
+  max-width: 220px;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: var(--paper);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-fast),
+    transform var(--duration-fast) var(--ease),
+    visibility var(--duration-fast);
+}
+
+:root[data-theme="dark"] .tooltip {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tooltip.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip-top {
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+}
+
+.tooltip-bottom {
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+}
+
+.tooltip-left {
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translate(4px, -50%);
+}
+
+.tooltip-right {
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translate(-4px, -50%);
+}
+
+.tooltip-top.is-open,
+.tooltip-bottom.is-open {
+  transform: translate(-50%, 0);
+}
+
+.tooltip-left.is-open,
+.tooltip-right.is-open {
+  transform: translate(0, -50%);
+}
+
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  border: 0;
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--shadow-floating);
+}
+
+.dialog::backdrop {
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+}
+
+.dialog[open] {
+  animation: dialog-in var(--duration-slow) var(--ease) both;
+}
+
+.dialog-panel {
+  display: grid;
+  gap: 24px;
+  padding: 32px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dialog-header h2 {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.dialog-description {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dialog-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 50%;
+  transition:
+    background var(--duration-fast),
+    transform var(--duration-base) var(--ease);
+}
+
+.dialog-close:hover {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+  transform: rotate(90deg);
+}
+
+.dialog-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.dialog-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Drawers: full-height sheets from either edge. */
+.dialog-left,
+.dialog-right {
+  width: min(420px, calc(100vw - 48px));
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+}
+
+.dialog-right {
+  margin-left: auto;
+}
+
+.dialog-left[open] {
+  animation-name: drawer-from-left;
+}
+
+.dialog-right[open] {
+  animation-name: drawer-from-right;
+}
+
+.dialog-left .dialog-panel,
+.dialog-right .dialog-panel {
+  align-content: start;
+  min-height: 100%;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
+@keyframes drawer-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes drawer-from-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+.menu,
+.popover {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding-inline: 18px 14px;
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.menu-trigger:hover {
+  border-color: var(--fg);
+}
+
+.menu-chevron {
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.menu-trigger[aria-expanded="true"] .menu-chevron {
+  transform: rotate(180deg);
+}
+
+.menu-list,
+.popover-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 30;
+  min-width: 220px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-floating);
+  animation: menu-in var(--duration-base) var(--ease) both;
+}
+
+.menu-start .menu-list,
+.popover-start .popover-panel {
+  left: 0;
+}
+
+.menu-end .menu-list,
+.popover-end .popover-panel {
+  right: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+  transition: background var(--duration-fast);
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  outline: none;
+}
+
+.menu-item:focus-visible {
+  box-shadow: inset 2px 0 0 var(--fg);
+}
+
+.menu-item-danger {
+  color: var(--danger);
+}
+
+.popover-panel {
+  display: grid;
+  gap: 10px;
+  width: 300px;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.popover-panel[hidden] {
+  display: none;
+}
+
+.popover-title {
+  font: 500 18px / 1.3 var(--font-display);
+  color: var(--fg);
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}

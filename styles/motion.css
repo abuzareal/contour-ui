@@ -1,0 +1,59 @@
+/* Motion policy: theme transitions, the in-page motion switch, and the reduced-motion preference. */
+
+/* Theme switch via the View Transitions API (see hooks/useTheme.ts). */
+::view-transition {
+  background: #050605;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Cross-fade fallback for browsers without view transitions. */
+.theme-fading *,
+.theme-fading *::before,
+.theme-fading *::after {
+  transition:
+    background-color 450ms ease,
+    color 450ms ease,
+    border-color 450ms ease !important;
+}
+
+/* "Motion off" toggle in the hero. */
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+[data-motion="off"] :is(.reveal, .type-run, .hero-letter) {
+  opacity: 1;
+  transform: none;
+}
+
+[data-motion="off"] .opening-sequence {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  :is(.reveal, .type-run, .hero-letter) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .opening-sequence {
+    display: none;
+  }
+}

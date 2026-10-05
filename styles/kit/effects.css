@@ -1,0 +1,144 @@
+/* Kit — effects: count-up, 3D tilt and flip cards, scroll progress, and 3D stage canvases. */
+
+.count-up {
+  font-variant-numeric: tabular-nums;
+}
+
+.tilt-stage,
+.flip-stage {
+  perspective: 1000px;
+}
+
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 500ms var(--ease);
+}
+
+.tilt-card:hover {
+  transition-duration: 120ms;
+}
+
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    #ffffff52,
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base);
+}
+
+.tilt-card:hover .tilt-glare {
+  opacity: 1;
+}
+
+.flip-stage {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.6;
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--ease);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.flip-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 6px;
+  border-bottom: 1px solid currentColor;
+  text-transform: uppercase;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  height: 2px;
+  background: var(--acid);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left;
+}
+
+.stage-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.stage-canvas canvas {
+  width: 100%;
+  height: 100%;
+  transition: opacity 600ms ease;
+}
+
+.stage-canvas:not([data-state="ready"]) canvas {
+  opacity: 0;
+}
+
+/* Depth button: the face sits on an ink base and travels down when pressed. */
+.depth-button {
+  display: inline-block;
+  padding: 0 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+}
+
+:root[data-theme="dark"] .depth-button {
+  background: #5a7210;
+}
+
+.depth-button-face {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding-inline: 28px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--acid);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  transform: translateY(-2px);
+  transition: transform 140ms var(--ease);
+}
+
+.depth-button:hover .depth-button-face {
+  transform: translateY(-5px);
+}
+
+.depth-button:active .depth-button-face {
+  transform: translateY(6px);
+}
+
+.depth-button:focus-visible {
+  outline-offset: 4px;
+}

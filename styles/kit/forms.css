@@ -1,0 +1,363 @@
+/* Kit — forms: underlined fields, checkboxes, radios, switches, and sliders. */
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.field-label {
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.field-required {
+  margin-left: 4px;
+  color: var(--olive);
+}
+
+.field-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line-strong);
+  transition:
+    border-color var(--duration-fast),
+    box-shadow var(--duration-fast);
+}
+
+.field-control:hover {
+  border-color: var(--muted);
+}
+
+.field-control:focus-within {
+  border-color: var(--fg);
+  box-shadow: inset 0 -1px 0 var(--fg);
+}
+
+.field-control:has(:focus-visible) {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.field-control input,
+.field-control select,
+.field-control textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+}
+
+.field-control textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.field-control textarea[data-auto-resize] {
+  resize: none;
+  overflow: hidden;
+}
+
+.field-control ::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.field-icon,
+.field-trailing {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+}
+
+.field-select select {
+  appearance: none;
+  padding-right: 24px;
+  cursor: pointer;
+}
+
+.field-select select option {
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.field-chevron {
+  margin-left: -28px;
+  pointer-events: none;
+  color: var(--muted);
+}
+
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+}
+
+.field-counter {
+  margin-left: auto;
+}
+
+.field-invalid .field-control {
+  border-color: var(--danger);
+  box-shadow: inset 0 -1px 0 var(--danger);
+}
+
+.field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--danger);
+}
+
+.field-disabled {
+  opacity: 0.5;
+}
+
+.field-disabled .field-control {
+  border-bottom-style: dashed;
+}
+
+/* Choice: checkbox and radio share the control, label, and description layout. */
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.choice-control {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.choice-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.choice-box {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  color: transparent;
+  pointer-events: none;
+  transition:
+    background var(--duration-fast),
+    border-color var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.choice-input:hover + .choice-box {
+  border-color: var(--fg);
+}
+
+.choice-input:checked + .choice-box,
+.choice-input:indeterminate + .choice-box {
+  background: var(--acid);
+  border-color: var(--acid);
+  color: var(--ink);
+}
+
+.choice-input:focus-visible + .choice-box {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.choice-input:disabled,
+.choice-input:disabled + .choice-box {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.choice-text {
+  display: grid;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.choice-label {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.choice-description {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.choice-error {
+  color: var(--danger);
+}
+
+.choice-invalid .choice-box {
+  border-color: var(--danger);
+}
+
+.choice-radio .choice-box {
+  border-radius: 50%;
+}
+
+.choice-radio .choice-input:checked + .choice-box {
+  background: transparent;
+  border-color: var(--fg);
+  box-shadow: inset 0 0 0 5px var(--acid);
+}
+
+.radio-group {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.radio-group legend {
+  margin-bottom: 14px;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .radio-group-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 32px;
+  }
+
+  .radio-group-inline legend {
+    width: 100%;
+  }
+}
+
+.switch {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.switch-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  transition:
+    background var(--duration-base) var(--ease),
+    border-color var(--duration-base);
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fg);
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.switch-track[aria-checked="true"] {
+  background: var(--acid);
+  border-color: var(--acid);
+}
+
+.switch-track[aria-checked="true"] .switch-thumb {
+  background: var(--ink);
+  transform: translateX(20px);
+}
+
+.switch-track:disabled {
+  opacity: 0.45;
+}
+
+.slider {
+  display: grid;
+  gap: 12px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider output {
+  color: var(--fg);
+}
+
+.slider input[type="range"] {
+  width: 100%;
+  height: 22px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--fg) var(--progress),
+    var(--line-strong) var(--progress)
+  );
+}
+
+.slider input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--fg) var(--progress),
+    var(--line-strong) var(--progress)
+  );
+}
+
+.slider input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -9px;
+  border: 2px solid var(--fg);
+  border-radius: 50%;
+  background: var(--acid);
+  transition: transform var(--duration-fast);
+}
+
+.slider input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--fg);
+  border-radius: 50%;
+  background: var(--acid);
+}
+
+.slider input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+.slider input[type="range"]:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 6px;
+}
