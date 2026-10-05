@@ -2,6 +2,8 @@
 
 An independent React component library for editorial interfaces: paper and ink surfaces, an acid accent, readable typography, restrained motion, and optional Three.js objects.
 
+The npm package is public under MIT; the development repository is private. Public consumers can inspect the distributed JavaScript, declarations, and CSS, but the repository and its issue tracker are accessible only to invited collaborators.
+
 **Status:** initial `0.1.0` release. React 18.3 is supported; React 19 and React Server Component execution are not advertised as tested. Interactive components belong in a client boundary in frameworks such as Next.js. The root module can be imported on the server, and basic components can render there.
 
 ## Install
