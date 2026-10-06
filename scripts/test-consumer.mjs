@@ -5,6 +5,8 @@ import { join } from "node:path";
 import assert from "node:assert/strict";
 import { build } from "vite";
 
+const reactVersion = process.env.CONTOUR_REACT_VERSION ?? "18.3.1";
+const typeMajor = reactVersion.split(".")[0];
 const temporary = await mkdtemp(join(tmpdir(), "contour-consumer-"));
 const cache = join(tmpdir(), "contour-ui-npm-cache");
 const runNpm = (args) =>
@@ -38,19 +40,27 @@ try {
         type: "module",
         dependencies: {
           "@abuzareal/contour-ui": `file:./${archive.filename}`,
-          react: "18.3.1",
-          "react-dom": "18.3.1",
+          react: reactVersion,
+          "react-dom": reactVersion,
         },
         devDependencies: {
-          "@types/react": "^18.3.5",
-          "@types/react-dom": "^18.3.0",
+          "@types/react": `^${typeMajor}.0.0`,
+          "@types/react-dom": `^${typeMajor}.0.0`,
+          "@testing-library/react": "^16.3.3",
+          jsdom: "^30.1.2",
         },
       },
       null,
       2,
     ),
   );
-  runNpm(["install", "--ignore-scripts", "--no-audit", "--no-fund"]);
+  runNpm([
+    "install",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--strict-peer-deps",
+  ]);
   for (const optional of ["three", "lenis"]) {
     await assert.rejects(stat(join(temporary, "node_modules", optional)), {
       code: "ENOENT",
@@ -62,14 +72,22 @@ try {
   );
   await writeFile(
     join(temporary, "main.tsx"),
-    `import React from 'react';
+    `import React, { useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button, ThemeToggle, TextField, type ButtonProps } from '@abuzareal/contour-ui';
+import { Button, ThemeToggle, TextField, useDismiss, useHeaderScroll, useMobileMenu, type ButtonProps } from '@abuzareal/contour-ui';
 import '@abuzareal/contour-ui/reset.css';
 import '@abuzareal/contour-ui/fonts.css';
 import '@abuzareal/contour-ui/styles.css';
+function RefConsumer() {
+  const container = useRef<HTMLDivElement>(null);
+  const button = useRef<HTMLButtonElement>(null);
+  useDismiss(container, false, () => {});
+  useHeaderScroll(container);
+  useMobileMenu(container, button);
+  return <div ref={container}><button ref={button}/></div>;
+}
 const props: ButtonProps = { variant: 'accent', children: 'Forecast' };
-createRoot(document.getElementById('root')!).render(<main data-motion="off"><ThemeToggle animate={false}/><TextField label="City"/><Button {...props}/></main>);
+createRoot(document.getElementById('root')!).render(<main data-motion="off"><RefConsumer/><ThemeToggle animate={false}/><TextField label="City"/><Button {...props}/></main>);
 `,
   );
   await writeFile(
@@ -82,7 +100,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><The
         jsx: "react-jsx",
         strict: true,
         noEmit: true,
-        skipLibCheck: true,
+        skipLibCheck: false,
         allowArbitraryExtensions: true,
       },
       include: ["main.tsx"],
@@ -103,6 +121,23 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><The
       emptyOutDir: true,
     },
   });
+  // Exercise the packed runtime, not repository-relative source or dist imports.
+  for (const file of ["components.test.mjs", "public-api.test.mjs"]) {
+    const testSource = (await readFile(join("tests", file), "utf8")).replaceAll(
+      "../dist/index.js",
+      "@abuzareal/contour-ui",
+    );
+    await writeFile(join(temporary, file), testSource);
+  }
+  execFileSync(
+    process.execPath,
+    ["--test", "components.test.mjs", "public-api.test.mjs"],
+    {
+      cwd: temporary,
+      stdio: "inherit",
+      env: { ...process.env, NODE_ENV: "test" },
+    },
+  );
   const lock = JSON.parse(
     await readFile(join(temporary, "package-lock.json"), "utf8"),
   );
@@ -112,7 +147,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><The
     library.version,
   );
   console.log(
-    "Clean consumer passed: typed imports, fonts/CSS, and a production build without Three.js or Lenis.",
+    `React ${reactVersion} clean consumer passed: strict peer installation, declarations, runtime tests, CSS/fonts, and production build without Three.js or Lenis.`,
   );
 } finally {
   await rm(temporary, { recursive: true, force: true });

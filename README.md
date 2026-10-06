@@ -4,12 +4,14 @@ An independent React component library for editorial interfaces: paper and ink s
 
 The npm package is public under MIT; the development repository is private. Public consumers can inspect the distributed JavaScript, declarations, and CSS, but the repository and its issue tracker are accessible only to invited collaborators.
 
-**Status:** initial `0.1.0` release. React 18.3 is supported; React 19 and React Server Component execution are not advertised as tested. Interactive components belong in a client boundary in frameworks such as Next.js. The root module can be imported on the server, and basic components can render there.
+**Status:** `0.1.1` compatibility update. React 18.3.1 and React 19 are supported; the packed-package matrix checks React 18.3.1, 19.0.0, and 19.3.0. React Server Component execution is not advertised as tested. Interactive components belong in a client boundary in frameworks such as Next.js. The root module can be imported on the server, and basic components can render there.
 
 ## Install
 
 ```sh
-npm install @abuzareal/contour-ui react@18 react-dom@18
+npm install @abuzareal/contour-ui
+# Your application must supply matching React and React DOM versions:
+# React 18.3.1 or React 19.
 ```
 
 ```tsx
@@ -37,6 +39,28 @@ export function App() {
 ```
 
 For an app with its own reset, include equivalent native button/input defaults, border-box sizing, focus outlines, and the `[hidden]` rule. Styles use globally named component classes and `:root` theme tokens; they are not Shadow DOM isolated. Avoid redefining generic classes such as `.card` or `.button` elsewhere.
+
+## Direct imports: no local component files required
+
+Use named imports directly in any component file:
+
+```tsx
+import { Button } from "@abuzareal/contour-ui";
+
+export function SaveAction() {
+  return (
+    <Button variant="accent" onClick={() => console.log("Saved")}>
+      Save
+    </Button>
+  );
+}
+```
+
+Import `styles.css` once at the application entry. `reset.css` and `fonts.css` are optional. No provider is needed for `Button` or ordinary controls; only toast consumers require `ToastProvider`.
+
+The original Portfolio and Design-System applications retained thin compatibility re-exports to preserve their pre-package imports. Those files are an application migration choice, not a requirement of this library. Create a wrapper only when it represents your own reusable application behavior.
+
+Text fields accept explicit `id` values and preserve your `aria-describedby` references alongside their own hint or error. Native props follow the documented component types; not every component currently accepts `className`, DOM refs, or arbitrary native attributes. Do not assume router `asChild` composition or form-library ref integration is available in this release.
 
 ## Theme and motion setup
 
@@ -83,6 +107,8 @@ The package exports named components and props types. TypeScript declarations ar
 - Motion and signature: `BrandMark`, `CountUp`, `DepthButton`, `FlipCard`, `Magnetic`, `Marquee`, `Reveal`, `RevealHeading`, `ScrollProgress`, `TiltCard`, `GitHubIcon`, `LinkedInIcon`.
 - Overlays: `Dialog`, `Popover`, `Tooltip`, `SceneBoundary`.
 
+`Dialog` locks document scrolling while open, including drawer placements. Its content remains scrollable on short screens. Nested dialogs share the lock; closing or unmounting the last restores the document's previous styles. This behavior is included in version 0.1.1.
+
 Use visible labels for fields, concise action labels for buttons, accessible labels for icon-only controls, and text alongside status colors. Sortable tables expect scalar string/number row values. Pagination expects a positive integer page count and a page in that range. Flip cards switch through their button; the hidden side is inert.
 
 Global colors, fonts, radii, duration, and spacing variables are in `tokens.css`. Override semantic tokens rather than copying components into your app. `styles.css` includes tokens and component styles; `fonts.css` and `reset.css` are separately opt-in. Do not import catalogue or portfolio CSS into other apps.
@@ -92,7 +118,7 @@ Global colors, fonts, radii, duration, and spacing variables are in `tokens.css`
 This repository contains only the library. The catalogue and portfolio remain separate repositories and consume the same published npm version. During first-release validation, a packed archive can be installed locally; replace the archive dependency with the registry version before committing consumer manifests.
 
 ```sh
-npm install @abuzareal/contour-ui@0.1.0 --save-exact
+npm install @abuzareal/contour-ui@0.1.1 --save-exact
 ```
 
 Commit both `package.json` and `package-lock.json`. Dependabot proposes version updates in each consumer repository. Updates reach production after that project's checks, merge, rebuild, and deployment. A registry release does not change deployed applications automatically.
@@ -101,7 +127,9 @@ Commit both `package.json` and `package-lock.json`. Dependabot proposes version 
 
 ```sh
 npm ci --ignore-scripts
+npx playwright install chromium # first browser-test run
 npm run validate
+npm run test:compat # packed consumers in both React majors and source compilation with React 19 types
 npm audit
 npm pack --dry-run
 ```

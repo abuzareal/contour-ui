@@ -4,8 +4,8 @@ import { useEffect, useState, type RefObject } from "react";
 const desktopQuery = "(min-width: 768px)";
 
 export default function useMobileMenu(
-  container: RefObject<HTMLElement>,
-  toggleButton: RefObject<HTMLButtonElement>,
+  container: RefObject<HTMLElement | null>,
+  toggleButton: RefObject<HTMLButtonElement | null>,
 ) {
   const [open, setOpen] = useState(false);
 

@@ -4,7 +4,7 @@ import { useEffect, useState, type RefObject } from "react";
 /** Fraction of the viewport height at which a section becomes "current". */
 const activationLine = 0.35;
 
-export default function useHeaderScroll(header: RefObject<HTMLElement>) {
+export default function useHeaderScroll(header: RefObject<HTMLElement | null>) {
   const [scrolled, setScrolled] = useState(false);
   const [overDark, setOverDark] = useState(false);
   const [activeId, setActiveId] = useState("");

@@ -33,7 +33,7 @@ type StageOptions = {
 const maxPixelRatio = 1.75;
 
 export default function useThreeStage(
-  hostRef: RefObject<HTMLDivElement>,
+  hostRef: RefObject<HTMLDivElement | null>,
   { motionEnabled, setup, cameraDistance }: StageOptions,
 ) {
   const motionRef = useRef(motionEnabled);

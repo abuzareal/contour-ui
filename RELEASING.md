@@ -3,8 +3,8 @@
 ## Initial release
 
 1. Verify `npm whoami` is `abuzareal`; the package is `@abuzareal/contour-ui` and public under MIT.
-2. Run `npm ci --ignore-scripts`, `npm run validate`, and `npm audit`. Review every advisory; do not release with unexplained audit findings.
-3. Test the actual packed archive in a clean React consumer without optional Three.js or Lenis, and in the catalogue and portfolio with their full browser suites.
+2. Run `npm ci --ignore-scripts`, install Chromium with `npx playwright install chromium` on a new machine, then run `npm run validate`, `npm run test:compat`, and `npm audit`. Review every advisory; do not release with unexplained audit findings.
+3. Test the actual packed archive in clean React 18 and React 19 consumers without optional Three.js or Lenis, and in the catalogue and portfolio with their full browser suites.
 4. Check `npm pack --dry-run --json` and licenses. No private data, credentials, unrelated assets, maps, or app content may enter the archive.
 5. Push the reviewed source and release commit to the independent GitHub repository. The owner currently keeps this repository private; the npm distribution remains public under MIT.
 6. Set `private` to `false` only for an approved, validated release. Publish from the verified owner account: `npm publish --access public`. Complete npm's required authentication/2FA personally.

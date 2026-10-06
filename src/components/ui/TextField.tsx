@@ -8,10 +8,7 @@ import {
 import { fieldDescribedBy } from "../../lib/a11y.js";
 import Field from "./Field.js";
 
-export type TextFieldProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "id"
-> & {
+export type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   hint?: string;
   error?: string;
@@ -22,6 +19,8 @@ export type TextFieldProps = Omit<
 };
 
 export default function TextField({
+  id: providedId,
+  "aria-describedby": describedBy,
   label,
   hint,
   error,
@@ -32,7 +31,8 @@ export default function TextField({
   onChange,
   ...rest
 }: TextFieldProps) {
-  const id = useId();
+  const generatedId = useId();
+  const id = providedId ?? generatedId;
   const [length, setLength] = useState(
     String(rest.value ?? rest.defaultValue ?? "").length,
   );
@@ -46,7 +46,11 @@ export default function TextField({
       required={rest.required}
       hideLabel={hideLabel}
       disabled={rest.disabled}
-      counter={maxLength ? `${length}/${maxLength}` : undefined}
+      counter={
+        maxLength
+          ? `${rest.value !== undefined ? String(rest.value).length : length}/${maxLength}`
+          : undefined
+      }
     >
       <div className="field-control">
         {leadingIcon && <span className="field-icon">{leadingIcon}</span>}
@@ -55,7 +59,11 @@ export default function TextField({
           id={id}
           maxLength={maxLength}
           aria-invalid={error ? true : undefined}
-          aria-describedby={fieldDescribedBy(id, hint, error)}
+          aria-describedby={
+            [describedBy, fieldDescribedBy(id, hint, error)]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
           onChange={(event) => {
             setLength(event.target.value.length);
             onChange?.(event);

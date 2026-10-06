@@ -9,10 +9,7 @@ import {
 import { fieldDescribedBy } from "../../lib/a11y.js";
 import Field from "./Field.js";
 
-export type TextAreaProps = Omit<
-  TextareaHTMLAttributes<HTMLTextAreaElement>,
-  "id"
-> & {
+export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   hint?: string;
   error?: string;
@@ -21,6 +18,8 @@ export type TextAreaProps = Omit<
 };
 
 export default function TextArea({
+  id: providedId,
+  "aria-describedby": describedBy,
   label,
   hint,
   error,
@@ -30,7 +29,8 @@ export default function TextArea({
   rows = 3,
   ...rest
 }: TextAreaProps) {
-  const id = useId();
+  const generatedId = useId();
+  const id = providedId ?? generatedId;
   const ref = useRef<HTMLTextAreaElement>(null);
   const [length, setLength] = useState(
     String(rest.value ?? rest.defaultValue ?? "").length,
@@ -52,7 +52,11 @@ export default function TextArea({
       error={error}
       required={rest.required}
       disabled={rest.disabled}
-      counter={maxLength ? `${length}/${maxLength}` : undefined}
+      counter={
+        maxLength
+          ? `${rest.value !== undefined ? String(rest.value).length : length}/${maxLength}`
+          : undefined
+      }
     >
       <div className="field-control">
         <textarea
@@ -63,7 +67,11 @@ export default function TextArea({
           maxLength={maxLength}
           data-auto-resize={autoResize || undefined}
           aria-invalid={error ? true : undefined}
-          aria-describedby={fieldDescribedBy(id, hint, error)}
+          aria-describedby={
+            [describedBy, fieldDescribedBy(id, hint, error)]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
           onChange={(event) => {
             setLength(event.target.value.length);
             fitContent();

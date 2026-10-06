@@ -2,7 +2,7 @@
 import { useEffect, type RefObject } from "react";
 
 export default function useDismiss(
-  container: RefObject<HTMLElement>,
+  container: RefObject<HTMLElement | null>,
   active: boolean,
   onDismiss: (reason: "escape" | "outside") => void,
 ) {

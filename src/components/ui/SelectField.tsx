@@ -4,10 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { fieldDescribedBy } from "../../lib/a11y.js";
 import Field from "./Field.js";
 
-export type SelectFieldProps = Omit<
-  SelectHTMLAttributes<HTMLSelectElement>,
-  "id"
-> & {
+export type SelectFieldProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   options: { value: string; label: string }[];
   hint?: string;
@@ -16,6 +13,8 @@ export type SelectFieldProps = Omit<
 };
 
 export default function SelectField({
+  id: providedId,
+  "aria-describedby": describedBy,
   label,
   options,
   hint,
@@ -23,7 +22,8 @@ export default function SelectField({
   placeholder,
   ...rest
 }: SelectFieldProps) {
-  const id = useId();
+  const generatedId = useId();
+  const id = providedId ?? generatedId;
 
   return (
     <Field
@@ -39,7 +39,11 @@ export default function SelectField({
           {...rest}
           id={id}
           aria-invalid={error ? true : undefined}
-          aria-describedby={fieldDescribedBy(id, hint, error)}
+          aria-describedby={
+            [describedBy, fieldDescribedBy(id, hint, error)]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
         >
           {placeholder && (
             <option value="" disabled>

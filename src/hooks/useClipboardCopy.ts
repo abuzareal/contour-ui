@@ -7,7 +7,9 @@ const resetDelay = 4000;
 
 export default function useClipboardCopy(text: string) {
   const [status, setStatus] = useState<CopyStatus>("idle");
-  const resetTimer = useRef<ReturnType<typeof setTimeout>>();
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   useEffect(() => () => clearTimeout(resetTimer.current), []);
 

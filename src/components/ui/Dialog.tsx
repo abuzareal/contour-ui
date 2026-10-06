@@ -2,6 +2,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
 import { cx } from "../../lib/classNames.js";
+import { lockDocumentScroll } from "../../lib/lockDocumentScroll.js";
 
 export type DialogProps = {
   open: boolean;
@@ -31,6 +32,13 @@ export default function Dialog({
     if (!dialog) return;
     if (open && !dialog.open) dialog.showModal();
     if (!open && dialog.open) dialog.close();
+    if (!open) return;
+    const release = lockDocumentScroll(dialog.ownerDocument);
+    dialog.addEventListener("close", release);
+    return () => {
+      dialog.removeEventListener("close", release);
+      release();
+    };
   }, [open]);
 
   return (

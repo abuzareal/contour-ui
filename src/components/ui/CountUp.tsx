@@ -25,7 +25,11 @@ export default function CountUp({
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    if (motionDisabledFor(element) || duration <= 0) {
+    if (
+      motionDisabledFor(element) ||
+      duration <= 0 ||
+      typeof IntersectionObserver === "undefined"
+    ) {
       setCurrent(to);
       return;
     }

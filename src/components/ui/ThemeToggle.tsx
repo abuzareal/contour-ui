@@ -13,6 +13,7 @@ export default function ThemeToggle({ animate }: ThemeToggleProps) {
 
   return (
     <button
+      type="button"
       className="theme-toggle"
       aria-label="Dark theme"
       aria-pressed={dark}
