@@ -1,139 +1,178 @@
 # Contour UI
 
-An independent React component library for editorial interfaces: paper and ink surfaces, an acid accent, readable typography, restrained motion, and optional Three.js objects.
+React components and CSS tokens for interfaces with paper and ink surfaces, a lime accent, and light and dark themes. Contour started as the shared UI in a personal portfolio; it now supplies components to the portfolio, its catalogue, Atmos, and Orbit.
 
-The npm package is public under MIT; the development repository is private. Public consumers can inspect the distributed JavaScript, declarations, and CSS, but the repository and its issue tracker are accessible only to invited collaborators.
+Use it when you want this visual style with typed controls, feedback, navigation, and motion. Applications own their layouts, data, validation, and workflows. Three.js scenes and smooth scrolling are separate, optional entries.
 
-**Status:** `0.1.1` compatibility update. React 18.3.1 and React 19 are supported; the packed-package matrix checks React 18.3.1, 19.0.0, and 19.3.0. React Server Component execution is not advertised as tested. Interactive components belong in a client boundary in frameworks such as Next.js. The root module can be imported on the server, and basic components can render there.
+[Live catalogue](https://design-system-abuzar.vercel.app/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
+
+The catalogue currently uses **0.1.0**; this repository is **0.1.1**. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 ## Install
 
+Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
+
 ```sh
-npm install @abuzareal/contour-ui
-# Your application must supply matching React and React DOM versions:
-# React 18.3.1 or React 19.
+npm install @abuzareal/contour-ui@0.1.1 --save-exact
 ```
 
+Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
+
+## First component
+
+Import the styles once in your application entry. Import components directly from the package; no generated files or local re-exports are needed.
+
 ```tsx
-import "@abuzareal/contour-ui/reset.css"; // optional, global reset; omit with an existing reset
-import "@abuzareal/contour-ui/fonts.css"; // optional, self-hosted font assets bundled by your app
+import { useState } from "react";
+import "@abuzareal/contour-ui/reset.css";
+import "@abuzareal/contour-ui/fonts.css";
 import "@abuzareal/contour-ui/styles.css";
-import {
-  Button,
-  TextField,
-  ToastProvider,
-  ThemeToggle,
-} from "@abuzareal/contour-ui";
+import { Button, TextField, ThemeToggle } from "@abuzareal/contour-ui";
 
-export function App() {
+export default function App() {
+  const [name, setName] = useState("");
+  const [savedName, setSavedName] = useState("");
+
   return (
-    <ToastProvider>
-      <main data-motion="off">
-        <ThemeToggle animate={false} />
-        <TextField label="City" placeholder="Pune" />
-        <Button variant="accent">Show forecast</Button>
-      </main>
-    </ToastProvider>
+    <main data-motion="off">
+      <ThemeToggle animate={false} />
+      <TextField
+        label="Name"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+      />
+      <Button variant="accent" onClick={() => setSavedName(name)}>
+        Save locally
+      </Button>
+      <p role="status">{savedName && `Saved for this session: ${savedName}`}</p>
+    </main>
   );
 }
 ```
 
-For an app with its own reset, include equivalent native button/input defaults, border-box sizing, focus outlines, and the `[hidden]` rule. Styles use globally named component classes and `:root` theme tokens; they are not Shadow DOM isolated. Avoid redefining generic classes such as `.card` or `.button` elsewhere.
+This example keeps the value in React state until the component unmounts. To persist it or send it to a server, add that behavior in your app.
 
-## Direct imports: no local component files required
+`Button` and ordinary controls need no provider. Toasts require `ToastProvider` around components that call `useToast()`.
 
-Use named imports directly in any component file:
+## Styles and customization
 
-```tsx
-import { Button } from "@abuzareal/contour-ui";
+| Import       | Purpose                                                                                                                                            |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styles.css` | Required for the supplied appearance: tokens, component styles, and utilities.                                                                     |
+| `reset.css`  | Optional global reset. Omit it if your app already has equivalent native-control defaults, border-box sizing, focus styles, and a `[hidden]` rule. |
+| `fonts.css`  | Optional self-hosted Space Grotesk, DM Sans, and DM Mono via Fontsource. Your bundler emits the font assets.                                       |
+| `tokens.css` | Tokens alone, for an app that supplies its own component styles. Already included by `styles.css`.                                                 |
 
-export function SaveAction() {
-  return (
-    <Button variant="accent" onClick={() => console.log("Saved")}>
-      Save
-    </Button>
-  );
+Override semantic tokens after importing the styles:
+
+```css
+:root {
+  --font-sans: system-ui, sans-serif;
+  --font-display: system-ui, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --bg: #111411;
+  --fg: #edf0e8;
 }
 ```
 
-Import `styles.css` once at the application entry. `reset.css` and `fonts.css` are optional. No provider is needed for `Button` or ordinary controls; only toast consumers require `ToastProvider`.
+Styles use global component classes and document-level theme tokens. Scope your application's classes to avoid collisions with names such as `.card` and `.button`. Contour's CSS isn't isolated with Shadow DOM or CSS Modules.
 
-The original Portfolio and Design-System applications retained thin compatibility re-exports to preserve their pre-package imports. Those files are an application migration choice, not a requirement of this library. Create a wrapper only when it represents your own reusable application behavior.
+The three Fontsource packages and `lucide-react` are direct dependencies. Omitting `fonts.css` keeps its font assets out of your application's bundle; the font packages still install. React and React DOM are peers. Three.js and Lenis are optional peers. Development tools aren't installed as Contour's consumer dependencies; tests and tooling are excluded from the npm archive.
 
-Text fields accept explicit `id` values and preserve your `aria-describedby` references alongside their own hint or error. Native props follow the documented component types; not every component currently accepts `className`, DOM refs, or arbitrary native attributes. Do not assume router `asChild` composition or form-library ref integration is available in this release.
+## Theme and motion
 
-## Theme and motion setup
+Set `data-theme="light"` or `"dark"` on `<html>`. `ThemeToggle` and `useTheme(animate)` read the same document state. The hook returns `{ theme, toggle }`; call `toggle(buttonElement)` from a user action. Preferences use the `aa-theme` local-storage key and are local to the site's origin.
 
-All theme toggles read the same document state. Set `data-theme="light"` or `"dark"` on `<html>`. `useTheme(animate)` returns `{ theme, toggle }`; call `toggle(buttonElement)` for a user action. The existing `aa-theme` local-storage key is preserved for compatibility with the original portfolio. Preference storage is origin-local, not shared across different website domains.
+For theme selection before first paint, inject `themeBootstrapScript` from `@abuzareal/contour-ui/theme-bootstrap` into the HTML head at build time. The exported string has no user interpolation. With a strict Content Security Policy, authorize that script with a nonce or hash.
 
-To avoid a first-paint theme flash, inject the exported static `themeBootstrapScript` from `@abuzareal/contour-ui/theme-bootstrap` into the HTML head at build time. It has no user-supplied interpolation. A strict Content Security Policy needs the appropriate script hash or nonce; do not enable unsafe inline scripts generally.
+`useMotionPreference()` returns whether the user prefers reduced motion. Combine it with your app's pause state, set `data-motion="off"` on the app wrapper when needed, and pass `motionEnabled` to scenes and `animate` to theme controls. System reduced motion also disables the theme reveal.
 
-Set `data-motion="off"` on your application wrapper when animation is disabled. `useMotionPreference()` tracks the system setting; combine it with your app's pause state. Pass the resulting `motionEnabled` to Three.js scenes and `animate` to theme controls. Reduced motion overrides theme reveal animations even if `animate` is true. No animation is required to operate the UI.
+## Components
 
-`useToast()` must run below `ToastProvider`. The library does not send messages, collect analytics, fetch application data, or require a service account. Links reject executable URL schemes; application authentication, validation, authorization, and data handling remain the application's responsibility.
+| Area                        | Public exports                                                                                                                                                  |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Actions                     | `Button`, `IconButton`, `ExternalLink`, `SegmentedControl`, `ThemeToggle`                                                                                       |
+| Forms                       | `Field`, `TextField`, `TextArea`, `SelectField`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`                                                                   |
+| Navigation                  | `Tabs`, `Breadcrumbs`, `Pagination`, `Stepper`, `DropdownMenu`                                                                                                  |
+| Data and layout             | `Avatar`, `Badge`, `Card`, `DataTable`, `Disclosure`, `Divider`, `EmptyState`, `Kbd`, `SectionLabel`, `Stat`, `Tag`, `Timeline`                                 |
+| Feedback                    | `Alert`, `ProgressBar`, `Skeleton`, `Spinner`, `ToastProvider`, `useToast`                                                                                      |
+| Motion and identity         | `BrandMark`, `CountUp`, `DepthButton`, `FlipCard`, `Magnetic`, `Marquee`, `Reveal`, `RevealHeading`, `ScrollProgress`, `TiltCard`, `GitHubIcon`, `LinkedInIcon` |
+| Overlays and scene fallback | `Dialog`, `Popover`, `Tooltip`, `SceneBoundary`                                                                                                                 |
 
-## Optional entries
+The root entry also exports theme, motion, clipboard, dismissal, navigation, and browser-lifecycle hooks plus utility functions. Check `src/index.ts` in a source checkout or `dist/index.d.ts` in the installed package for the complete API. Component declarations describe their props.
+
+Use visible field labels, accessible names for icon buttons, and text alongside status colors. `DataTable` sorts scalar string/number values; `Pagination` expects a positive integer page count and a page within that range. Flip cards use a button and make the hidden face inert.
+
+Props support varies between components. Don't assume every export forwards DOM refs, accepts arbitrary native attributes, supports router `asChild` composition, or integrates with form libraries through refs. Verify the relevant type before adopting it.
+
+## Optional scenes and scrolling
+
+Core imports don't load Three.js or Lenis. Install either only if you use its entry:
 
 ```sh
-npm install three@^0.186.1      # only for the /three entry
-npm install lenis@^1.3.26      # only for the /scroll entry
+npm install three@^0.186.1 # @abuzareal/contour-ui/three
+npm install lenis@^1.3.26 # @abuzareal/contour-ui/scroll
+# TypeScript consumers of /three also need the matching declarations:
+npm install -D @types/three@^0.186.0
 ```
+
+`/scroll` exports `useSmoothScroll`. `/three` exports `Sculpture`, `ObjectStudy`, `useThreeStage`, geometry/material helpers, and associated types. CSS depth controls such as `TiltCard` and `FlipCard` are core exports and don't require Three.js.
 
 ```tsx
 import { lazy, Suspense } from "react";
+import { SceneBoundary } from "@abuzareal/contour-ui";
+
 const Sculpture = lazy(() =>
   import("@abuzareal/contour-ui/three").then((module) => ({
     default: module.Sculpture,
   })),
 );
 
-// Provide a sized container and an application-owned static fallback.
-<Suspense fallback={<p>Loading preview…</p>}>
-  <Sculpture motionEnabled={false} />
-</Suspense>;
+export function Preview() {
+  return (
+    <div>
+      <p>Three interlocking links, shown in a WebGL preview when available.</p>
+      <SceneBoundary>
+        <Suspense fallback={<p>Loading preview…</p>}>
+          <Sculpture motionEnabled={false} />
+        </Suspense>
+      </SceneBoundary>
+    </div>
+  );
+}
 ```
 
-`/three` also exports `ObjectStudy`, `useThreeStage`, geometry/material helpers, and their types. Treat the 3D API as experimental in this initial release. Scene setup functions are captured on mount; remount the scene when its setup configuration changes. Scenes require WebGL and should always have a visible fallback. No Three.js or Lenis imports occur in the core runtime graph.
+Give scenes a sized container and a usable static fallback. `SceneBoundary` hides a scene on failure; it doesn't supply fallback content, so keep that content outside the boundary. The 3D API is experimental. Stage setup functions are captured on mount; remount a scene when its setup configuration changes. WebGL availability is a runtime requirement for scenes.
 
-## Components and typed APIs
+## Release notes and upgrades
 
-The package exports named components and props types. TypeScript declarations are shipped with every entry; editors provide the complete props API.
-
-- Actions: `Button`, `IconButton`, `ExternalLink`, `SegmentedControl`, `ThemeToggle`.
-- Forms: `Field`, `TextField`, `TextArea`, `SelectField`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`.
-- Navigation: `Tabs`, `Breadcrumbs`, `Pagination`, `Stepper`, `DropdownMenu`.
-- Data and layout: `Avatar`, `Badge`, `Card`, `DataTable`, `Disclosure`, `Divider`, `EmptyState`, `Kbd`, `SectionLabel`, `Stat`, `Tag`, `Timeline`.
-- Feedback: `Alert`, `ProgressBar`, `Skeleton`, `Spinner`, `ToastProvider`, `useToast`.
-- Motion and signature: `BrandMark`, `CountUp`, `DepthButton`, `FlipCard`, `Magnetic`, `Marquee`, `Reveal`, `RevealHeading`, `ScrollProgress`, `TiltCard`, `GitHubIcon`, `LinkedInIcon`.
-- Overlays: `Dialog`, `Popover`, `Tooltip`, `SceneBoundary`.
-
-`Dialog` locks document scrolling while open, including drawer placements. Its content remains scrollable on short screens. Nested dialogs share the lock; closing or unmounting the last restores the document's previous styles. This behavior is included in version 0.1.1.
-
-Use visible labels for fields, concise action labels for buttons, accessible labels for icon-only controls, and text alongside status colors. Sortable tables expect scalar string/number row values. Pagination expects a positive integer page count and a page in that range. Flip cards switch through their button; the hidden side is inert.
-
-Global colors, fonts, radii, duration, and spacing variables are in `tokens.css`. Override semantic tokens rather than copying components into your app. `styles.css` includes tokens and component styles; `fonts.css` and `reset.css` are separately opt-in. Do not import catalogue or portfolio CSS into other apps.
-
-## Independent repositories and updates
-
-This repository contains only the library. The catalogue and portfolio remain separate repositories and consume the same published npm version. During first-release validation, a packed archive can be installed locally; replace the archive dependency with the registry version before committing consumer manifests.
+**0.1.1** adds React 19 compatibility and fixes dialog background scrolling, field IDs/descriptions, controlled counters, theme-button form behavior, and count-up fallback behavior. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
 npm install @abuzareal/contour-ui@0.1.1 --save-exact
 ```
 
-Commit both `package.json` and `package-lock.json`. Dependabot proposes version updates in each consumer repository. Updates reach production after that project's checks, merge, rebuild, and deployment. A registry release does not change deployed applications automatically.
+Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
 
-## Development and release
+The package is public under MIT. The source repository and its issue tracker currently require collaborator access. Public users can inspect the distributed code, CSS, declarations, and release documents through npm. Contact the [maintainer](https://github.com/abuzareal) for support; see `SECURITY.md` in the package for vulnerability reporting guidance.
+
+## Develop this library
+
+From a source checkout:
 
 ```sh
 npm ci --ignore-scripts
-npx playwright install chromium # first browser-test run
+npx playwright install chromium
 npm run validate
-npm run test:compat # packed consumers in both React majors and source compilation with React 19 types
+npm run test:compat
 npm audit
 npm pack --dry-run
 ```
 
-See `RELEASING.md` for the release checklist, authentication, and trusted-publishing setup. The package ships only built code/styles and release documents, with no consumer installation scripts. The complete-source Git repository contains tests and tooling; those are excluded from the npm archive.
+`validate` checks types, lint, builds, Node/component tests, dialog browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. Compatibility runs need registry access for clean installs.
 
-MIT licensed. Font dependencies retain their own font licenses; Lucide, React, Three.js, and Lenis retain their respective licenses.
+`src/` owns components, hooks, helpers, and public entries. `styles/` owns CSS. `tests/` owns regressions and browser checks; `scripts/` owns builds and package/consumer checks. `dist/` is generated. `RELEASING.md` in the source checkout and package archive covers validation and publication.
+
+MIT licensed. Fontsource fonts and dependencies retain their own licenses.
