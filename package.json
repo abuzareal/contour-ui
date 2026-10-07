@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",
@@ -35,7 +35,8 @@
     "./styles.css": "./dist/styles.css",
     "./reset.css": "./dist/reset.css",
     "./tokens.css": "./dist/tokens.css",
-    "./fonts.css": "./dist/fonts.css"
+    "./fonts.css": "./dist/fonts.css",
+    "./fonts-latin.css": "./dist/fonts-latin.css"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -47,7 +48,8 @@
     "validate": "npm run typecheck && npm run lint && npm run build && npm test && npm run test:browser && npm run check:package",
     "prepublishOnly": "npm run validate && npm run test:compat",
     "test:consumer": "node scripts/test-consumer.mjs",
-    "test:compat": "node scripts/test-compat.mjs"
+    "test:compat": "node scripts/test-compat.mjs",
+    "test:optional": "node scripts/test-optional-consumer.mjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
@@ -72,7 +74,6 @@
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "@testing-library/react": "^16.3.3",
-    "@types/node": "^24.13.3",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.186.0",
@@ -97,8 +98,15 @@
     "type": "git",
     "url": "git+https://github.com/abuzareal/contour-ui.git"
   },
-  "homepage": "https://github.com/abuzareal/contour-ui#readme",
+  "homepage": "https://contour.abuzr.in/",
   "bugs": {
     "url": "https://github.com/abuzareal/contour-ui/issues"
-  }
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "components",
+    "design-system",
+    "contour-ui"
+  ]
 }

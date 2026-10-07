@@ -1,5 +1,15 @@
 # Releasing Contour UI
 
+## Package-page documentation and release notes
+
+The npm Readme tab renders the root `README.md`. npm updates it when a new package version is published; editing this repository does not update the existing npm page. Follow [npm's README update guidance](https://docs.npmjs.com/about-package-readme-files/). Do not try to overwrite a published version or unpublish it to change documentation.
+
+Keep installation, a working example, CSS/theme setup, supported APIs, optional dependencies, limits, and a release summary in the README. Keep the detailed version history in `CHANGELOG.md`, which ships in the archive and is available through npm's Code view. The private GitHub repository is not a public documentation destination. When public docs and changelog routes exist, add their verified URLs to the README and package metadata.
+
+Write new changes under **Unreleased**, or under a version heading explicitly marked **Pending release** when the next version has been chosen. At publication, remove the pending label and record the verified publication date. Use sections only when they contain useful changes: Added, Fixes, Compatibility, Upgrading, and Known limitations. Each entry should name the affected component/API and describe the user's resulting behavior. Include a migration example for incompatible changes. For a documentation-only patch, state that runtime behavior and dependency contracts are unchanged.
+
+Link each release to available evidence: changed APIs, relevant tests, and public issues/PRs when readers can access them. Do not invent dates, issue numbers, performance gains, accessibility certification, or compatibility results. Confirm that README examples use the exports and props in the release archive. Run the same release gates for a documentation patch; the archive, manifest, tag, changelog, and registry version must agree. Publishing still requires the maintainer's authorization.
+
 ## Initial release
 
 1. Verify `npm whoami` is `abuzareal`; the package is `@abuzareal/contour-ui` and public under MIT.
@@ -32,6 +42,8 @@ Increment PATCH for compatible fixes, MINOR for compatible additions, and MAJOR 
 
 Dependabot is selected because it is integrated with GitHub and requires no extra hosted service or bot account. It proposes weekly npm and action updates; the library is not auto-merged. npm distribution is public. Standard-hosted Actions run only if the repository is public; checks run locally while it stays private. Do not enable paid runners, private npm distribution, or paid security subscriptions as part of this setup.
 
-The validation workflows deliberately skip private repositories. If a consumer stays private, run its checks locally before merging dependency updates. Enabling private-repository Actions later requires reviewing that account's included usage and spending settings first.
+The library's validation workflows deliberately skip private repositories. Consumer policies vary: Portfolio allows private pull requests to opt in with the `run-validation` label. Check each consumer's workflow and run its required checks locally when CI is skipped. Enabling private-repository Actions requires reviewing that account's included usage and spending settings first.
 
-Consumers install with `npm install @abuzareal/contour-ui@VERSION --save-exact`, commit their lockfile, run their checks, and redeploy. Keep the three Git repositories independent.
+Consumers install with `npm install @abuzareal/contour-ui@VERSION --save-exact`, commit their lockfile, run their checks, and redeploy. Portfolio, Design-System, Atmos, Orbit, and the library remain independent repositories.
+
+The compatibility gate also installs the optional Three.js and Lenis peers in separate packed consumers. It checks `/three` and `/scroll` with `skipLibCheck: false`, builds their imports, and verifies the Latin WOFF2 export. Core consumers continue to run without those optional peers. Run `npm run test:optional` for that focused check.

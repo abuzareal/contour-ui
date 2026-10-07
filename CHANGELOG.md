@@ -2,13 +2,30 @@
 
 Changes to the published `@abuzareal/contour-ui` package. Version headings refer to package versions, not catalogue or application versions. Consumer projects pin their own version and update separately.
 
-## Unreleased
+## 0.1.2 — 2026-10-07
+
+An optional font-loading entry and clearer setup documentation. Component APIs and runtime dependencies are unchanged from 0.1.1.
+
+### Added
+
+- `fonts-latin.css`: load Latin WOFF2 files for the three system typefaces. The existing `fonts.css` retains full character coverage.
 
 ### Documentation
 
-- Reorganize the README around installation, a working React example, CSS setup, supported exports, optional entries, and upgrades.
-- Explain the catalogue's version and its application-owned examples, the scope of compatibility checks, and which dependencies consumers install.
-- Add practical upgrade guidance and a repeatable release-note format. These documentation edits don't change component behavior.
+- Clarify installation, CSS import order, public exports, optional dependencies, and upgrade guidance.
+- Pair live examples with their source code on the documentation site. Site navigation, theme transitions, responsive layouts, and the homepage specimen were refined; these site changes do not alter package component APIs.
+
+### Compatibility
+
+- React 18 and 19 remain supported. Three.js and Lenis remain optional. Packed optional-entry checks cover strict TypeScript declarations and production builds.
+
+### Upgrading from 0.1.1
+
+```sh
+npm install @abuzareal/contour-ui@0.1.2 --save-exact
+```
+
+No component changes are required. To use the smaller Latin font set, replace your `fonts.css` import with `@abuzareal/contour-ui/fonts-latin.css`. Keep the existing import for additional character coverage. Update your manifest and lockfile and check your application's rendered text.
 
 ## 0.1.1
 

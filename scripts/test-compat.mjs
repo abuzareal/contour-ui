@@ -16,6 +16,12 @@ for (const version of ["18.3.1", "19.0.0", "19.3.0"]) {
   });
 }
 
+for (const version of ["18.3.1", "19.3.0"]) {
+  run(["scripts/test-optional-consumer.mjs"], {
+    env: { ...process.env, CONTOUR_REACT_VERSION: version },
+  });
+}
+
 // Compile the source against React 19 declarations too; runtime-only testing misses ref errors.
 const temporary = await mkdtemp(join(tmpdir(), "contour-source19-"));
 try {

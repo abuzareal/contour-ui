@@ -4,16 +4,16 @@ React components and CSS tokens for interfaces with paper and ink surfaces, a li
 
 Use it when you want this visual style with typed controls, feedback, navigation, and motion. Applications own their layouts, data, validation, and workflows. Three.js scenes and smooth scrolling are separate, optional entries.
 
-[Live catalogue](https://design-system-abuzar.vercel.app/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
+[Live catalogue](https://contour.abuzr.in/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
 
-The catalogue currently uses **0.1.0**; this repository is **0.1.1**. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+The catalogue currently uses **0.1.1**; this release is **0.1.2**. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 ## Install
 
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.1.1 --save-exact
+npm install @abuzareal/contour-ui@0.1.2 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
@@ -54,14 +54,23 @@ This example keeps the value in React state until the component unmounts. To per
 
 `Button` and ordinary controls need no provider. Toasts require `ToastProvider` around components that call `useToast()`.
 
+### Optional Latin fonts
+
+`fonts-latin.css`, added in 0.1.2, keeps DM Sans, Space Grotesk, and DM Mono while loading only Latin WOFF2 files. Use it instead of `fonts.css` for Latin text; keep `fonts.css` when the additional character sets are needed. Existing font imports continue to work.
+
+```tsx
+import "@abuzareal/contour-ui/fonts-latin.css";
+```
+
 ## Styles and customization
 
-| Import       | Purpose                                                                                                                                            |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styles.css` | Required for the supplied appearance: tokens, component styles, and utilities.                                                                     |
-| `reset.css`  | Optional global reset. Omit it if your app already has equivalent native-control defaults, border-box sizing, focus styles, and a `[hidden]` rule. |
-| `fonts.css`  | Optional self-hosted Space Grotesk, DM Sans, and DM Mono via Fontsource. Your bundler emits the font assets.                                       |
-| `tokens.css` | Tokens alone, for an app that supplies its own component styles. Already included by `styles.css`.                                                 |
+| Import            | Purpose                                                                                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styles.css`      | Required for the supplied appearance: tokens, component styles, and utilities.                                                                     |
+| `reset.css`       | Optional global reset. Omit it if your app already has equivalent native-control defaults, border-box sizing, focus styles, and a `[hidden]` rule. |
+| `fonts-latin.css` | Optional Latin-only WOFF2 fonts, available since 0.1.2. Use instead of `fonts.css`, not alongside it.                                              |
+| `fonts.css`       | Optional self-hosted Space Grotesk, DM Sans, and DM Mono via Fontsource. Your bundler emits the font assets.                                       |
+| `tokens.css`      | Tokens alone, for an app that supplies its own component styles. Already included by `styles.css`.                                                 |
 
 Override semantic tokens after importing the styles:
 
@@ -148,10 +157,10 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 
 ## Release notes and upgrades
 
-**0.1.1** adds React 19 compatibility and fixes dialog background scrolling, field IDs/descriptions, controlled counters, theme-button form behavior, and count-up fallback behavior. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
+**0.1.2** adds the optional `fonts-latin.css` export, clearer setup documentation, and links to the Contour UI documentation site. Component APIs and runtime dependencies remain unchanged from 0.1.1. React 19 support and the interaction fixes from 0.1.1 are retained. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.1.1 --save-exact
+npm install @abuzareal/contour-ui@0.1.2 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
@@ -171,7 +180,7 @@ npm audit
 npm pack --dry-run
 ```
 
-`validate` checks types, lint, builds, Node/component tests, dialog browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. Compatibility runs need registry access for clean installs.
+`validate` checks types, lint, builds, Node/component tests, dialog browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. `test:optional` verifies strict `/three` and `/scroll` declarations and builds their imports with explicit peers and Three.js types. The compatibility gate runs both checks and verifies the Latin font assets. Compatibility runs need registry access for clean installs.
 
 `src/` owns components, hooks, helpers, and public entries. `styles/` owns CSS. `tests/` owns regressions and browser checks; `scripts/` owns builds and package/consumer checks. `dist/` is generated. `RELEASING.md` in the source checkout and package archive covers validation and publication.
 
