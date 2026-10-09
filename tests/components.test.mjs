@@ -36,6 +36,10 @@ const {
   ThemeToggle,
   Tabs,
   TextField,
+  TextArea,
+  SelectField,
+  DropdownMenu,
+  Popover,
   Tooltip,
   FlipCard,
   ExternalLink,
@@ -310,4 +314,195 @@ test("count-up renders its final value when observers are unavailable", async ()
     view.container.querySelector('[aria-hidden="true"]').textContent,
     "42",
   );
+});
+
+test("field refs focus native controls, preserve caller validity, and allow a zero limit", () => {
+  for (const Control of [TextField, TextArea, SelectField]) {
+    const ref = React.createRef();
+    const view = render(
+      React.createElement(
+        Control,
+        {
+          label: "Control",
+          options:
+            Control === SelectField
+              ? [{ value: "one", label: "One" }]
+              : undefined,
+          ref,
+          "aria-invalid": true,
+          maxLength: Control === SelectField ? undefined : 0,
+        },
+        Control === SelectField
+          ? React.createElement("option", null, "One")
+          : undefined,
+      ),
+    );
+    assert.ok(ref.current instanceof HTMLElement);
+    ref.current.focus();
+    assert.equal(document.activeElement, ref.current);
+    assert.equal(ref.current.getAttribute("aria-invalid"), "true");
+    if (Control !== SelectField) assert.ok(view.getByText("0/0"));
+    view.unmount();
+    assert.equal(ref.current, null);
+  }
+});
+
+test("native form reset synchronizes uncontrolled counters, including external form controls", async () => {
+  for (const Control of [TextField, TextArea]) {
+    for (const external of [false, true]) {
+      const field = React.createElement(Control, {
+        label: "Name",
+        defaultValue: "abc",
+        maxLength: 20,
+        form: external ? "owner" : undefined,
+      });
+      const view = render(
+        React.createElement(
+          "div",
+          null,
+          React.createElement("form", { id: "owner" }, external ? null : field),
+          external ? field : null,
+        ),
+      );
+      const input = view.getByRole("textbox");
+      fireEvent.change(input, { target: { value: "abcdef" } });
+      assert.ok(view.getByText("6/20"));
+      await act(async () => {
+        document.getElementById("owner").reset();
+        await new Promise((resolve) => setTimeout(resolve, 5));
+      });
+      assert.equal(input.value, "abc");
+      assert.ok(view.getByText("3/20"));
+      fireEvent.change(input, { target: { value: "abcdefgh" } });
+      document
+        .getElementById("owner")
+        .addEventListener("reset", (event) => event.preventDefault(), {
+          once: true,
+        });
+      await act(async () => {
+        document.getElementById("owner").reset();
+        await new Promise((resolve) => setTimeout(resolve, 5));
+      });
+      assert.equal(input.value, "abcdefgh");
+      assert.ok(view.getByText("8/20"));
+      view.unmount();
+    }
+  }
+});
+
+test("controlled tabs notify the parent without overriding its selection", () => {
+  const changes = [];
+  const tabs = [
+    { id: "one", label: "One", content: "First" },
+    { id: "two", label: "Two", content: "Second" },
+  ];
+  const props = {
+    label: "Views",
+    tabs,
+    activeTabId: "one",
+    onTabChange: (id) => changes.push(id),
+  };
+  const view = render(React.createElement(Tabs, props));
+  fireEvent.click(view.getByRole("tab", { name: "Two" }));
+  assert.deepEqual(changes, ["two"]);
+  assert.equal(view.getByRole("tabpanel").textContent, "First");
+  view.rerender(React.createElement(Tabs, { ...props, activeTabId: "two" }));
+  assert.equal(view.getByRole("tabpanel").textContent, "Second");
+});
+
+test("action menus skip disabled items, open from keyboard, type ahead and restore focus", () => {
+  let selected = 0;
+  const view = render(
+    React.createElement(DropdownMenu, {
+      label: "Actions",
+      items: [
+        {
+          label: "Blocked",
+          disabled: true,
+          onSelect() {
+            throw Error("disabled action");
+          },
+        },
+        {
+          label: "Alpha",
+          onSelect() {
+            selected++;
+          },
+        },
+        {
+          label: "Beta",
+          onSelect() {
+            selected++;
+          },
+        },
+      ],
+    }),
+  );
+  const trigger = view.getByRole("button", { name: "Actions" });
+  fireEvent.keyDown(trigger, { key: "ArrowUp" });
+  assert.equal(document.activeElement.textContent, "Beta");
+  fireEvent.keyDown(document.activeElement, { key: "ArrowDown" });
+  assert.equal(document.activeElement.textContent, "Alpha");
+  fireEvent.keyDown(document.activeElement, { key: "b" });
+  assert.equal(document.activeElement.textContent, "Beta");
+  fireEvent.click(document.activeElement);
+  assert.equal(selected, 1);
+  assert.equal(document.activeElement, trigger);
+  assert.equal(trigger.getAttribute("aria-expanded"), "false");
+  fireEvent.keyDown(trigger, { key: "ArrowUp" });
+  fireEvent.keyDown(document.activeElement, { key: "a" });
+  assert.equal(document.activeElement.textContent, "Alpha");
+});
+
+test("controlled disclosures report changes and respect the parent's open state", () => {
+  for (const Control of [Popover, DropdownMenu]) {
+    const changes = [];
+    const props =
+      Control === Popover
+        ? { trigger: "Open", title: "Details", children: "Content" }
+        : { label: "Open", items: [{ label: "Item", onSelect() {} }] };
+    const view = render(
+      React.createElement(Control, {
+        ...props,
+        open: false,
+        onOpenChange: (value) => changes.push(value),
+      }),
+    );
+    const trigger = view.getByRole("button", { name: "Open" });
+    fireEvent.click(trigger);
+    assert.deepEqual(changes, [true]);
+    assert.equal(trigger.getAttribute("aria-expanded"), "false");
+    view.rerender(
+      React.createElement(Control, {
+        ...props,
+        open: true,
+        onOpenChange: (value) => changes.push(value),
+      }),
+    );
+    assert.equal(trigger.getAttribute("aria-expanded"), "true");
+    fireEvent.keyDown(document, { key: "Escape" });
+    assert.deepEqual(changes, [true, false]);
+    view.unmount();
+  }
+});
+
+test("native input updates counters and preserves caller input/change callbacks", () => {
+  for (const Control of [TextField, TextArea]) {
+    const inputs = [],
+      changes = [];
+    const view = render(
+      React.createElement(Control, {
+        label: "Name",
+        defaultValue: "abc",
+        maxLength: 20,
+        onInput: (event) => inputs.push(event.currentTarget.value),
+        onChange: (event) => changes.push(event.currentTarget.value),
+      }),
+    );
+    fireEvent.input(view.getByRole("textbox"), { target: { value: "abcdef" } });
+    assert.ok(view.getByText("6/20"));
+    assert.deepEqual(inputs, ["abcdef"]);
+    assert.deepEqual(changes, ["abcdef"]);
+    view.unmount();
+  }
 });

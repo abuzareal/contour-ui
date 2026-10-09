@@ -1,3 +1,5 @@
+"use client";
+
 /** Square checkbox with an acid check, optional description, error, and indeterminate state. */
 import { useEffect, useId, useRef, type InputHTMLAttributes } from "react";
 import { Check, Minus } from "lucide-react";

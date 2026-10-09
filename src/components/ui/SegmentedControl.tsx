@@ -1,3 +1,5 @@
+"use client";
+
 /** Single-choice pill group (filter buttons) with arrow-key navigation. */
 import { useRef } from "react";
 import { nextIndexForKey } from "../../lib/keyboard.js";

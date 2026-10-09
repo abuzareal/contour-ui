@@ -1,3 +1,5 @@
+"use client";
+
 /** Light/dark theme state: persisted choice, system fallback, and the animated switch. */
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";

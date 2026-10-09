@@ -1,3 +1,5 @@
+"use client";
+
 /** Renders queued toasts in a polite live region; each auto-dismisses unless hovered or focused. */
 import {
   useCallback,

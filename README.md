@@ -6,14 +6,14 @@ Use it when you want this visual style with typed controls, feedback, navigation
 
 [Live catalogue](https://contour.abuzr.in/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
 
-The catalogue currently uses **0.1.1**; this release is **0.1.2**. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+This source checkout targets **0.2.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 ## Install
 
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.1.2 --save-exact
+npm install @abuzareal/contour-ui@0.2.0 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
@@ -157,15 +157,15 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 
 ## Release notes and upgrades
 
-**0.1.2** adds the optional `fonts-latin.css` export, clearer setup documentation, and links to the Contour UI documentation site. Component APIs and runtime dependencies remain unchanged from 0.1.1. React 19 support and the interaction fixes from 0.1.1 are retained. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
+**0.2.0** adds native field refs, controlled tabs and disclosure state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.1.2 --save-exact
+npm install @abuzareal/contour-ui@0.2.0 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
 
-The package is public under MIT. The source repository and its issue tracker currently require collaborator access. Public users can inspect the distributed code, CSS, declarations, and release documents through npm. Contact the [maintainer](https://github.com/abuzareal) for support; see `SECURITY.md` in the package for vulnerability reporting guidance.
+The package and [source repository](https://github.com/abuzareal/contour-ui) are public under MIT. Report reproducible defects in the [issue tracker](https://github.com/abuzareal/contour-ui/issues); use [SECURITY.md](SECURITY.md) for private vulnerability reporting. Public users can inspect code, CSS, declarations and release documents through GitHub or npm.
 
 ## Develop this library
 
@@ -180,8 +180,60 @@ npm audit
 npm pack --dry-run
 ```
 
-`validate` checks types, lint, builds, Node/component tests, dialog browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. `test:optional` verifies strict `/three` and `/scroll` declarations and builds their imports with explicit peers and Three.js types. The compatibility gate runs both checks and verifies the Latin font assets. Compatibility runs need registry access for clean installs.
+`validate` checks types, lint, builds, Node/component tests, dialog and Three.js browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. `test:optional` verifies strict `/three` and `/scroll` declarations and builds their imports with explicit peers and Three.js types. The compatibility gate runs both checks and verifies the Latin font assets. Compatibility runs need registry access for clean installs.
 
 `src/` owns components, hooks, helpers, and public entries. `styles/` owns CSS. `tests/` owns regressions and browser checks; `scripts/` owns builds and package/consumer checks. `dist/` is generated. `RELEASING.md` in the source checkout and package archive covers validation and publication.
 
 MIT licensed. Fontsource fonts and dependencies retain their own licenses.
+
+## APIs added in 0.2.0
+
+Version 0.2.0 adds native refs to TextField, TextArea and SelectField; synchronizes uncontrolled counters and auto-resize after native form reset; adds controlled Tabs (`activeTabId`, `onTabChange`) and disclosures (`open`, `defaultOpen`, `onOpenChange`); and adds disabled menu items, stable item ids and typeahead. These additions are absent from 0.1.2. Switching a field/disclosure between controlled and uncontrolled ownership during its lifetime is unsupported.
+
+Existing uncontrolled calls remain valid. Use a native ref to focus a field or integrate a form controller; controlled tabs and disclosures require the caller to update the selected id or open state:
+
+```tsx
+import { useRef, useState } from "react";
+import { Button, Popover, Tabs, TextField } from "@abuzareal/contour-ui";
+
+export function AccountControls() {
+  const input = useRef<HTMLInputElement>(null);
+  const [activeTabId, setActiveTabId] = useState("details");
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <TextField ref={input} label="Name" name="name" />
+      <Button onClick={() => input.current?.focus()}>Focus name</Button>
+      <Tabs
+        label="Account"
+        activeTabId={activeTabId}
+        onTabChange={setActiveTabId}
+        tabs={[
+          { id: "details", label: "Details", content: <p>Account details</p> },
+          {
+            id: "settings",
+            label: "Settings",
+            content: <p>Account settings</p>,
+          },
+        ]}
+      />
+      <Popover trigger="Help" title="Help" open={open} onOpenChange={setOpen}>
+        <p>Account help</p>
+      </Popover>
+    </>
+  );
+}
+```
+
+Interactive module boundaries retain `use client` in the built package. The pinned Next.js App Router consumer checks the packed 0.2.0 archive. Follow [Next.js setup](NEXTJS.md) for the pinned Next.js 16.4.0 / React 19.3.0 pair. Pure URL/theme-bootstrap helpers remain usable from the server. A separate fixture mode checks lazy optional Three.js loading and navigation cleanup. Lenis integration, other Next versions and alternate bundlers remain separate compatibility questions.
+
+Custom `useThreeStage` setup can register disposal through `context.onDispose?.(cleanup)` immediately after acquiring each resource, including resources allocated before setup returns. Registered resources are released on failed initialization and unmount; avoid also disposing the same resource in `StageScene.dispose`. A stage may implement `resize()` to reflow after aspect changes while motion is paused.
+
+## Compatibility boundaries
+
+Styles are global, not a scoped CSS engine. Existing class names such as `.field` and `.menu` can collide with host CSS. Import Contour styles before deliberate application overrides; keep application selectors area-prefixed. The optional reset and fonts affect the document. Tokens use root `data-theme`; `useTheme` retains the legacy `aa-theme` local-storage key for compatibility. A multi-library page must decide which system owns its root theme.
+
+Menus and popovers remain local panels without portals or collision detection; use them where the container can accommodate their content. No submenu or arbitrary trigger-composition contract is claimed. BrandMark and page/editorial helpers preserve existing identity and layout assumptions; they are optional exports rather than universal primitives. Do not copy private internals or deep-import them.
+
+For contribution setup and review expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). Contour currently provides React components; no Vue, Svelte or Angular adapter is included.

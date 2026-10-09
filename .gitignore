@@ -5,3 +5,22 @@ dist/
 .npmrc
 .DS_Store
 coverage/
+
+# Local planning, research and agent guidance
+/AGENTS.md
+/agents.md
+/AGENTS_USAGE.md
+/agents-usage.md
+/PROJECTS.md
+/ORCHESTRATOR.md
+/CODE_WRITER.md
+/CODE_REVIEWER.md
+/DESIGN.md
+/design.md
+/.agents/
+/.codex/
+/research/
+/plans/
+/local-notes/
+/docs/content-strategy.md
+/docs/why-contour.md

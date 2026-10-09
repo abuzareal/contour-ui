@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible component or package defect
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Link or paste the smallest example. Remove private data.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Versions and environment
+      description: Contour, React/React DOM, framework, browser and OS; keyboard or pointer steps when relevant.
+    validations:
+      required: true

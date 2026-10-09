@@ -1,3 +1,5 @@
+"use client";
+
 /** Number that counts up the first time it scrolls into view; screen readers get the final value. */
 import { useEffect, useRef, useState } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";

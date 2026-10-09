@@ -1,3 +1,5 @@
+"use client";
+
 /** Pulls its child toward a fine pointer while hovered, then springs back (an awwwards staple). */
 import { useRef, type ReactNode } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";

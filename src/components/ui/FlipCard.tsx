@@ -1,3 +1,5 @@
+"use client";
+
 /** Two-sided card that flips in 3D; a button toggles it so the back is reachable without hover. */
 import { useState, version, type HTMLAttributes, type ReactNode } from "react";
 import { RefreshCw } from "lucide-react";

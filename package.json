@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",
@@ -10,7 +10,10 @@
     "LICENSE",
     "CHANGELOG.md",
     "SECURITY.md",
-    "RELEASING.md"
+    "RELEASING.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "NEXTJS.md"
   ],
   "sideEffects": [
     "**/*.css"
@@ -18,19 +21,23 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./three": {
       "types": "./dist/three.d.ts",
-      "import": "./dist/three.js"
+      "import": "./dist/three.js",
+      "default": "./dist/three.js"
     },
     "./scroll": {
       "types": "./dist/scroll.d.ts",
-      "import": "./dist/scroll.js"
+      "import": "./dist/scroll.js",
+      "default": "./dist/scroll.js"
     },
     "./theme-bootstrap": {
       "types": "./dist/lib/themeBootstrap.d.ts",
-      "import": "./dist/lib/themeBootstrap.js"
+      "import": "./dist/lib/themeBootstrap.js",
+      "default": "./dist/lib/themeBootstrap.js"
     },
     "./styles.css": "./dist/styles.css",
     "./reset.css": "./dist/reset.css",
@@ -46,10 +53,12 @@
     "test:browser": "node --test tests/*.browser.mjs",
     "check:package": "node scripts/check-package.mjs",
     "validate": "npm run typecheck && npm run lint && npm run build && npm test && npm run test:browser && npm run check:package",
-    "prepublishOnly": "npm run validate && npm run test:compat",
+    "prepublishOnly": "node scripts/verify-release.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
     "test:compat": "node scripts/test-compat.mjs",
-    "test:optional": "node scripts/test-optional-consumer.mjs"
+    "test:optional": "node scripts/test-optional-consumer.mjs",
+    "test:next": "npm run build && node scripts/test-next.mjs",
+    "verify:release": "node scripts/verify-release.mjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

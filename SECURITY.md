@@ -1,6 +1,6 @@
 # Security
 
-Report suspected vulnerabilities privately using GitHub's private vulnerability reporting for this repository once enabled. If that option is unavailable, contact the maintainer privately through their GitHub profile; do not post exploit details or credentials in a public issue.
+Report suspected vulnerabilities privately to abuzart1999@gmail.com. Include the affected version and a minimal reproduction without credentials or unrelated personal data. If GitHub private vulnerability reporting is available on this repository, it is another private channel. Do not post exploit details or credentials in a public issue.
 
 The latest published release is the supported version. Dependency audits identify known reported vulnerabilities, not all possible defects. No claim of complete security or formal accessibility certification is made.
 

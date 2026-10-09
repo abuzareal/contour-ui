@@ -1,3 +1,5 @@
+"use client";
+
 /** Prints the full page: opens collapsed disclosures and uses the light theme, then restores both. */
 import { useEffect } from "react";
 

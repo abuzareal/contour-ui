@@ -1,3 +1,5 @@
+"use client";
+
 /** Editorial data table with mono headers, optional column sorting, and horizontal scroll on small screens. */
 import { useMemo, useState, type ReactNode } from "react";
 import { ArrowDown, ArrowUp } from "lucide-react";

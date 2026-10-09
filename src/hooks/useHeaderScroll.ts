@@ -1,3 +1,5 @@
+"use client";
+
 /** Derives header state from scroll position: scrolled, over a dark area, and the active section. */
 import { useEffect, useState, type RefObject } from "react";
 

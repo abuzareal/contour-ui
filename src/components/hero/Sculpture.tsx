@@ -1,3 +1,5 @@
+"use client";
+
 /** Hero sculpture: three chrome/lime links that follow the pointer and drift while motion is on. */
 import { useRef } from "react";
 import * as THREE from "three";
@@ -17,10 +19,13 @@ export type SculptureProps = {
 
 const restRotation = new THREE.Euler(-0.15, -0.1, -0.1);
 
-function setupSculpture({ scene }: StageContext) {
+function setupSculpture({ scene, onDispose }: StageContext) {
   const chrome = createChrome();
+  onDispose?.(() => chrome.dispose());
   const lime = createLime();
+  onDispose?.(() => lime.dispose());
   const geometry = createLinkGeometry();
+  onDispose?.(() => geometry.dispose());
 
   // Three interlocking links arranged as one assembly.
   const assembly = new THREE.Group();
@@ -58,9 +63,7 @@ function setupSculpture({ scene }: StageContext) {
       assembly.position.y = 0;
     },
     dispose: () => {
-      geometry.dispose();
-      chrome.dispose();
-      lime.dispose();
+      scene.remove(assembly);
     },
   };
 }

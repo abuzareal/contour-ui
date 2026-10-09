@@ -1,3 +1,5 @@
+"use client";
+
 /** Card that tilts in 3D toward a fine pointer with a moving glare highlight. */
 import { useRef, type ReactNode } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";

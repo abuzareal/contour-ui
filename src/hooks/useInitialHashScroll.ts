@@ -1,3 +1,5 @@
+"use client";
+
 /** Scrolls to the URL fragment after first render; the section does not exist yet when the browser first tries. */
 import { useEffect } from "react";
 

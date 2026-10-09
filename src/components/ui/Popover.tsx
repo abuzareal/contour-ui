@@ -1,5 +1,8 @@
+"use client";
+
 /** Non-modal floating panel anchored to a trigger; closes on Escape or an outside press. */
-import { useCallback, useId, useRef, useState, type ReactNode } from "react";
+import { useCallback, useId, useRef, type ReactNode } from "react";
+import useOpenState from "../../hooks/useOpenState.js";
 import useDismiss from "../../hooks/useDismiss.js";
 import { cx } from "../../lib/classNames.js";
 
@@ -9,6 +12,9 @@ export type PopoverProps = {
   title: string;
   children: ReactNode;
   align?: "start" | "end";
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export default function Popover({
@@ -16,20 +22,30 @@ export default function Popover({
   title,
   children,
   align = "start",
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
 }: PopoverProps) {
   const panelId = useId();
   const titleId = useId();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useOpenState(
+    controlledOpen,
+    defaultOpen,
+    onOpenChange,
+  );
   const container = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
 
   useDismiss(
     container,
     open,
-    useCallback((reason) => {
-      setOpen(false);
-      if (reason === "escape") button.current?.focus();
-    }, []),
+    useCallback(
+      (reason) => {
+        setOpen(false);
+        if (reason === "escape") button.current?.focus();
+      },
+      [setOpen],
+    ),
   );
 
   return (
@@ -40,7 +56,7 @@ export default function Popover({
         className="menu-trigger"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => setOpen(!open)}
       >
         {trigger}
       </button>

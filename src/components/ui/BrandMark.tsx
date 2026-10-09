@@ -1,3 +1,5 @@
+"use client";
+
 import { safeHref } from "../../lib/safeHref.js";
 /** The "aa." monogram; links to the top of the page unless given another href. */
 
