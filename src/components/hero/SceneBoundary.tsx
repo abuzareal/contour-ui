@@ -1,3 +1,5 @@
+"use client";
+
 /** Error boundary that hides the 3D scene if its lazy module or renderer throws. */
 import { Component, type ReactNode } from "react";
 

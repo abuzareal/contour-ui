@@ -1,3 +1,5 @@
+"use client";
+
 /** Returns the id of the last listed element whose top has scrolled past the activation line. */
 import { useEffect, useState } from "react";
 

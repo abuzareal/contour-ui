@@ -1,3 +1,5 @@
+"use client";
+
 /** Fieldset of round radio options sharing one name, with a mono legend. */
 import { useId } from "react";
 import { cx } from "../../lib/classNames.js";

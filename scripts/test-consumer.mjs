@@ -1,3 +1,4 @@
+import { packedArchive } from "./packed-archive.mjs";
 import { mkdtemp, writeFile, readFile, rm, stat } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
@@ -16,22 +17,7 @@ const runNpm = (args) =>
     stdio: ["ignore", "pipe", "pipe"],
   });
 try {
-  const packed = JSON.parse(
-    execFileSync(
-      "npm",
-      [
-        "pack",
-        "--json",
-        "--ignore-scripts",
-        "--pack-destination",
-        temporary,
-        "--cache",
-        cache,
-      ],
-      { encoding: "utf8" },
-    ),
-  );
-  const archive = Array.isArray(packed) ? packed[0] : Object.values(packed)[0];
+  const archive = await packedArchive(temporary);
   await writeFile(
     join(temporary, "package.json"),
     JSON.stringify(
@@ -39,7 +25,7 @@ try {
         private: true,
         type: "module",
         dependencies: {
-          "@abuzareal/contour-ui": `file:./${archive.filename}`,
+          "@abuzareal/contour-ui": `file:${archive}`,
           react: reactVersion,
           "react-dom": reactVersion,
         },

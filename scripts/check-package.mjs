@@ -34,7 +34,7 @@ const archive = Array.isArray(result) ? result[0] : Object.values(result)[0];
 for (const { path } of archive.files) {
   assert.match(
     path,
-    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$)/,
+    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$)/,
   );
   assert.doesNotMatch(
     path,
@@ -54,12 +54,46 @@ for (const name of [
   "CHANGELOG.md",
   "SECURITY.md",
   "RELEASING.md",
+  "CONTRIBUTING.md",
+  "CODE_OF_CONDUCT.md",
+  "NEXTJS.md",
 ]) {
   assert.ok(
     archive.files.some((file) => file.path === name),
     `Missing release document: ${name}`,
   );
 }
+for (const file of [
+  "components/ui/TextField.js",
+  "components/ui/TextArea.js",
+  "components/ui/SelectField.js",
+  "components/ui/ThemeToggle.js",
+  "components/ui/Dialog.js",
+  "components/ui/Tabs.js",
+  "components/ui/Popover.js",
+  "components/ui/DropdownMenu.js",
+  "hooks/useToast.js",
+]) {
+  assert.match(
+    readFileSync(`dist/${file}`, "utf8"),
+    /^"use client";/,
+    `Client boundary lost in ${file}`,
+  );
+}
+assert.doesNotMatch(
+  readFileSync("dist/index.js", "utf8"),
+  /^"use client";/,
+  "Keep pure helpers accessible to server imports",
+);
+for (const name of [
+  "dm-sans-latin-wght-normal.woff2",
+  "space-grotesk-latin-wght-normal.woff2",
+  "dm-mono-latin-400-normal.woff2",
+])
+  assert.ok(
+    archive.files.some((file) => file.path === `dist/fonts/${name}`),
+    `Missing relative font ${name}`,
+  );
 console.log(
   `Package contents verified: ${archive.files.length} files, ${archive.size} compressed bytes.`,
 );

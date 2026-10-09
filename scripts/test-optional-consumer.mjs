@@ -1,3 +1,4 @@
+import { packedArchive } from "./packed-archive.mjs";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -16,29 +17,14 @@ const reactVersion = process.env.CONTOUR_REACT_VERSION ?? "18.3.1";
 const temporary = await mkdtemp(join(tmpdir(), "contour-optional-"));
 const cache = join(tmpdir(), "contour-ui-npm-cache");
 try {
-  const packed = JSON.parse(
-    execFileSync(
-      "npm",
-      [
-        "pack",
-        "--json",
-        "--ignore-scripts",
-        "--pack-destination",
-        temporary,
-        "--cache",
-        cache,
-      ],
-      { encoding: "utf8" },
-    ),
-  );
-  const archive = Array.isArray(packed) ? packed[0] : Object.values(packed)[0];
+  const archive = await packedArchive(temporary);
   await writeFile(
     join(temporary, "package.json"),
     JSON.stringify({
       private: true,
       type: "module",
       dependencies: {
-        "@abuzareal/contour-ui": `file:./${archive.filename}`,
+        "@abuzareal/contour-ui": `file:${archive}`,
         react: reactVersion,
         "react-dom": reactVersion,
         three: "0.186.1",

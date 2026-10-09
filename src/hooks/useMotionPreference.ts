@@ -1,3 +1,5 @@
+"use client";
+
 /** Tracks the user's `prefers-reduced-motion` setting and updates when it changes. */
 import { useEffect, useState } from "react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 /** Becomes true once the browser is idle after `enabled` turns on; used to defer heavy work. */
 import { useEffect, useState } from "react";
 

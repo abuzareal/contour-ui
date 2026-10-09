@@ -1,3 +1,5 @@
+"use client";
+
 /** Inline or full-width message with a tone icon, 3px accent rule, optional action, and dismiss. */
 import type { ReactNode } from "react";
 import {

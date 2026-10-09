@@ -1,3 +1,5 @@
+"use client";
+
 /** Enables Lenis smooth scrolling (and animated anchor jumps) while motion is allowed. */
 import { useEffect } from "react";
 import Lenis from "lenis";

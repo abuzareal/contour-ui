@@ -1,3 +1,5 @@
+"use client";
+
 /** Fades and lifts its children into view the first time they enter the viewport. */
 import { useEffect, useRef, type ReactNode } from "react";
 

@@ -17,12 +17,36 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
           package-manager-cache: false
+      - name: Determine affected checks
+        id: scope
+        env:
+          CONTOUR_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-scope.mjs
       - run: npm ci --ignore-scripts
-      - run: npx playwright install --with-deps chromium
-      - run: npm run validate
-      - run: npm run test:compat
+      - name: Types, lint, build and archive contents
+        run: npm run typecheck && npm run lint && npm run build && npm run check:package
+      - if: steps.scope.outputs.runtime == 'true'
+        run: npm test
+      - if: steps.scope.outputs.runtime == 'true'
+        run: npx playwright install --with-deps chromium
+      - if: steps.scope.outputs.runtime == 'true'
+        run: npm run test:browser
+      - name: Pack the candidate once
+        if: steps.scope.outputs.runtime == 'true'
+        run: |
+          node --input-type=module <<'NODE'
+          import {packedArchive} from "./scripts/packed-archive.mjs";
+          import {appendFileSync} from "node:fs";
+          const archive = await packedArchive(process.env.RUNNER_TEMP);
+          appendFileSync(process.env.GITHUB_ENV, `CONTOUR_ARCHIVE=${archive}\n`);
+          NODE
+      - if: steps.scope.outputs.runtime == 'true'
+        run: npm run test:compat
+      - if: steps.scope.outputs.runtime == 'true' && steps.scope.outputs.next == 'true'
+        run: node scripts/test-next.mjs
       - run: npm audit --audit-level=low

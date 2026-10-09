@@ -1,3 +1,5 @@
+"use client";
+
 /** Lays out a set of 3D objects in a responsive grid; each turns slowly and the set leans toward the pointer. */
 import { useRef } from "react";
 import * as THREE from "three";
@@ -39,8 +41,9 @@ export default function ObjectStudy({
   useThreeStage(hostRef, {
     motionEnabled,
     cameraDistance,
-    setup: ({ scene, camera }: StageContext) => {
+    setup: ({ scene, camera, onDispose }: StageContext) => {
       const set = objectStudies[study]();
+      onDispose?.(set.dispose);
       const group = new THREE.Group();
       set.objects.forEach((object) => {
         object.rotation.copy(restTilt);
@@ -65,7 +68,6 @@ export default function ObjectStudy({
 
       return {
         update: ({ delta, elapsed, pointer }: StageFrame) => {
-          arrange();
           set.objects.forEach((object, index) => {
             object.rotation.y += delta * 0.45;
             object.rotation.x =
@@ -88,7 +90,10 @@ export default function ObjectStudy({
           group.rotation.set(0, 0, 0);
           set.objects.forEach((object) => object.rotation.copy(restTilt));
         },
-        dispose: set.dispose,
+        resize: arrange,
+        dispose: () => {
+          scene.remove(group);
+        },
       };
     },
   });

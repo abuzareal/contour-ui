@@ -1,3 +1,5 @@
+"use client";
+
 /** Calls onDismiss on Escape or a pointer press outside the container while `active`. */
 import { useEffect, type RefObject } from "react";
 

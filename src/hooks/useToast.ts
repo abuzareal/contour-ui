@@ -1,3 +1,5 @@
+"use client";
+
 /** Toast context: lets any component queue a notification rendered by ToastProvider. */
 import { createContext, useContext } from "react";
 import type { AlertTone } from "../components/ui/Alert.js";

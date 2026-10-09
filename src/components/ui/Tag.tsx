@@ -1,3 +1,5 @@
+"use client";
+
 /** Mono "+ tag" label (as in project notes); becomes a removable chip when given onRemove. */
 import { X } from "lucide-react";
 

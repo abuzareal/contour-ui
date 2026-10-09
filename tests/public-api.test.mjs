@@ -9,13 +9,13 @@ test("public entry imports on the server without browser globals", () => {
   for (const name of [
     "Button",
     "Dialog",
-    "TextField",
     "ThemeToggle",
     "ToastProvider",
     "useTheme",
   ]) {
     assert.equal(typeof ui[name], "function", name);
   }
+  assert.equal(ui.TextField.$$typeof, Symbol.for("react.forward_ref"));
   assert.equal(ui.Sculpture, undefined);
   assert.equal(ui.useSmoothScroll, undefined);
 });

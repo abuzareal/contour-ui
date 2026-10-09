@@ -1,3 +1,5 @@
+"use client";
+
 /** Ink tooltip shown on hover or focus, dismissible with Escape, described via aria-describedby. */
 import { cloneElement, useId, useState, type ReactElement } from "react";
 import { cx } from "../../lib/classNames.js";

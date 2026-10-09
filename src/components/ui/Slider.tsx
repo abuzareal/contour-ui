@@ -1,3 +1,5 @@
+"use client";
+
 /** Range slider with a filled acid track and a live value readout. */
 import { useId, type CSSProperties } from "react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 /** Open state for the mobile menu, closing on Escape, outside pointer, or desktop resize. */
 import { useEffect, useState, type RefObject } from "react";
 

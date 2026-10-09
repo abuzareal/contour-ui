@@ -1,3 +1,5 @@
+"use client";
+
 /** Copies text to the clipboard and reports the outcome, resetting after a few seconds. */
 import { useCallback, useEffect, useRef, useState } from "react";
 

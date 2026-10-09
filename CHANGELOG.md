@@ -2,6 +2,22 @@
 
 Changes to the published `@abuzareal/contour-ui` package. Version headings refer to package versions, not catalogue or application versions. Consumer projects pin their own version and update separately.
 
+## Unreleased
+
+No changes recorded.
+
+## 0.2.0
+
+- TextField, TextArea and SelectField expose native refs while retaining React 18/19 compatibility. Caller-supplied aria-invalid is preserved when no component error overrides it.
+- Uncontrolled field counters and textarea height follow native form reset, including external form association and canceled resets. A browser task waits for the native reset default action, and native input keeps counters current when an edit repeats the pre-reset value.
+- Tabs adds activeTabId/onTabChange; Popover and DropdownMenu add open/defaultOpen/onOpenChange. Existing uncontrolled defaults remain.
+- DropdownMenu skips disabled items, opens from ArrowUp/ArrowDown, supports label typeahead and accepts stable item ids.
+- Three stages release resources after partial initialization failure; setup can register disposal immediately. ObjectStudy reflows paused scenes on resize instead of arranging every animation frame.
+- Interactive modules retain client boundaries; ESM export targets also provide a default condition for framework dynamic-module resolution. A pinned packed Next.js App Router fixture checks the candidate. Latin font assets use relative packaged URLs with their licenses for webpack compatibility.
+- Contributor setup and issue/PR templates are portable. Release checks reuse one archive across compatibility consumers and publish that verified archive without rerunning source lifecycle gates.
+
+These changes are absent from 0.1.2. A separate Next.js fixture mode covers lazy Three.js; Lenis, alternate-bundler and wider framework support remain outside these checks.
+
 ## 0.1.2 — 2026-10-07
 
 An optional font-loading entry and clearer setup documentation. Component APIs and runtime dependencies are unchanged from 0.1.1.

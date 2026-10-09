@@ -42,8 +42,18 @@ jobs:
           git merge-base --is-ancestor HEAD origin/main
       - run: npm ci --ignore-scripts
       - run: npx playwright install --with-deps chromium
-      - run: npm run validate
-      - run: npm run test:compat
-      - run: npm audit --audit-level=low
-      - name: Publish with trusted identity and provenance
-        run: npm publish --access public --provenance
+      - name: Verify one release archive
+        env:
+          CONTOUR_RELEASE_DIR: ${{ runner.temp }}
+        run: node scripts/verify-release.mjs
+      - name: Publish the verified archive with trusted identity and provenance
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync} from "node:fs";
+          import {createHash} from "node:crypto";
+          import {execFileSync} from "node:child_process";
+          import assert from "node:assert/strict";
+          const verified = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/verified-archive.json`));
+          assert.equal(createHash("sha256").update(readFileSync(verified.archive)).digest("hex"), verified.checksum);
+          execFileSync("npm", ["publish", verified.archive, "--ignore-scripts", "--access", "public", "--provenance"], {stdio: "inherit"});
+          NODE

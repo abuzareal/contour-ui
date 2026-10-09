@@ -1,3 +1,5 @@
+"use client";
+
 /** Page navigation with previous/next controls and a condensed list of two-digit page numbers. */
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { formatIndex } from "../../lib/format.js";

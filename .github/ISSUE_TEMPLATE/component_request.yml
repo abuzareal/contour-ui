@@ -1,0 +1,15 @@
+name: Component or capability request
+description: Describe a recurring user task before proposing an API
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Task and existing alternatives
+      description: Who needs it, what fails today, and why existing exports cannot compose it.
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Proposed contract and states
+      description: Props, native semantics, keyboard/focus, disabled/loading/error behavior and framework requirements.

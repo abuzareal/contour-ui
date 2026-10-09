@@ -1,3 +1,5 @@
+"use client";
+
 /** Modal dialog on the native <dialog> element; also slides in from either edge as a drawer. */
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";

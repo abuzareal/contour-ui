@@ -4,7 +4,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 100 1000;
-  src: url(@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2)
+  src: url("./fonts/dm-sans-latin-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -17,7 +17,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 300 700;
-  src: url(@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2)
+  src: url("./fonts/space-grotesk-latin-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -30,6 +30,6 @@
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: url(@fontsource/dm-mono/files/dm-mono-latin-400-normal.woff2)
+  src: url("./fonts/dm-mono-latin-400-normal.woff2")
     format("woff2");
 }

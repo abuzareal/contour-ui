@@ -1,3 +1,5 @@
+"use client";
+
 /** Thin acid bar fixed to the top of the viewport that tracks page scroll progress. */
 import { useEffect, useRef } from "react";
 

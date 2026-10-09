@@ -1,3 +1,5 @@
+"use client";
+
 /** On/off switch (role="switch") with a pill track that fills acid when on. */
 import { useId } from "react";
 

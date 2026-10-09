@@ -1,3 +1,5 @@
+"use client";
+
 /** Header button that switches between the light and dark themes. */
 import { Moon, Sun } from "lucide-react";
 import useTheme from "../../hooks/useTheme.js";

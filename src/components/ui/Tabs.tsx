@@ -1,3 +1,5 @@
+"use client";
+
 /** Tabs with a sliding underline indicator, arrow-key navigation, and linked panels. */
 import {
   useId,
@@ -19,16 +21,25 @@ export type TabsProps = {
   label: string;
   tabs: TabItem[];
   defaultTabId?: string;
+  /** Controlled selection. The caller must update this after onTabChange. */
+  activeTabId?: string;
+  onTabChange?: (id: string) => void;
 };
 
-export default function Tabs({ label, tabs, defaultTabId }: TabsProps) {
+export default function Tabs({
+  label,
+  tabs,
+  defaultTabId,
+  activeTabId,
+  onTabChange,
+}: TabsProps) {
   const baseId = useId();
   const [activeId, setActiveId] = useState(defaultTabId ?? tabs[0]?.id ?? "");
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const activeIndex = Math.max(
     0,
-    tabs.findIndex((tab) => tab.id === activeId),
+    tabs.findIndex((tab) => tab.id === (activeTabId ?? activeId)),
   );
   const selectedId = tabs[activeIndex]?.id;
 
@@ -40,10 +51,11 @@ export default function Tabs({ label, tabs, defaultTabId }: TabsProps) {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [activeIndex]);
+  }, [activeIndex, tabs]);
 
   const select = (index: number) => {
-    setActiveId(tabs[index].id);
+    if (activeTabId === undefined) setActiveId(tabs[index].id);
+    onTabChange?.(tabs[index].id);
     tabRefs.current[index]?.focus();
   };
 
@@ -75,7 +87,10 @@ export default function Tabs({ label, tabs, defaultTabId }: TabsProps) {
               aria-controls={`${baseId}-panel-${tab.id}`}
               tabIndex={selected ? 0 : -1}
               className="tabs-tab"
-              onClick={() => setActiveId(tab.id)}
+              onClick={() => {
+                if (activeTabId === undefined) setActiveId(tab.id);
+                onTabChange?.(tab.id);
+              }}
               onKeyDown={(event) => {
                 const next = nextIndexForKey(event.key, index, tabs.length);
                 if (next === null) return;
