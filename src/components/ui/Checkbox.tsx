@@ -39,8 +39,16 @@ export default function Checkbox({
           id={id}
           type="checkbox"
           className="choice-input"
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-invalid={error ? true : rest["aria-invalid"]}
+          aria-describedby={
+            [
+              rest["aria-describedby"],
+              description && `${id}-description`,
+              error && `${id}-error`,
+            ]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
         />
         <span className="choice-box" aria-hidden="true">
           {indeterminate ? (
@@ -53,7 +61,9 @@ export default function Checkbox({
       <label htmlFor={id} className="choice-text">
         <span className="choice-label">{label}</span>
         {description && (
-          <span className="choice-description">{description}</span>
+          <span id={`${id}-description`} className="choice-description">
+            {description}
+          </span>
         )}
         {error && (
           <span id={`${id}-error`} className="choice-error mono">
