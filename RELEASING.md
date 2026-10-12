@@ -2,7 +2,7 @@
 
 Source is public at [github.com/abuzareal/contour-ui](https://github.com/abuzareal/contour-ui); the package is public under MIT. Query npm for the latest published version; the source manifest does not prove publication. Source changes are not delivered to consumers until publication and an exact dependency/lockfile update. The npm README changes only when a new version is published; do not overwrite or unpublish an existing version to edit it.
 
-Before selecting a release version, review public API and visual changes, types, dependencies, licenses, changelog and compatibility limits. Use patch for compatible fixes, minor for additions, and document every incompatible 0.x change explicitly. README examples must match the archive. Record publication dates only after verifying the registry. A local check is not deployment evidence.
+Use [the public contract and compatibility policy](CONTRACTS.md#change-deprecation-and-migration-policy) and [the maturity register](PUBLIC-API.md) when classifying changes. Before selecting a release version, review public API and visual changes, types, dependencies, licenses, changelog and compatibility limits. Use patch for compatible fixes, minor for additions, and document every incompatible 0.x change explicitly. README examples must match the archive. Record publication dates only after verifying the registry. A local check is not deployment evidence.
 
 ## Verify and publish one archive
 

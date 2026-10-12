@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",
@@ -13,7 +13,9 @@
     "RELEASING.md",
     "CONTRIBUTING.md",
     "CODE_OF_CONDUCT.md",
-    "NEXTJS.md"
+    "NEXTJS.md",
+    "CONTRACTS.md",
+    "PUBLIC-API.md"
   ],
   "sideEffects": [
     "**/*.css"
