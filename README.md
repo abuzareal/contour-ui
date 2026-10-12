@@ -6,14 +6,18 @@ Use it when you want this visual style with typed controls, feedback, navigation
 
 [Live catalogue](https://contour.abuzr.in/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
 
-This source checkout targets **0.2.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+This source checkout targets **0.2.1**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+
+[Public API and maturity register](PUBLIC-API.md) · [Architecture, scope and compatibility](CONTRACTS.md)
+
+Version 0.2.1 documents baseline contracts and limitations and includes compatible Checkbox ARIA and clipboard lifecycle fixes. Export names, prop types, style defaults, dependencies and optional entry boundaries match 0.2.0. It remains an early 0.x library.
 
 ## Install
 
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.2.0 --save-exact
+npm install @abuzareal/contour-ui@0.2.1 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
@@ -157,10 +161,10 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 
 ## Release notes and upgrades
 
-**0.2.0** adds native field refs, controlled tabs and disclosure state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
+**0.2.0** adds native field refs, controlled tabs and popover/menu open state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.2.0 --save-exact
+npm install @abuzareal/contour-ui@0.2.1 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
@@ -188,7 +192,7 @@ MIT licensed. Fontsource fonts and dependencies retain their own licenses.
 
 ## APIs added in 0.2.0
 
-Version 0.2.0 adds native refs to TextField, TextArea and SelectField; synchronizes uncontrolled counters and auto-resize after native form reset; adds controlled Tabs (`activeTabId`, `onTabChange`) and disclosures (`open`, `defaultOpen`, `onOpenChange`); and adds disabled menu items, stable item ids and typeahead. These additions are absent from 0.1.2. Switching a field/disclosure between controlled and uncontrolled ownership during its lifetime is unsupported.
+Version 0.2.0 adds native refs to TextField, TextArea and SelectField; synchronizes uncontrolled counters and auto-resize after native form reset; adds controlled Tabs (`activeTabId`, `onTabChange`) and Popover/DropdownMenu (`open`, `defaultOpen`, `onOpenChange`); and adds disabled menu items, stable item ids and typeahead. These additions are absent from 0.1.2. Switching a field/disclosure between controlled and uncontrolled ownership during its lifetime is unsupported.
 
 Existing uncontrolled calls remain valid. Use a native ref to focus a field or integrate a form controller; controlled tabs and disclosures require the caller to update the selected id or open state:
 

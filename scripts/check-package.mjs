@@ -34,7 +34,7 @@ const archive = Array.isArray(result) ? result[0] : Object.values(result)[0];
 for (const { path } of archive.files) {
   assert.match(
     path,
-    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$)/,
+    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$)/,
   );
   assert.doesNotMatch(
     path,
@@ -57,6 +57,8 @@ for (const name of [
   "CONTRIBUTING.md",
   "CODE_OF_CONDUCT.md",
   "NEXTJS.md",
+  "CONTRACTS.md",
+  "PUBLIC-API.md",
 ]) {
   assert.ok(
     archive.files.some((file) => file.path === name),

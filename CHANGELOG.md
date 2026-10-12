@@ -4,8 +4,25 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 ## Unreleased
 
+No changes recorded.
+
+## 0.2.1
+
+A baseline contract release with compatible Checkbox ARIA and clipboard lifecycle fixes. Export names, prop types, visual defaults, dependencies and optional peer boundaries are unchanged from 0.2.0.
+
 - Checkbox preserves caller-supplied validation attributes and associates its description and error with the native input.
 - Clipboard feedback ignores writes that settle after unmount or after a newer copy request. No reset timer is created for an obsolete result.
+
+- Publish the complete public-export and maturity register, including runtime/type-only distinctions, ownership, intended use, documentation destinations, known limits and scoped verification references.
+- Publish architecture, adoption scope, environment/support evidence, dependency/size explanations and compatibility/deprecation rules.
+- Clarify native form/ref limitations, local overlay behavior, inherited CSS/theme contracts and experimental/legacy APIs. Disclosure exposes defaultOpen; controlled open state belongs to Popover and DropdownMenu.
+- Include both reference documents in the verified npm archive. Existing 0.2.0 consumers need no API or style migration; update the exact package pin and lockfile to receive the documents.
+
+```sh
+npm install @abuzareal/contour-ui@0.2.1 --save-exact
+```
+
+Publication is not established by this source heading. Verify npm availability; the catalogue's installed and hosted versions are separate.
 
 ## 0.2.0
 

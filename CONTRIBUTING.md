@@ -13,3 +13,5 @@ For a fix, add a regression that fails for the previous behavior. Use component 
 Update the README and Unreleased changelog when public behavior changes. Keep documented APIs consistent with the archive. New APIs need a migration/usage example. Generic CSS class names and the legacy `aa-theme` storage key are existing compatibility constraints; do not rename them silently.
 
 A pull request should name the concrete behavior change, why it helps, which checks passed and any remaining limitation. Review public exports, packed files and dependency changes. No publish, deploy or merge is implied by opening a pull request. Consumers adopt an exact published release with a lockfile update; local source edits do not update them.
+
+Public API changes must follow [the compatibility policy](CONTRACTS.md#change-deprecation-and-migration-policy) and update [the maturity register](PUBLIC-API.md). Preserve native semantics and optional entry isolation; an experimental or legacy label does not authorize an undocumented removal.
