@@ -30,9 +30,11 @@ window.matchMedia = (query) => ({
   removeEventListener() {},
 });
 const React = (await import("react")).default;
-const { render, fireEvent, cleanup, act } =
+const { render, renderHook, fireEvent, cleanup, act } =
   await import("@testing-library/react");
 const {
+  Checkbox,
+  useClipboardCopy,
   ThemeToggle,
   Tabs,
   TextField,
@@ -505,4 +507,124 @@ test("native input updates counters and preserves caller input/change callbacks"
     assert.deepEqual(changes, ["abcdef"]);
     view.unmount();
   }
+});
+
+test("Checkbox preserves external validation and composes its description and error", () => {
+  const props = {
+    label: "Accept terms",
+    description: "Read the terms first.",
+    "aria-invalid": "grammar",
+    "aria-describedby": "external-error",
+  };
+  const view = render(React.createElement(Checkbox, props));
+  const input = view.getByRole("checkbox", { name: /Accept terms/ });
+  assert.equal(input.getAttribute("aria-invalid"), "grammar");
+  const description = view.getByText("Read the terms first.");
+  assert.ok(description.id);
+  assert.equal(
+    input.getAttribute("aria-describedby"),
+    `external-error ${description.id}`,
+  );
+  view.rerender(React.createElement(Checkbox, { ...props, error: "Required" }));
+  const error = view.getByText("Required");
+  assert.equal(input.getAttribute("aria-invalid"), "true");
+  assert.equal(
+    input.getAttribute("aria-describedby"),
+    `external-error ${description.id} ${error.id}`,
+  );
+  view.rerender(React.createElement(Checkbox, props));
+  assert.equal(input.getAttribute("aria-invalid"), "grammar");
+  assert.equal(
+    input.getAttribute("aria-describedby"),
+    `external-error ${description.id}`,
+  );
+  fireEvent.click(input);
+  assert.equal(input.checked, true);
+});
+
+test("clipboard ignores a completion after unmount and an older overlapping request", async (t) => {
+  const pending = [];
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: {
+      writeText: () =>
+        new Promise((resolve, reject) => pending.push({ resolve, reject })),
+    },
+  });
+  t.after(() => {
+    delete navigator.clipboard;
+  });
+  const originalTimer = globalThis.setTimeout;
+  let resetTimers = 0;
+  t.mock.method(globalThis, "setTimeout", (callback, delay, ...args) => {
+    if (delay === 4000) resetTimers++;
+    return originalTimer(callback, delay, ...args);
+  });
+  const first = renderHook(() => useClipboardCopy("first"));
+  let abandoned;
+  act(() => {
+    abandoned = first.result.current.copy();
+  });
+  first.unmount();
+  await act(async () => {
+    pending[0].resolve();
+    await abandoned;
+  });
+  assert.equal(resetTimers, 0);
+  const second = renderHook(() => useClipboardCopy("second"));
+  let older, newer;
+  act(() => {
+    older = second.result.current.copy();
+    newer = second.result.current.copy();
+  });
+  await act(async () => {
+    pending[2].resolve();
+    await newer;
+  });
+  assert.equal(second.result.current.status, "copied");
+  await act(async () => {
+    pending[1].reject(new Error("old failure"));
+    await older;
+  });
+  assert.equal(second.result.current.status, "copied");
+  assert.equal(resetTimers, 1);
+  let denied;
+  act(() => {
+    denied = second.result.current.copy();
+  });
+  await act(async () => {
+    pending[3].reject(new Error("denied"));
+    await denied;
+  });
+  assert.equal(second.result.current.status, "error");
+  second.unmount();
+});
+
+test("clipboard discards feedback when the text changes during a pending write", async (t) => {
+  let finish;
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: {
+      writeText: () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    },
+  });
+  t.after(() => {
+    delete navigator.clipboard;
+  });
+  const view = renderHook(({ text }) => useClipboardCopy(text), {
+    initialProps: { text: "old" },
+  });
+  let operation;
+  act(() => {
+    operation = view.result.current.copy();
+  });
+  view.rerender({ text: "new" });
+  await act(async () => {
+    finish();
+    await operation;
+  });
+  assert.equal(view.result.current.status, "idle");
 });

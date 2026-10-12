@@ -4,7 +4,8 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 ## Unreleased
 
-No changes recorded.
+- Checkbox preserves caller-supplied validation attributes and associates its description and error with the native input.
+- Clipboard feedback ignores writes that settle after unmount or after a newer copy request. No reset timer is created for an obsolete result.
 
 ## 0.2.0
 
