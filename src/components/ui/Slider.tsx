@@ -1,7 +1,7 @@
 "use client";
 
 /** Range slider with a filled acid track and a live value readout. */
-import { useId, type CSSProperties } from "react";
+import { forwardRef, useId, type CSSProperties } from "react";
 
 export type SliderProps = {
   label: string;
@@ -15,16 +15,19 @@ export type SliderProps = {
   disabled?: boolean;
 };
 
-export default function Slider({
-  label,
-  value,
-  onChange,
-  min = 0,
-  max = 100,
-  step = 1,
-  format = String,
-  disabled,
-}: SliderProps) {
+const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
+  {
+    label,
+    value,
+    onChange,
+    min = 0,
+    max = 100,
+    step = 1,
+    format = String,
+    disabled,
+  }: SliderProps,
+  ref,
+) {
   const id = useId();
   const progress =
     max > min
@@ -40,6 +43,7 @@ export default function Slider({
         <output htmlFor={id}>{format(value)}</output>
       </div>
       <input
+        ref={ref}
         id={id}
         type="range"
         min={min}
@@ -53,4 +57,5 @@ export default function Slider({
       />
     </div>
   );
-}
+});
+export default Slider;

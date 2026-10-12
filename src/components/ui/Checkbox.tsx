@@ -1,8 +1,9 @@
 "use client";
 
 /** Square checkbox with an acid check, optional description, error, and indeterminate state. */
-import { useEffect, useId, useRef, type InputHTMLAttributes } from "react";
+import { forwardRef, useEffect, useId, type InputHTMLAttributes } from "react";
 import { Check, Minus } from "lucide-react";
+import useControlRef from "../../hooks/useControlRef.js";
 import { cx } from "../../lib/classNames.js";
 
 export type CheckboxProps = Omit<
@@ -15,27 +16,30 @@ export type CheckboxProps = Omit<
   indeterminate?: boolean;
 };
 
-export default function Checkbox({
-  label,
-  description,
-  error,
-  indeterminate = false,
-  className,
-  ...rest
-}: CheckboxProps) {
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
+  {
+    label,
+    description,
+    error,
+    indeterminate = false,
+    className,
+    ...rest
+  }: CheckboxProps,
+  forwardedRef,
+) {
   const id = useId();
-  const ref = useRef<HTMLInputElement>(null);
+  const { ref, attach } = useControlRef(forwardedRef);
 
   useEffect(() => {
     if (ref.current) ref.current.indeterminate = indeterminate;
-  }, [indeterminate]);
+  }, [indeterminate, ref]);
 
   return (
     <div className={cx("choice", error && "choice-invalid", className)}>
       <span className="choice-control">
         <input
           {...rest}
-          ref={ref}
+          ref={attach}
           id={id}
           type="checkbox"
           className="choice-input"
@@ -73,4 +77,5 @@ export default function Checkbox({
       </label>
     </div>
   );
-}
+});
+export default Checkbox;

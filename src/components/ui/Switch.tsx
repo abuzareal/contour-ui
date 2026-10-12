@@ -1,7 +1,7 @@
 "use client";
 
 /** On/off switch (role="switch") with a pill track that fills acid when on. */
-import { useId } from "react";
+import { forwardRef, useId } from "react";
 
 export type SwitchProps = {
   label: string;
@@ -11,18 +11,16 @@ export type SwitchProps = {
   disabled?: boolean;
 };
 
-export default function Switch({
-  label,
-  checked,
-  onChange,
-  description,
-  disabled,
-}: SwitchProps) {
+const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
+  { label, checked, onChange, description, disabled }: SwitchProps,
+  ref,
+) {
   const id = useId();
 
   return (
     <div className="switch">
       <button
+        ref={ref}
         id={id}
         type="button"
         role="switch"
@@ -44,4 +42,5 @@ export default function Switch({
       </label>
     </div>
   );
-}
+});
+export default Switch;

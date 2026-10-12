@@ -1,13 +1,16 @@
 "use client";
 
-/** Non-modal floating panel anchored to a trigger; closes on Escape or an outside press. */
-import { useCallback, useId, useRef, type ReactNode } from "react";
+/** Nonmodal local panel; root and existing trigger/panel props preserve owned state wiring. */
+import { forwardRef, useCallback, useId, type ReactNode } from "react";
 import useOpenState from "../../hooks/useOpenState.js";
 import useDismiss from "../../hooks/useDismiss.js";
+import useControlRef from "../../hooks/useControlRef.js";
 import { cx } from "../../lib/classNames.js";
+import { composeEventHandlers } from "../../lib/composeEventHandlers.js";
+import type { NativePartProps } from "../../lib/componentProps.js";
 
-export type PopoverProps = {
-  /** Text for the trigger button. */
+export type PopoverProps = Omit<NativePartProps<"div">, "ref" | "title"> & {
+  /** Content inside the owned trigger button, not a replacement interactive element. */
   trigger: ReactNode;
   title: string;
   children: ReactNode;
@@ -15,27 +18,39 @@ export type PopoverProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  triggerProps?: NativePartProps<"button">;
+  panelProps?: NativePartProps<"div">;
 };
 
-export default function Popover({
-  trigger,
-  title,
-  children,
-  align = "start",
-  open: controlledOpen,
-  defaultOpen = false,
-  onOpenChange,
-}: PopoverProps) {
-  const panelId = useId();
+const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover(
+  {
+    trigger,
+    title,
+    children,
+    align = "start",
+    open: controlledOpen,
+    defaultOpen = false,
+    onOpenChange,
+    className,
+    triggerProps,
+    panelProps,
+    ...rest
+  },
+  forwardedRef,
+) {
+  const generatedPanelId = useId();
+  const panelId = panelProps?.id ?? generatedPanelId;
   const titleId = useId();
   const [open, setOpen] = useOpenState(
     controlledOpen,
     defaultOpen,
     onOpenChange,
   );
-  const container = useRef<HTMLDivElement>(null);
-  const button = useRef<HTMLButtonElement>(null);
-
+  const { ref: container, attach: attachContainer } =
+    useControlRef(forwardedRef);
+  const { ref: button, attach: attachButton } = useControlRef(
+    triggerProps?.ref ?? null,
+  );
   useDismiss(
     container,
     open,
@@ -44,27 +59,36 @@ export default function Popover({
         setOpen(false);
         if (reason === "escape") button.current?.focus();
       },
-      [setOpen],
+      [setOpen, button],
     ),
   );
 
   return (
-    <div ref={container} className={cx("popover", `popover-${align}`)}>
+    <div
+      {...rest}
+      ref={attachContainer}
+      className={cx("popover", `popover-${align}`, className)}
+    >
       <button
-        ref={button}
+        {...triggerProps}
+        ref={attachButton}
         type="button"
-        className="menu-trigger"
+        className={cx("menu-trigger", triggerProps?.className)}
+        aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen(!open)}
+        onClick={composeEventHandlers(triggerProps?.onClick, () => {
+          if (!triggerProps?.disabled) setOpen(!open);
+        })}
       >
         {trigger}
       </button>
       <div
+        {...panelProps}
         id={panelId}
         role="dialog"
-        aria-labelledby={titleId}
-        className="popover-panel"
+        aria-labelledby={cx(titleId, panelProps?.["aria-labelledby"])}
+        className={cx("popover-panel", panelProps?.className)}
         hidden={!open}
       >
         <strong id={titleId} className="popover-title">
@@ -74,4 +98,5 @@ export default function Popover({
       </div>
     </div>
   );
-}
+});
+export default Popover;

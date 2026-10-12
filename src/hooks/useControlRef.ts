@@ -11,9 +11,9 @@ export default function useControlRef<T extends HTMLElement>(
     const element = ref.current;
     if (!element)
       throw new Error(
-        "The field control must be mounted before exposing its ref.",
+        "The native target must be mounted before exposing its ref.",
       );
     return element;
-  });
+  }, []);
   return { ref, attach: ref };
 }

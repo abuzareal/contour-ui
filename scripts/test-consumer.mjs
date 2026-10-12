@@ -60,7 +60,7 @@ try {
     join(temporary, "main.tsx"),
     `import React, { useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button, ThemeToggle, TextField, useDismiss, useHeaderScroll, useMobileMenu, type ButtonProps } from '@abuzareal/contour-ui';
+import { Button, IconButton, DepthButton, ExternalLink, Checkbox, Slider, Switch, Dialog, Tabs, Popover, ThemeToggle, TextField, useDismiss, useHeaderScroll, useMobileMenu, type ButtonProps } from '@abuzareal/contour-ui';
 import '@abuzareal/contour-ui/reset.css';
 import '@abuzareal/contour-ui/fonts.css';
 import '@abuzareal/contour-ui/styles.css';
@@ -70,12 +70,44 @@ function RefConsumer() {
   useDismiss(container, false, () => {});
   useHeaderScroll(container);
   useMobileMenu(container, button);
-  return <div ref={container}><button ref={button}/></div>;
+  const input = useRef<HTMLInputElement>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const anchor = useRef<HTMLAnchorElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  return <div ref={container}>
+    <Button ref={button}>Action</Button><IconButton ref={button} label="Copy">Icon</IconButton>
+    <DepthButton ref={button}>Depth</DepthButton><ExternalLink ref={anchor} href="https://example.com">Link</ExternalLink>
+    <Checkbox ref={input} label="Accept"/><Slider ref={input} label="Amount" value={2} onChange={() => {}}/>
+    <Switch ref={button} label="Enabled" checked={false} onChange={() => {}}/><ThemeToggle ref={button} animate={false}/>
+    <Dialog ref={dialog} open={false} onClose={() => {}} title="Settings" className="host-dialog" bodyProps={{ ref: panel, 'data-body': 'settings' }}>Content</Dialog>
+    <Tabs ref={panel} label="Views" listProps={{ 'data-list': 'views' }} tabs={[{ id: 'one', label: 'One', content: 'Panel', buttonProps: { ref: button }, panelProps: { ref: panel } }]}/>
+    <Popover ref={panel} trigger="Help" title="Help" triggerProps={{ ref: button, 'data-trigger': 'help' }} panelProps={{ ref: panel }}>Content</Popover>
+  </div>;
 }
 const props: ButtonProps = { variant: 'accent', children: 'Forecast' };
 createRoot(document.getElementById('root')!).render(<main data-motion="off"><RefConsumer/><ThemeToggle animate={false}/><TextField label="City"/><Button {...props}/></main>);
 `,
   );
+  const compositionGuide = await readFile(
+    join(temporary, "node_modules/@abuzareal/contour-ui/COMPOSITION.md"),
+    "utf8",
+  );
+  const completeExamples = [
+    ...compositionGuide.matchAll(/```tsx\n([\s\S]*?)```/g),
+  ]
+    .map((match) => match[1])
+    .filter(
+      (source) =>
+        !source.startsWith("// Fragment:") &&
+        !source.includes('from "next/link"'),
+    );
+  assert.equal(
+    completeExamples.length,
+    3,
+    "complete core composition examples",
+  );
+  for (const [index, source] of completeExamples.entries())
+    await writeFile(join(temporary, `composition-${index}.tsx`), source);
   await writeFile(
     join(temporary, "tsconfig.json"),
     JSON.stringify({
@@ -89,7 +121,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         skipLibCheck: false,
         allowArbitraryExtensions: true,
       },
-      include: ["main.tsx"],
+      include: ["main.tsx", "composition-*.tsx"],
     }),
   );
   execFileSync(

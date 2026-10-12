@@ -54,6 +54,11 @@ try {
       code: "ENOENT",
     });
   await mkdir(join(temporary, "app", "next-page"), { recursive: true });
+  await mkdir(join(temporary, "public"), { recursive: true });
+  await writeFile(
+    join(temporary, "public", "favicon.svg"),
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg>',
+  );
   await writeFile(
     join(temporary, "next.config.mjs"),
     "export default { experimental: { cpus: 2 } };\n",
@@ -64,7 +69,7 @@ try {
 import '@abuzareal/contour-ui/fonts-latin.css';
 import { themeBootstrapScript } from '@abuzareal/contour-ui/theme-bootstrap';
 export default function Layout({ children }: { children: React.ReactNode }) {
- return <html lang="en" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }}/></head><body>{children}</body></html>;
+ return <html lang="en" suppressHydrationWarning><head><link rel="icon" href="/favicon.svg"/><script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }}/></head><body>{children}</body></html>;
 }`,
   );
   await writeFile(
@@ -82,12 +87,14 @@ export default function Page() { return <main><h1>Server route</h1><a href={safe
     `'use client';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { TextField, TextArea, Dialog, Button, ThemeToggle, ToastProvider, useToast, Tabs } from '@abuzareal/contour-ui';
+import { TextField, TextArea, Dialog, Button, ThemeToggle, ToastProvider, useToast, Tabs, buttonClassName } from '@abuzareal/contour-ui';
 function Content() {
  const [open, setOpen] = useState(false);
  const ref = useRef<HTMLInputElement>(null);
+ const action = useRef<HTMLButtonElement>(null);
+ const link = useRef<HTMLAnchorElement>(null);
  const toast = useToast();
- return <><ThemeToggle animate={false}/><form><TextField label="Name" ref={ref} defaultValue="abc" maxLength={20}/><TextArea label="Notes" defaultValue="abc" maxLength={20} autoResize/><button type="reset">Reset</button></form><Button onClick={() => ref.current?.focus()}>Focus name</Button><Button onClick={() => setOpen(true)}>Open dialog</Button><Dialog open={open} onClose={() => setOpen(false)} title="Settings"><Button onClick={() => setOpen(false)}>Done</Button></Dialog><Button onClick={() => toast.show({ title: 'Saved', message: 'Local fixture only' })}>Notify</Button><Tabs label="Views" tabs={[{ id: 'one', label: 'One', content: 'First panel' }, { id: 'two', label: 'Two', content: 'Second panel' }]}/><Link href="/next-page">Navigate</Link></>;
+ return <><ThemeToggle animate={false}/><Button ref={action}>Measured action</Button><Button onClick={() => action.current?.focus()}>Focus action</Button><Button onClick={() => link.current?.focus()}>Focus destination</Button><form><TextField label="Name" ref={ref} defaultValue="abc" maxLength={20}/><TextArea label="Notes" defaultValue="abc" maxLength={20} autoResize/><button type="reset">Reset</button></form><Button onClick={() => ref.current?.focus()}>Focus name</Button><Button onClick={() => setOpen(true)}>Open dialog</Button><Dialog open={open} onClose={() => setOpen(false)} title="Settings"><Button onClick={() => setOpen(false)}>Done</Button></Dialog><Button onClick={() => toast.show({ title: 'Saved', message: 'Local fixture only' })}>Notify</Button><Tabs label="Views" tabs={[{ id: 'one', label: 'One', content: 'First panel' }, { id: 'two', label: 'Two', content: 'Second panel' }]}/><Link ref={link} className={buttonClassName("secondary")} href="/next-page">Navigate</Link><Link href="/next-page" onNavigate={event => event.preventDefault()}>Canceled navigation</Link></>;
 }
 export default function Demo() { return <ToastProvider><Content/></ToastProvider>; }`,
   );
@@ -149,6 +156,7 @@ export default function ScenePage() { return <main><h1>Optional scene</h1><p>Sta
     server.stderr.on("data", read);
   });
   browser = await chromium.launch({
+    channel: "chromium",
     args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
   });
   const page = await browser.newPage({
@@ -156,11 +164,39 @@ export default function ScenePage() { return <main><h1>Optional scene</h1><p>Sta
     reducedMotion: "reduce",
   });
   const errors = [];
+  const failedResponses = [];
+  page.on("response", (response) => {
+    if (response.status() >= 400)
+      failedResponses.push(`${response.status()} ${response.url()}`);
+  });
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
   });
   await page.goto(origin);
+  await page.getByRole("button", { name: "Focus action", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Measured action", exact: true }),
+  ).toBeFocused();
+  await page
+    .getByRole("button", { name: "Focus destination", exact: true })
+    .click();
+  await expect(
+    page.getByRole("link", { name: "Navigate", exact: true }),
+  ).toBeFocused();
+  await page
+    .getByRole("link", { name: "Canceled navigation", exact: true })
+    .click();
+  assert.equal(new URL(page.url()).pathname, "/");
+  const popupPromise = page.context().waitForEvent("page");
+  await page
+    .getByRole("link", { name: "Navigate", exact: true })
+    .click({ button: "middle" });
+  const popup = await popupPromise;
+  await popup.waitForLoadState();
+  assert.equal(new URL(popup.url()).pathname, "/next-page");
+  assert.equal(new URL(page.url()).pathname, "/");
+  await popup.close();
   await page.getByRole("button", { name: "Focus name", exact: true }).click();
   assert.equal(
     await page
@@ -233,6 +269,7 @@ export default function ScenePage() { return <main><h1>Optional scene</h1><p>Sta
     await page.getByRole("heading", { name: "Server route" }).waitFor();
     assert.equal(await page.locator("canvas").count(), 0);
   }
+  assert.deepEqual(failedResponses, []);
   assert.deepEqual(errors, []);
   console.log(
     `Next ${nextVersion} / React ${reactVersion} passed: packed App Router build, server imports, native fields/reset, focus, dialog, toast, theme persistence and client navigation ${optional ? "with a separately lazy-loaded Three.js scene and navigation cleanup" : "without optional peers"}.`,

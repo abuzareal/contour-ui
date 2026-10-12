@@ -33,6 +33,11 @@ const React = (await import("react")).default;
 const { render, renderHook, fireEvent, cleanup, act } =
   await import("@testing-library/react");
 const {
+  Button,
+  IconButton,
+  DepthButton,
+  Slider,
+  Switch,
   Checkbox,
   useClipboardCopy,
   ThemeToggle,
@@ -627,4 +632,521 @@ test("clipboard discards feedback when the text changes during a pending write",
     await operation;
   });
   assert.equal(view.result.current.status, "idle");
+});
+
+test("single controls expose native object/callback refs and retain them through prop updates", () => {
+  const cases = [
+    [Button, { children: "Action", variant: "accent" }, "BUTTON"],
+    [IconButton, { label: "Action", children: "Icon" }, "BUTTON"],
+    [DepthButton, { children: "Action" }, "BUTTON"],
+    [ExternalLink, { href: "https://example.com", children: "Visit" }, "A"],
+    [ThemeToggle, { animate: false }, "BUTTON"],
+    [Checkbox, { label: "Accept", indeterminate: true }, "INPUT"],
+    [Slider, { label: "Amount", value: 20, onChange() {} }, "INPUT"],
+    [Switch, { label: "Enabled", checked: false, onChange() {} }, "BUTTON"],
+    [TextField, { label: "Name" }, "INPUT"],
+    [TextArea, { label: "Notes" }, "TEXTAREA"],
+    [SelectField, { label: "Plan", options: [] }, "SELECT"],
+  ];
+  for (const [Component, props, tag] of cases) {
+    const ref = React.createRef();
+    const view = render(React.createElement(Component, { ...props, ref }));
+    assert.equal(ref.current?.tagName, tag);
+    ref.current.focus();
+    assert.equal(document.activeElement, ref.current);
+    if (Component === Checkbox) assert.equal(ref.current.indeterminate, true);
+    view.unmount();
+    assert.equal(ref.current, null);
+    const calls = [];
+    const callback = (node) => {
+      calls.push(node);
+    };
+    const callbackView = render(
+      React.createElement(Component, { ...props, ref: callback }),
+    );
+    const node = calls[0];
+    assert.equal(node.tagName, tag);
+    callbackView.rerender(
+      React.createElement(Component, {
+        ...props,
+        ref: callback,
+        title: "Updated",
+      }),
+    );
+    assert.deepEqual(calls, [node]);
+    callbackView.unmount();
+    assert.deepEqual(calls, [node, null]);
+  }
+});
+
+test(
+  "React 19 cleanup-returning refs work alongside internal control and part refs",
+  { skip: Number.parseInt(React.version, 10) < 19 },
+  () => {
+    for (const Component of [
+      Button,
+      Checkbox,
+      TextField,
+      Dialog,
+      Popover,
+      Tabs,
+    ]) {
+      let attached = 0,
+        cleaned = 0;
+      const ref = () => {
+        attached++;
+        return () => {
+          cleaned++;
+        };
+      };
+      const props =
+        Component === Dialog
+          ? { open: false, onClose() {}, title: "Dialog" }
+          : Component === Popover
+            ? { trigger: "Open", title: "Panel", triggerProps: { ref } }
+            : Component === Tabs
+              ? {
+                  label: "Views",
+                  tabs: [
+                    {
+                      id: "one",
+                      label: "One",
+                      content: "Panel",
+                      buttonProps: { ref },
+                    },
+                  ],
+                }
+              : Component === Button
+                ? { children: "Action" }
+                : { label: "Name" };
+      const view = render(React.createElement(Component, { ...props, ref }));
+      assert.ok(attached >= 1);
+      view.unmount();
+      assert.equal(cleaned, attached);
+    }
+  },
+);
+
+test("Button/IconButton preserve native props, default type, loading and required labels", () => {
+  let clicks = 0;
+  const ref = React.createRef();
+  const view = render(
+    React.createElement(
+      Button,
+      {
+        ref,
+        name: "intent",
+        value: "save",
+        loading: true,
+        variant: "danger",
+        size: "lg",
+        className: "host-action",
+        "data-action": "save",
+        onClick() {
+          clicks++;
+        },
+      },
+      "Save",
+    ),
+  );
+  assert.equal(ref.current.type, "button");
+  assert.equal(ref.current.disabled, true);
+  assert.equal(ref.current.getAttribute("aria-busy"), "true");
+  assert.match(ref.current.className, /button-danger/);
+  assert.match(ref.current.className, /host-action/);
+  fireEvent.click(ref.current);
+  assert.equal(clicks, 0);
+  view.rerender(
+    React.createElement(
+      Button,
+      {
+        ref,
+        type: "submit",
+        onClick() {
+          clicks++;
+        },
+      },
+      "Save",
+    ),
+  );
+  assert.equal(ref.current.type, "submit");
+  fireEvent.click(ref.current);
+  assert.equal(clicks, 1);
+  view.unmount();
+  const icon = render(
+    React.createElement(
+      IconButton,
+      {
+        ref,
+        label: "Copy",
+        "data-copy": "ready",
+        title: "Copy now",
+        size: "sm",
+      },
+      "Icon",
+    ),
+  );
+  assert.equal(ref.current.getAttribute("aria-label"), "Copy");
+  assert.equal(ref.current.title, "Copy now");
+  assert.equal(ref.current.getAttribute("data-copy"), "ready");
+  assert.match(ref.current.className, /icon-button-sm/);
+  icon.unmount();
+});
+
+test("Dialog root and owned parts accept customization without dropping semantic wiring", () => {
+  const root = React.createRef(),
+    body = React.createRef(),
+    panel = React.createRef(),
+    close = React.createRef();
+  const view = render(
+    React.createElement(
+      Dialog,
+      {
+        ref: root,
+        open: true,
+        onClose() {},
+        title: "Settings",
+        description: "Edit preferences",
+        id: "settings",
+        className: "host-dialog",
+        style: { maxWidth: 700 },
+        "data-owner": "account",
+        "aria-describedby": "external-help",
+        panelProps: { ref: panel, className: "host-panel" },
+        bodyProps: { ref: body, id: "settings-body", "data-part": "body" },
+        closeButtonProps: { ref: close, "aria-label": "Close settings" },
+      },
+      "Content",
+    ),
+  );
+  assert.equal(root.current.tagName, "DIALOG");
+  assert.equal(root.current.id, "settings");
+  assert.equal(root.current.getAttribute("data-owner"), "account");
+  assert.match(root.current.className, /dialog-center.*host-dialog/);
+  assert.equal(root.current.style.maxWidth, "700px");
+  assert.equal(view.getByRole("dialog", { name: "Settings" }), root.current);
+  const description = view.getByText("Edit preferences");
+  assert.ok(
+    root.current.getAttribute("aria-describedby").includes(description.id),
+  );
+  assert.ok(
+    root.current.getAttribute("aria-describedby").includes("external-help"),
+  );
+  assert.equal(panel.current.className, "dialog-panel host-panel");
+  assert.equal(body.current.id, "settings-body");
+  assert.equal(close.current.type, "button");
+  assert.equal(close.current.getAttribute("aria-label"), "Close settings");
+  view.unmount();
+  assert.equal(root.current, null);
+  assert.equal(body.current, null);
+  assert.equal(close.current, null);
+});
+
+test("Dialog caller cancellation vetoes dismissal but keeps native cancel controlled", () => {
+  let closes = 0,
+    clicks = 0;
+  const props = {
+    open: true,
+    onClose() {
+      closes++;
+    },
+    title: "Settings",
+  };
+  const view = render(
+    React.createElement(
+      Dialog,
+      {
+        ...props,
+        onCancel(event) {
+          event.preventDefault();
+        },
+        onClick(event) {
+          clicks++;
+          event.preventDefault();
+        },
+        closeButtonProps: {
+          onClick(event) {
+            event.preventDefault();
+          },
+        },
+      },
+      "Content",
+    ),
+  );
+  const dialog = view.getByRole("dialog");
+  const cancel = new Event("cancel", { bubbles: false, cancelable: true });
+  fireEvent(dialog, cancel);
+  assert.equal(cancel.defaultPrevented, true);
+  fireEvent.click(dialog);
+  fireEvent.click(view.getByRole("button", { name: "Close dialog" }));
+  assert.equal(closes, 0);
+  assert.ok(clicks >= 1);
+  view.rerender(React.createElement(Dialog, props, "Content"));
+  fireEvent(dialog, new Event("cancel", { cancelable: true }));
+  assert.equal(closes, 1);
+});
+
+test("Tabs root/list/item parts preserve controlled selection, keyboard behavior, IDs and refs", () => {
+  const root = React.createRef(),
+    list = React.createRef(),
+    button = React.createRef(),
+    panel = React.createRef();
+  const changes = [];
+  const tabs = [
+    {
+      id: "one",
+      label: "One",
+      content: "First",
+      buttonProps: { id: "one-tab", ref: button, className: "host-tab" },
+      panelProps: { id: "one-panel", ref: panel, "data-result": "one" },
+    },
+    {
+      id: "two",
+      label: "Two",
+      content: "Second",
+      buttonProps: {
+        onClick(event) {
+          event.preventDefault();
+        },
+        onKeyDown(event) {
+          event.preventDefault();
+        },
+      },
+    },
+  ];
+  const props = {
+    ref: root,
+    id: "views",
+    className: "host-tabs",
+    "data-owner": "account",
+    label: "Views",
+    tabs,
+    listProps: { ref: list, className: "host-list", style: { padding: 2 } },
+    activeTabId: "one",
+    onTabChange: (id) => changes.push(id),
+  };
+  const view = render(React.createElement(Tabs, props));
+  assert.equal(root.current.id, "views");
+  assert.equal(root.current.className, "tabs host-tabs");
+  assert.equal(list.current.getAttribute("role"), "tablist");
+  assert.equal(button.current.id, "one-tab");
+  assert.equal(button.current.getAttribute("aria-controls"), "one-panel");
+  assert.equal(panel.current.getAttribute("aria-labelledby"), "one-tab");
+  fireEvent.click(view.getByRole("tab", { name: "Two" }));
+  assert.deepEqual(changes, []);
+  fireEvent.keyDown(view.getByRole("tab", { name: "Two" }), {
+    key: "ArrowLeft",
+  });
+  assert.deepEqual(changes, []);
+  fireEvent.keyDown(button.current, { key: "ArrowRight" });
+  assert.deepEqual(changes, ["two"]);
+  assert.equal(view.getByRole("tabpanel").textContent, "First");
+  const identity = button.current;
+  view.rerender(
+    React.createElement(Tabs, {
+      ...props,
+      tabs: [...tabs].reverse(),
+      activeTabId: "two",
+    }),
+  );
+  assert.equal(button.current, identity);
+  assert.equal(view.getByRole("tabpanel").textContent, "Second");
+  view.unmount();
+  assert.equal(root.current, null);
+  assert.equal(list.current, null);
+  assert.equal(button.current, null);
+  assert.equal(panel.current, null);
+});
+
+test("Popover owned root/trigger/panel refs and caller handlers compose with controlled state", () => {
+  const root = React.createRef(),
+    trigger = React.createRef(),
+    panel = React.createRef();
+  const changes = [];
+  const props = {
+    ref: root,
+    trigger: "Help",
+    title: "Help details",
+    open: false,
+    onOpenChange: (value) => changes.push(value),
+    id: "help",
+    "data-context": "settings",
+    className: "host-popover",
+    panelProps: {
+      ref: panel,
+      id: "help-panel",
+      className: "host-panel",
+      "aria-describedby": "hint",
+    },
+    triggerProps: {
+      ref: trigger,
+      id: "help-trigger",
+      className: "host-trigger",
+      onClick(event) {
+        event.preventDefault();
+      },
+    },
+  };
+  const view = render(React.createElement(Popover, props, "Details"));
+  assert.equal(root.current.id, "help");
+  assert.equal(root.current.className, "popover popover-start host-popover");
+  assert.equal(trigger.current.getAttribute("aria-controls"), "help-panel");
+  assert.equal(panel.current.hidden, true);
+  fireEvent.click(trigger.current);
+  assert.deepEqual(changes, []);
+  view.rerender(
+    React.createElement(
+      Popover,
+      { ...props, triggerProps: { ref: trigger, disabled: true } },
+      "Details",
+    ),
+  );
+  fireEvent.click(trigger.current);
+  assert.deepEqual(changes, []);
+  view.rerender(
+    React.createElement(
+      Popover,
+      { ...props, triggerProps: { ref: trigger } },
+      "Details",
+    ),
+  );
+  fireEvent.click(trigger.current);
+  assert.deepEqual(changes, [true]);
+  assert.equal(panel.current.hidden, true);
+  view.rerender(
+    React.createElement(
+      Popover,
+      { ...props, open: true, triggerProps: { ref: trigger } },
+      "Details",
+    ),
+  );
+  fireEvent.keyDown(document, { key: "Escape" });
+  assert.deepEqual(changes, [true, false]);
+  assert.equal(document.activeElement, trigger.current);
+  view.unmount();
+  assert.equal(root.current, null);
+  assert.equal(trigger.current, null);
+  assert.equal(panel.current, null);
+});
+
+test("an external trigger adapter can clone a Button, focus/measure it and release its ref", () => {
+  const nodes = [];
+  function Adapter({ children }) {
+    const ref = React.useRef(null);
+    React.useEffect(() => {
+      ref.current.focus();
+      assert.equal(
+        Number.isFinite(ref.current.getBoundingClientRect().width),
+        true,
+      );
+    }, []);
+    return React.cloneElement(children, {
+      ref: (node) => {
+        ref.current = node;
+        nodes.push(node);
+      },
+      "data-trigger": "external",
+    });
+  }
+  const view = render(
+    React.createElement(
+      Adapter,
+      null,
+      React.createElement(Button, null, "Open"),
+    ),
+  );
+  assert.equal(
+    document.activeElement,
+    view.getByRole("button", { name: "Open" }),
+  );
+  assert.equal(nodes[0].getAttribute("data-trigger"), "external");
+  view.unmount();
+  assert.equal(nodes.at(-1), null);
+});
+
+test("menu stable IDs retain native item identity through duplicate labels and reordering", () => {
+  const chosen = [];
+  const items = [
+    { id: "a", label: "Same", onSelect: () => chosen.push("a") },
+    { id: "b", label: "Same", onSelect: () => chosen.push("b") },
+  ];
+  const view = render(
+    React.createElement(DropdownMenu, {
+      label: "Actions",
+      defaultOpen: true,
+      items,
+    }),
+  );
+  const [first, second] = view.getAllByRole("menuitem");
+  first.focus();
+  view.rerender(
+    React.createElement(DropdownMenu, {
+      label: "Actions",
+      defaultOpen: true,
+      items: [...items].reverse(),
+    }),
+  );
+  assert.equal(view.getAllByRole("menuitem")[1], first);
+  assert.equal(document.activeElement, first);
+  fireEvent.keyDown(first, { key: "ArrowDown" });
+  assert.equal(document.activeElement, second);
+  fireEvent.click(second);
+  assert.deepEqual(chosen, ["b"]);
+  assert.equal(
+    document.activeElement,
+    view.getByRole("button", { name: "Actions" }),
+  );
+});
+
+test("part customization cannot overwrite owned roles, selected/hidden state or ARIA relationships", () => {
+  const tabs = render(
+    React.createElement(Tabs, {
+      label: "Views",
+      tabs: [
+        {
+          id: "one",
+          label: "One",
+          content: "First",
+          buttonProps: {
+            role: "button",
+            "aria-selected": false,
+            "aria-controls": "wrong",
+            tabIndex: -1,
+          },
+        },
+        {
+          id: "two",
+          label: "Two",
+          content: "Second",
+          panelProps: { hidden: false, role: "region" },
+        },
+      ],
+    }),
+  );
+  const selected = tabs.getByRole("tab", { name: "One" });
+  assert.equal(selected.getAttribute("aria-selected"), "true");
+  assert.equal(selected.tabIndex, 0);
+  assert.equal(
+    selected.getAttribute("aria-controls"),
+    tabs.getByRole("tabpanel").id,
+  );
+  assert.equal(tabs.getByText("Second").hidden, true);
+  tabs.unmount();
+  const popup = render(
+    React.createElement(
+      Popover,
+      {
+        trigger: "Help",
+        title: "Help",
+        triggerProps: { "aria-expanded": true, "aria-controls": "wrong" },
+        panelProps: { id: "actual-panel", role: "region", hidden: false },
+      },
+      "Details",
+    ),
+  );
+  const trigger = popup.getByRole("button", { name: "Help" });
+  assert.equal(trigger.getAttribute("aria-expanded"), "false");
+  assert.equal(trigger.getAttribute("aria-controls"), "actual-panel");
+  assert.equal(popup.getByText("Details").hidden, true);
+  assert.equal(popup.getByText("Details").getAttribute("role"), "dialog");
 });

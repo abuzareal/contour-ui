@@ -6,6 +6,23 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.3.0
+
+Native refs and focused composition APIs for existing components. This heading records source work, not npm publication.
+
+- Button/IconButton/DepthButton/ThemeToggle, ExternalLink, Checkbox, Slider and Switch forward their native targets on React 18/19. Existing native field refs remain; callback refs stay stable across ordinary prop updates and support React 19 cleanup.
+- Dialog, Tabs and Popover accept native root props and typed props/refs for existing parts. Custom IDs preserve relationships; internal state/ARIA/classes remain intact. Caller handlers can prevent default selection/toggle/dismissal, while native dialog cancel remains prop-controlled.
+- Tabs retain ID-based focus/refs on reorder and remeasure the underline when root/list customization changes. Existing controlled/default state, menu disabled items/typeahead/stable IDs and focus return remain supported.
+- Publish native anchor and pinned Next Link recipes, preserving ordinary/canceled/middle-click navigation without nesting interactive elements or adding Button polymorphism. No runtime dependency or CSS/theme/form contract change is introduced.
+
+Existing JSX calls remain valid. Render components through React; newly ref-enabled exports are forwardRef components rather than plain callable functions. Named Switch/Slider/RadioGroup submission, overlay positioning/nesting corrections and CSS isolation remain separate work. See [COMPOSITION.md](COMPOSITION.md).
+
+```sh
+npm install @abuzareal/contour-ui@0.3.0 --save-exact
+```
+
+Use that command after registry availability is verified; update the exact pin/lockfile and validate your app.
+
 ## 0.2.1
 
 A baseline contract release with compatible Checkbox ARIA and clipboard lifecycle fixes. Export names, prop types, visual defaults, dependencies and optional peer boundaries are unchanged from 0.2.0.
