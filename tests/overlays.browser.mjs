@@ -44,7 +44,7 @@ function App(){
  <DropdownMenu label="Actions" renderTrigger={props=><Button {...props}/>} items={[{id:'a',label:'Alpha',onSelect(){}},{id:'b',label:'Beta',onSelect(){}}]}/><Button id="outside">Outside focus</Button>
  <Button onClick={()=>setModal(true)}>Open modal</Button>
  <Dialog open={modal} onClose={()=>setModal(false)} title="Native modal" initialFocus={modalInitial}>
-  <TextField ref={modalInitial} label="Modal initial"/>
+  <TextField ref={modalInitial} label="Modal initial"/><Popover defaultOpen trigger="Auto modal trigger" title="Auto modal panel"><Button>Automatic panel action</Button></Popover>
   <Popover trigger="Modal popover" title="Modal child"><TextField label="Modal field"/><DropdownMenu label="Modal actions" items={[{label:'Modal item',onSelect(){}}]}/></Popover>
  </Dialog>
  {!removed&&<div className="edge"><Popover trigger="Edge trigger" title="Long content" align="end"><div style={{height:1400}}>Long text</div><Button onClick={()=>setRemoved(true)}>Unmount layer</Button></Popover></div>}
@@ -298,6 +298,18 @@ function App(){
         await expect(
           page.getByRole("textbox", { name: "Modal initial" }),
         ).toBeFocused();
+        const automatic = page.getByRole("dialog", {
+          name: "Auto modal panel",
+          exact: true,
+        });
+        await expect(automatic).toBeVisible();
+        assert.equal(
+          await automatic.evaluate((e) => !!e.closest("dialog[open]")),
+          true,
+          "default-open floating content enters the native modal top layer on the same commit",
+        );
+        await page.keyboard.press("Escape");
+        await expect(automatic).toBeHidden();
         await page.getByRole("button", { name: "Modal popover" }).click();
         const modalChild = page.getByRole("dialog", {
           name: "Modal child",

@@ -48,3 +48,5 @@ Tooltip content is a noninteractive string. Hover and keyboard focus cooperate; 
 Production checks cover nested/sibling/portaled layers, native modal portals, touch outside press, RTL, narrow/resized viewports, long scrolling panels and CSS zoom. These are automated browser checks, not physical mobile-keyboard or assistive-technology certification. See [W3C hover/focus guidance](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR39) and [Floating UI observer lifecycle](https://floating-ui.com/docs/autoupdate).
 
 Keep a portal container stable while open. Changing its DOM target can remount the portaled subtree; keep unsaved child state in the owner when container changes are required.
+
+Default-open children choose an enclosing native dialog even before its open attribute is set. When Dialog calls showModal in the same commit, these children enter its top layer without an additional click or render.

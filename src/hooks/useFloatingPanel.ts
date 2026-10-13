@@ -23,7 +23,9 @@ export function floatingContainer(
   anchor: HTMLElement,
   options: FloatingOptions,
 ) {
-  const modal = anchor.closest<HTMLElement>("dialog[open]");
+  // Select the enclosing native dialog before showModal runs: default-open children
+  // render in the same commit, while its open attribute is still absent.
+  const modal = anchor.closest<HTMLElement>("dialog");
   if (
     options.container &&
     options.container.ownerDocument === anchor.ownerDocument &&
