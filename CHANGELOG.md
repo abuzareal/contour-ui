@@ -6,6 +6,17 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.4.0
+
+Native forms and tested application recipes. This heading records source work, not npm publication.
+
+- Switch supports name/form/value, defaultChecked and native required validation through a checkbox backing; checked submits, unchecked/disabled omit. The native ref remains a button and onChange remains boolean.
+- Slider supports native name/form/defaultValue, reset, input attributes and formatted native sanitized values; onChange remains numeric. RadioGroup supports caller name/form/defaultValue, required/disabled and per-option native input props/refs; onChange remains a string value.
+- Native reset and cancellation work with external owners. Controlled TextField/TextArea/SelectField/Checkbox DOM values now remain aligned with their parent state after native reset, including the select-first-option regression. Controlled values remain parent-owned; defaults for these controls are captured on mount. Checkbox accepts caller IDs and preserves descriptions/validity/indeterminate/ref behavior.
+- Ship version-qualified 0.3.0 manual submission guidance and copyable native/React Hook Form recipes. Tested field/service errors, real pending/success states, retry, duplicate-submit prevention, reset/cancel/unmount and stale-result cleanup. RHF is example-only; no new runtime dependency, CSS/theme change or overlay rewrite.
+
+Existing controlled JSX calls remain compatible. Add names only when native submission is intended; unchecked Switch values are omitted rather than serialized as false. Use Controller for value callbacks; native registered fields retain native events. See [FORMS.md](FORMS.md) for copyable sources, reset/registration details and service responsibilities. Independent consumer updates require an exact version/lockfile change and validation.
+
 ## 0.3.0
 
 Native refs and focused composition APIs for existing components. This heading records source work, not npm publication.

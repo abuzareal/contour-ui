@@ -52,6 +52,8 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     };
     useLayoutEffect(fitContent);
     useFormReset(ref, () => {
+      if (ref.current && rest.value !== undefined)
+        ref.current.value = String(rest.value);
       setLength(ref.current?.value.length ?? 0);
       fitContent();
     });

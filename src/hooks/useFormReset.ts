@@ -4,7 +4,11 @@ import { useEffect, useLayoutEffect, useRef, type RefObject } from "react";
 
 /** Native reset fires before the browser restores default values. */
 export default function useFormReset<
-  T extends HTMLInputElement | HTMLTextAreaElement,
+  T extends
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLFieldSetElement,
 >(ref: RefObject<T | null>, sync: () => void) {
   const synchronize = useRef(sync);
   useLayoutEffect(() => {

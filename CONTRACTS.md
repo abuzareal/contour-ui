@@ -1,6 +1,6 @@
 # Architecture, scope and compatibility
 
-Contract version **0.3.0**, reviewed 12 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
+Contract version **0.4.0**, reviewed 13 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
 
 ## Intended adoption scope
 
@@ -37,7 +37,7 @@ React is the UI runtime. Strict TypeScript/TSX source compiles through `tsc` int
 | Optional peers           | three: `^0.186.1`; lenis: `^1.3.26`                                                                    | Core works without either. Install explicitly for the matching optional entry.                                             |
 | Development dependencies | TypeScript, Vite, Oxlint, Testing Library, jsdom, Playwright, React/types and optional peer dev copies | Source authoring/tests/build; not downstream Contour production dependencies.                                              |
 
-Use explicit public paths; deep imports into dist internals are unsupported. CSS is marked as side-effectful to retain imported styles. The archive contains built modules/declarations/assets and release documents, with no consumer install scripts or private research.
+Use explicit public paths; deep imports into dist internals are unsupported. CSS is marked as side-effectful to retain imported styles. The archive contains built modules/declarations/assets and release documents, plus copyable form recipe sources, with no consumer install scripts or private research. React Hook Form is an example/application dependency, not a runtime dependency.
 
 Archive bytes, installed dependency bytes, browser JS/CSS, emitted fonts and actual requested/cached network assets are different measurements. An installed icon collection is not proof all icons download. JavaScript tree shaking does not remove unused aggregate CSS rules automatically. Size claims require version, fixture, tool versions, compression and exclusions; independent component gzip samples cannot be added as an application total.
 
@@ -71,7 +71,7 @@ Respect system reduced motion and app pause. CSS depth is core; WebGL is separat
 Preserve native input/select/details/dialog behavior where appropriate. Future replacements require a written rationale and equivalent labels/descriptions, submission/disabled omission, validation/reset timing, keyboard/focus, modal scroll locking and cleanup, with relevant component/browser checks.
 
 - Actions, ExternalLink, native fields/choices, Dialog and the documented Tabs/Popover parts forward their native targets on React 18/19. Multi-control/presentation wrappers do not imply a singular input ref; see [the composition contract](COMPOSITION.md).
-- Checkbox retains its generated ID and internal indeterminate behavior alongside the forwarded input ref; caller ARIA validity and descriptions remain composed. Switch/Slider/RadioGroup lack caller-named form contracts; serialize state deliberately.
+- Checkbox accepts caller IDs while retaining a generated fallback and internal indeterminate behavior alongside the forwarded input ref; caller ARIA validity and descriptions remain composed. Switch/Slider/RadioGroup support named/external form submission and controlled/default/reset behavior; see [the form guide](FORMS.md). Switch refs remain buttons and its checkbox backing submits only while checked; a range has no required constraint.
 - Popover/DropdownMenu use local absolute panels without portal/collision/submenu/custom-trigger contracts. Independent document listeners close both nested Popovers on one Escape: a reproduced defect.
 - Tooltip closes on pointer leave and CSS prevents content hover: a source finding/accessibility risk requiring correction and pointer/focus verification, not a formal conformance audit. Hints must be supplemental and noninteractive.
 - Dialog/Tabs/Popover expose typed root and owned-part props/refs; state and ARIA wiring stay protected and caller cancellation composes with internal behavior. Arbitrary trigger replacement, portals/collision and general polymorphism remain outside this API.

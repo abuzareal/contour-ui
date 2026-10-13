@@ -4,11 +4,12 @@
 import { forwardRef, useEffect, useId, type InputHTMLAttributes } from "react";
 import { Check, Minus } from "lucide-react";
 import useControlRef from "../../hooks/useControlRef.js";
+import useFormReset from "../../hooks/useFormReset.js";
 import { cx } from "../../lib/classNames.js";
 
 export type CheckboxProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  "type" | "id"
+  "type"
 > & {
   label: string;
   description?: string;
@@ -23,16 +24,23 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
     error,
     indeterminate = false,
     className,
+    id: providedId,
     ...rest
   }: CheckboxProps,
   forwardedRef,
 ) {
-  const id = useId();
+  const generatedId = useId();
+  const id = providedId ?? generatedId;
   const { ref, attach } = useControlRef(forwardedRef);
 
   useEffect(() => {
     if (ref.current) ref.current.indeterminate = indeterminate;
   }, [indeterminate, ref]);
+  useFormReset(ref, () => {
+    if (!ref.current) return;
+    if (rest.checked !== undefined) ref.current.checked = rest.checked;
+    ref.current.indeterminate = indeterminate;
+  });
 
   return (
     <div className={cx("choice", error && "choice-invalid", className)}>

@@ -5,6 +5,8 @@ import { forwardRef, useId, type SelectHTMLAttributes } from "react";
 import { ChevronDown } from "lucide-react";
 import { fieldDescribedBy } from "../../lib/a11y.js";
 import Field from "./Field.js";
+import useControlRef from "../../hooks/useControlRef.js";
+import useFormReset from "../../hooks/useFormReset.js";
 
 export type SelectFieldProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
@@ -13,6 +15,18 @@ export type SelectFieldProps = SelectHTMLAttributes<HTMLSelectElement> & {
   error?: string;
   placeholder?: string;
 };
+
+/** Native reset does not preserve React's controlled selection on its own. */
+function restoreSelection(
+  control: HTMLSelectElement,
+  value: string | number | readonly string[],
+) {
+  const values = new Set(
+    Array.isArray(value) ? value.map(String) : [String(value)],
+  );
+  for (const option of control.options)
+    option.selected = values.has(option.value);
+}
 
 const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   function SelectField(
@@ -26,10 +40,15 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
       placeholder,
       ...rest
     },
-    ref,
+    forwardedRef,
   ) {
     const generatedId = useId();
     const id = providedId ?? generatedId;
+    const { ref, attach } = useControlRef(forwardedRef);
+    useFormReset(ref, () => {
+      if (!ref.current || rest.value === undefined) return;
+      restoreSelection(ref.current, rest.value);
+    });
 
     return (
       <Field
@@ -43,7 +62,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
         <div className="field-control field-select">
           <select
             {...rest}
-            ref={ref}
+            ref={attach}
             id={id}
             aria-invalid={error ? true : rest["aria-invalid"]}
             aria-describedby={

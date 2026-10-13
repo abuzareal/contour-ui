@@ -27,6 +27,16 @@ try {
   }
 
   for (const version of ["18.3.1", "19.3.0"]) {
+    run(["scripts/test-form-recipes.mjs"], {
+      env: {
+        ...process.env,
+        CONTOUR_ARCHIVE: archive,
+        CONTOUR_REACT_VERSION: version,
+      },
+    });
+  }
+
+  for (const version of ["18.3.1", "19.3.0"]) {
     run(["scripts/test-optional-consumer.mjs"], {
       env: {
         ...process.env,
