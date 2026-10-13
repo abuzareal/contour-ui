@@ -1,5 +1,7 @@
+"use client";
+
 /** Pill button in four emphasis levels and three sizes, with loading and icon slots. */
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import {
   buttonClassName,
   type ButtonSize,
@@ -16,20 +18,24 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
 };
 
-export default function Button({
-  variant,
-  size,
-  icon,
-  leadingIcon,
-  loading = false,
-  disabled,
-  className,
-  children,
-  type = "button",
-  ...rest
-}: ButtonProps) {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    variant,
+    size,
+    icon,
+    leadingIcon,
+    loading = false,
+    disabled,
+    className,
+    children,
+    type = "button",
+    ...rest
+  }: ButtonProps,
+  ref,
+) {
   return (
     <button
+      ref={ref}
       {...rest}
       type={type}
       className={buttonClassName(variant, size, className)}
@@ -41,4 +47,5 @@ export default function Button({
       {icon && <span className="button-icon">{icon}</span>}
     </button>
   );
-}
+});
+export default Button;

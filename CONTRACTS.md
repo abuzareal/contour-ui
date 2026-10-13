@@ -1,6 +1,6 @@
 # Architecture, scope and compatibility
 
-Contract version **0.2.1**, reviewed 12 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
+Contract version **0.3.0**, reviewed 12 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
 
 ## Intended adoption scope
 
@@ -16,10 +16,10 @@ No promise of enterprise completeness, universal embedding, all locales/RTL, eve
 
 ## Package and application ownership
 
-| Area | Owner |
-| --- | --- |
-| Reusable controls, semantic tokens, shared theme/motion/browser lifecycle, public APIs and package releases | contour-ui |
-| Catalogue shell/chapters, executable documentation/source display, discovery, examples and site delivery | Design-System |
+| Area                                                                                                          | Owner            |
+| ------------------------------------------------------------------------------------------------------------- | ---------------- |
+| Reusable controls, semantic tokens, shared theme/motion/browser lifecycle, public APIs and package releases   | contour-ui       |
+| Catalogue shell/chapters, executable documentation/source display, discovery, examples and site delivery      | Design-System    |
 | Product layouts/routes, domain data/calculations, workflows, requests, validation and product-specific scenes | Each application |
 
 Repositories remain independent. Contour source is public and MIT licensed; catalogue source is currently private while hosted documentation is public. The catalogue's `private: true` prevents npm publication; it is separate from GitHub visibility. Visibility, history/assets/licensing review and CI runner policy are separate decisions.
@@ -30,12 +30,12 @@ Catalogue UI/hook/scene compatibility modules intentionally forward public packa
 
 React is the UI runtime. Strict TypeScript/TSX source compiles through `tsc` into ES2022 ESM modules and declarations. The build copies CSS and selected licensed Latin font assets. It does not bundle React or compile the library into a Vite app. Vite serves development/consumer fixtures; Design-System is the Vite application. Consumers can write JavaScript or TypeScript.
 
-| Category | Current packages | Consumer consequence |
-| --- | --- | --- |
-| Runtime dependencies | lucide-react; @fontsource-variable/dm-sans; @fontsource-variable/space-grotesk; @fontsource/dm-mono | Install with Contour. Selected imports determine browser output. Font CSS is optional; font installation currently is not. |
-| Required peers | react/react-dom: `^18.3.1 || ^19.0.0` | App supplies a matching pair; allowed range is broader than individually tested versions. |
-| Optional peers | three: `^0.186.1`; lenis: `^1.3.26` | Core works without either. Install explicitly for the matching optional entry. |
-| Development dependencies | TypeScript, Vite, Oxlint, Testing Library, jsdom, Playwright, React/types and optional peer dev copies | Source authoring/tests/build; not downstream Contour production dependencies. |
+| Category                 | Current packages                                                                                       | Consumer consequence                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| Runtime dependencies     | lucide-react; @fontsource-variable/dm-sans; @fontsource-variable/space-grotesk; @fontsource/dm-mono    | Install with Contour. Selected imports determine browser output. Font CSS is optional; font installation currently is not. |
+| Required peers           | react/react-dom: React 18 (`^18.3.1`) or React 19 (`^19.0.0`)                                          | App supplies a matching pair; allowed range is broader than individually tested versions.                                  |
+| Optional peers           | three: `^0.186.1`; lenis: `^1.3.26`                                                                    | Core works without either. Install explicitly for the matching optional entry.                                             |
+| Development dependencies | TypeScript, Vite, Oxlint, Testing Library, jsdom, Playwright, React/types and optional peer dev copies | Source authoring/tests/build; not downstream Contour production dependencies.                                              |
 
 Use explicit public paths; deep imports into dist internals are unsupported. CSS is marked as side-effectful to retain imported styles. The archive contains built modules/declarations/assets and release documents, with no consumer install scripts or private research.
 
@@ -43,16 +43,16 @@ Archive bytes, installed dependency bytes, browser JS/CSS, emitted fonts and act
 
 ## Environment and validation policy
 
-| Environment | Declared or exercised scope | Limits |
-| --- | --- | --- |
-| React/ReactDOM | Peer range above; packed matrix exercises 18.3.1, 19.0.0 and 19.3.0 | Matching pairs required. Other allowed patches are not individually certified. |
-| TypeScript | Strict source/fixtures; pinned optional/Next fixtures use 5.9.3; React 18 and 19 declarations compiled | No universal older/newer compiler support claim; JS users need no compiler at runtime. |
-| Node | Manifest >=22 for installation/tooling; use 22.12+ or 24+ with current Vite tooling | Browser components do not need Node in the browser. Actual runner versions are recorded per check. |
-| ESM/CSS-capable bundler | Packed Vite consumers exercise imports/declarations/CSS/fonts with no optional peers | No CommonJS build or unbundled-browser CSS loader promised. |
-| Next.js | Next 16.4.0 / React and ReactDOM 19.3.0, App Router, webpack production build | [NEXTJS.md](NEXTJS.md); other versions, Turbopack, Pages Router and Next Lenis remain unverified. |
-| Optional Three | Separate consumers and lazy Next mode; explicit Three/types, WebGL, sized host and static fallback | Experimental API; sampled lifecycle checks do not validate every custom scene/GPU/device. |
-| Optional scroll | Separate declaration/build consumer with Lenis and one scroll owner | Caller handles pause/reduced motion; generic Next Lenis integration unverified. |
-| Browsers | Playwright Chromium exercises selected native-dialog/reset/graphics/hydration/catalogue journeys | Emulation is not a physical device. Chromium/axe is not Firefox/WebKit/Safari or manual VoiceOver/NVDA verification. |
+| Environment             | Declared or exercised scope                                                                            | Limits                                                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| React/ReactDOM          | Peer range above; packed matrix exercises 18.3.1, 19.0.0 and 19.3.0                                    | Matching pairs required. Other allowed patches are not individually certified.                                       |
+| TypeScript              | Strict source/fixtures; pinned optional/Next fixtures use 5.9.3; React 18 and 19 declarations compiled | No universal older/newer compiler support claim; JS users need no compiler at runtime.                               |
+| Node                    | Manifest >=22 for installation/tooling; use 22.12+ or 24+ with current Vite tooling                    | Browser components do not need Node in the browser. Actual runner versions are recorded per check.                   |
+| ESM/CSS-capable bundler | Packed Vite consumers exercise imports/declarations/CSS/fonts with no optional peers                   | No CommonJS build or unbundled-browser CSS loader promised.                                                          |
+| Next.js                 | Next 16.4.0 / React and ReactDOM 19.3.0, App Router, webpack production build                          | [NEXTJS.md](NEXTJS.md); other versions, Turbopack, Pages Router and Next Lenis remain unverified.                    |
+| Optional Three          | Separate consumers and lazy Next mode; explicit Three/types, WebGL, sized host and static fallback     | Experimental API; sampled lifecycle checks do not validate every custom scene/GPU/device.                            |
+| Optional scroll         | Separate declaration/build consumer with Lenis and one scroll owner                                    | Caller handles pause/reduced motion; generic Next Lenis integration unverified.                                      |
+| Browsers                | Playwright Chromium exercises selected native-dialog/reset/graphics/hydration/catalogue journeys       | Emulation is not a physical device. Chromium/axe is not Firefox/WebKit/Safari or manual VoiceOver/NVDA verification. |
 
 Release gates use one exact archive: types/lint/build, Node/component tests, native-dialog/graphics browser checks, exports/archive inspection, React matrix, optional consumers, pinned Next core/lazy-Three modes and dependency audit. Catalogue has separate required checks/affected journeys. Record checksum, actual environments and passed/failed/skipped/blocked results. Historical results are dated evidence, not a fresh pass; see [RELEASING.md](RELEASING.md).
 
@@ -70,11 +70,11 @@ Respect system reduced motion and app pause. CSS depth is core; WebGL is separat
 
 Preserve native input/select/details/dialog behavior where appropriate. Future replacements require a written rationale and equivalent labels/descriptions, submission/disabled omission, validation/reset timing, keyboard/focus, modal scroll locking and cleanup, with relevant component/browser checks.
 
-- TextField/TextArea/SelectField forward native refs; Button/IconButton do not on React 18. Ref/native-prop support varies; inspect declarations.
-- Checkbox owns its ID/ref; 0.2.1 preserves caller ARIA validity and composes external descriptions with its own description/error. Switch/Slider/RadioGroup lack caller-named form contracts; serialize state deliberately.
+- Actions, ExternalLink, native fields/choices, Dialog and the documented Tabs/Popover parts forward their native targets on React 18/19. Multi-control/presentation wrappers do not imply a singular input ref; see [the composition contract](COMPOSITION.md).
+- Checkbox retains its generated ID and internal indeterminate behavior alongside the forwarded input ref; caller ARIA validity and descriptions remain composed. Switch/Slider/RadioGroup lack caller-named form contracts; serialize state deliberately.
 - Popover/DropdownMenu use local absolute panels without portal/collision/submenu/custom-trigger contracts. Independent document listeners close both nested Popovers on one Escape: a reproduced defect.
 - Tooltip closes on pointer leave and CSS prevents content hover: a source finding/accessibility risk requiring correction and pointer/focus verification, not a formal conformance audit. Hints must be supplemental and noninteractive.
-- Dialog/Tabs/Popover have closed customization props. Do not invent root refs, slots or arbitrary attributes absent from declarations.
+- Dialog/Tabs/Popover expose typed root and owned-part props/refs; state and ARIA wiring stay protected and caller cancellation composes with internal behavior. Arbitrary trigger replacement, portals/collision and general polymorphism remain outside this API.
 - Disclosure is native details with defaultOpen and required className, not controlled open/onOpenChange. Controlled open state belongs to Popover/DropdownMenu.
 - BrandMark/editorial section/heading helpers and selected navigation/print hooks retain inherited page assumptions. They remain supported legacy APIs, not universal product primitives.
 

@@ -6,16 +6,11 @@ import * as ui from "../dist/index.js";
 
 test("public entry imports on the server without browser globals", () => {
   assert.equal(typeof window, "undefined");
-  for (const name of [
-    "Button",
-    "Dialog",
-    "ThemeToggle",
-    "ToastProvider",
-    "useTheme",
-  ]) {
+  for (const name of ["ToastProvider", "useTheme"]) {
     assert.equal(typeof ui[name], "function", name);
   }
-  assert.equal(ui.TextField.$$typeof, Symbol.for("react.forward_ref"));
+  for (const name of ["Button", "Dialog", "ThemeToggle", "TextField"])
+    assert.equal(ui[name].$$typeof, Symbol.for("react.forward_ref"), name);
   assert.equal(ui.Sculpture, undefined);
   assert.equal(ui.useSmoothScroll, undefined);
 });

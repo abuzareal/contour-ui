@@ -1,6 +1,6 @@
 # Next.js App Router integration
 
-This guide describes **Contour 0.2.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
+This guide describes **Contour 0.3.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
 
 In `app/layout.tsx`, load CSS once:
 
@@ -49,3 +49,5 @@ export default function SearchForm() {
 Provide real submission behavior in the application. Toast consumers need ToastProvider; dialogs need application-owned open/onClose. Keep function props inside client boundaries. A server component can pass serializable props to a package client component or import pure `safeHref`; a client directive does not remove normal server prerendering.
 
 Run `npm run test:next` to rebuild and consume the candidate archive. The fixture checks server imports/prerendering, hydration, CSS/fonts, refs, native resets, dialog dismissal/focus, toast, tabs, theme persistence and client navigation without Three.js/Lenis installed. Run `CONTOUR_NEXT_OPTIONAL=1 node scripts/test-next.mjs` for the separate lazy `/three` route; ordinary consumers still require neither optional peer. Compatibility evidence applies to the fixture's exact pair and local runtime, not deployment.
+
+The 0.3.0 fixture also verifies Button native-ref focus and styled Next Link ordinary/canceled/middle-click navigation. Use [the composition guide](COMPOSITION.md#native-and-router-links) for the Link recipe; Button remains an action rather than a polymorphic navigation component.

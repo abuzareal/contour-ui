@@ -1,18 +1,28 @@
+"use client";
+
 /** Physical, layered button that presses down into its base (CSS 3D depth). */
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { cx } from "../../lib/classNames.js";
 
 export type DepthButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
 };
 
-export default function DepthButton({
-  children,
-  type = "button",
-  ...rest
-}: DepthButtonProps) {
-  return (
-    <button {...rest} type={type} className="depth-button">
-      <span className="depth-button-face">{children}</span>
-    </button>
-  );
-}
+const DepthButton = forwardRef<HTMLButtonElement, DepthButtonProps>(
+  function DepthButton(
+    { children, className, type = "button", ...rest }: DepthButtonProps,
+    ref,
+  ) {
+    return (
+      <button
+        ref={ref}
+        {...rest}
+        type={type}
+        className={cx("depth-button", className)}
+      >
+        <span className="depth-button-face">{children}</span>
+      </button>
+    );
+  },
+);
+export default DepthButton;

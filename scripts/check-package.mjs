@@ -34,7 +34,7 @@ const archive = Array.isArray(result) ? result[0] : Object.values(result)[0];
 for (const { path } of archive.files) {
   assert.match(
     path,
-    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$)/,
+    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$|COMPOSITION\.md$)/,
   );
   assert.doesNotMatch(
     path,
@@ -59,6 +59,7 @@ for (const name of [
   "NEXTJS.md",
   "CONTRACTS.md",
   "PUBLIC-API.md",
+  "COMPOSITION.md",
 ]) {
   assert.ok(
     archive.files.some((file) => file.path === name),
@@ -66,6 +67,13 @@ for (const name of [
   );
 }
 for (const file of [
+  "components/ui/Button.js",
+  "components/ui/IconButton.js",
+  "components/ui/DepthButton.js",
+  "components/ui/ExternalLink.js",
+  "components/ui/Checkbox.js",
+  "components/ui/Slider.js",
+  "components/ui/Switch.js",
   "components/ui/TextField.js",
   "components/ui/TextArea.js",
   "components/ui/SelectField.js",
