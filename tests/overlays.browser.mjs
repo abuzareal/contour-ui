@@ -218,8 +218,39 @@ function App(){
         await expect(
           page.getByRole("button", { name: "Nested trigger" }),
         ).toBeFocused();
+        // Programmatic scroll must not hover an unrelated tooltip under the old pointer.
+        // A tooltip is itself a dismissal layer; the outside-press assertion targets the popover.
+        await page.mouse.move(0, 0);
+        await page
+          .getByRole("button", { name: "Outside focus" })
+          .scrollIntoViewIfNeeded();
         await page.getByRole("button", { name: "Outside focus" }).click();
-        await expect(parent).toBeHidden();
+        await expect(parent)
+          .toBeHidden()
+          .catch(async (error) => {
+            console.error(
+              "Visible layer diagnostics",
+              await page
+                .locator(
+                  ".contour-popover-panel,.contour-tooltip,.contour-menu-list",
+                )
+                .evaluateAll((nodes) =>
+                  nodes
+                    .filter(
+                      (e) =>
+                        getComputedStyle(e).visibility !== "hidden" &&
+                        !e.hidden,
+                    )
+                    .map((e) => ({
+                      className: e.className,
+                      content: e.textContent?.slice(0, 120),
+                      zIndex: getComputedStyle(e).zIndex,
+                      bounds: e.getBoundingClientRect().toJSON(),
+                    })),
+                ),
+            );
+            throw error;
+          });
         await expect(page.locator("#outside")).toBeFocused();
         await page
           .getByRole("button", { name: "Sibling second", exact: true })
