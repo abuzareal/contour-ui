@@ -127,3 +127,10 @@ export * from "./lib/motion.js";
 export type { Section } from "./types.js";
 export { default as SceneBoundary } from "./components/hero/SceneBoundary.js";
 export { safeHref } from "./lib/safeHref.js";
+
+export { default as ThemeScope } from "./components/ui/ThemeScope.js";
+export type * from "./components/ui/ThemeScope.js";
+
+export type { FloatingOptions } from "./hooks/useFloatingPanel.js";
+export type { PanelFocusOptions } from "./hooks/usePanelFocus.js";
+export type { DismissReason } from "./lib/layers.js";

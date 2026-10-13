@@ -260,3 +260,7 @@
     min-width: 14px;
   }
 }
+
+:dir(rtl) .pagination-step svg {
+  transform: scaleX(-1);
+}

@@ -8,7 +8,7 @@ import {
   useState,
   type FieldsetHTMLAttributes,
 } from "react";
-import { cx } from "../../lib/classNames.js";
+import { cx, ccx } from "../../lib/classNames.js";
 import type { NativePartProps } from "../../lib/componentProps.js";
 import useFormReset from "../../hooks/useFormReset.js";
 
@@ -99,19 +99,19 @@ export default function RadioGroup<Value extends string>({
       disabled={disabled}
       aria-invalid={error ? true : rest["aria-invalid"]}
       aria-describedby={context}
-      className={cx("radio-group", inline && "radio-group-inline", className)}
+      className={ccx("radio-group", inline && "radio-group-inline", className)}
     >
-      <legend className="field-label mono">{legend}</legend>
+      <legend className={ccx("field-label mono")}>{legend}</legend>
       {description && (
-        <span id={`${id}-description`} className="choice-description">
+        <span id={`${id}-description`} className={ccx("choice-description")}>
           {description}
         </span>
       )}
       {options.map((option) => {
         const optionId = option.inputProps?.id ?? `${id}-${option.value}`;
         return (
-          <div key={option.value} className="choice choice-radio">
-            <span className="choice-control">
+          <div key={option.value} className={ccx("choice choice-radio")}>
+            <span className={ccx("choice-control")}>
               <input
                 {...option.inputProps}
                 id={optionId}
@@ -127,7 +127,7 @@ export default function RadioGroup<Value extends string>({
                 }
                 required={required}
                 disabled={disabled || option.disabled}
-                className={cx("choice-input", option.inputProps?.className)}
+                className={ccx("choice-input", option.inputProps?.className)}
                 aria-invalid={
                   error
                     ? true
@@ -146,14 +146,14 @@ export default function RadioGroup<Value extends string>({
                   onChange?.(option.value);
                 }}
               />
-              <span className="choice-box" aria-hidden="true" />
+              <span className={ccx("choice-box")} aria-hidden="true" />
             </span>
-            <label htmlFor={optionId} className="choice-text">
-              <span className="choice-label">{option.label}</span>
+            <label htmlFor={optionId} className={ccx("choice-text")}>
+              <span className={ccx("choice-label")}>{option.label}</span>
               {option.description && (
                 <span
                   id={`${optionId}-description`}
-                  className="choice-description"
+                  className={ccx("choice-description")}
                 >
                   {option.description}
                 </span>
@@ -163,7 +163,7 @@ export default function RadioGroup<Value extends string>({
         );
       })}
       {error && (
-        <span id={`${id}-error`} className="choice-error mono">
+        <span id={`${id}-error`} className={ccx("choice-error mono")}>
           {error}
         </span>
       )}

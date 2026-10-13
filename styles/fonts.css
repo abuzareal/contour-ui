@@ -1,3 +1,11 @@
 @import "@fontsource-variable/dm-sans/wght.css";
 @import "@fontsource-variable/space-grotesk/wght.css";
 @import "@fontsource/dm-mono/400.css";
+
+/* Explicit branded typography for isolated components; import after scoped styles. */
+:where(:root) {
+  --contour-font-sans: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
+  --contour-font-display:
+    "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
+  --contour-font-mono: "DM Mono", ui-monospace, monospace;
+}

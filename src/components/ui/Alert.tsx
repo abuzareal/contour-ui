@@ -10,7 +10,7 @@ import {
   TriangleAlert,
   X,
 } from "lucide-react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type AlertTone =
   "neutral" | "accent" | "success" | "info" | "warning" | "danger";
@@ -29,6 +29,7 @@ export type AlertProps = {
   title: string;
   children?: ReactNode;
   action?: ReactNode;
+  dismissLabel?: string;
   onDismiss?: () => void;
   /** "banner" spans its container edge to edge on one line. */
   layout?: "inline" | "banner";
@@ -40,27 +41,28 @@ export default function Alert({
   children,
   action,
   onDismiss,
+  dismissLabel = "Dismiss",
   layout = "inline",
 }: AlertProps) {
   const urgent = tone === "warning" || tone === "danger";
   return (
     <div
       role={urgent ? "alert" : "status"}
-      className={cx("alert", `alert-${tone}`, `alert-${layout}`)}
+      className={ccx("alert", `alert-${tone}`, `alert-${layout}`)}
     >
-      <span className="alert-icon" aria-hidden="true">
+      <span className={ccx("alert-icon")} aria-hidden="true">
         {toneIcons[tone]}
       </span>
-      <div className="alert-content">
-        <strong className="alert-title">{title}</strong>
-        {children && <div className="alert-body">{children}</div>}
+      <div className={ccx("alert-content")}>
+        <strong className={ccx("alert-title")}>{title}</strong>
+        {children && <div className={ccx("alert-body")}>{children}</div>}
       </div>
-      {action && <div className="alert-action">{action}</div>}
+      {action && <div className={ccx("alert-action")}>{action}</div>}
       {onDismiss && (
         <button
           type="button"
-          className="alert-dismiss"
-          aria-label="Dismiss"
+          className={ccx("alert-dismiss")}
+          aria-label={dismissLabel}
           onClick={onDismiss}
         >
           <X size={16} />

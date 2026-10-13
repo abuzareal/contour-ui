@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Page navigation with previous/next controls and a condensed list of two-digit page numbers. */
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { formatIndex } from "../../lib/format.js";
@@ -9,6 +11,10 @@ export type PaginationProps = {
   pageCount: number;
   onChange: (page: number) => void;
   label?: string;
+  previousLabel?: string;
+  nextLabel?: string;
+  pageLabel?: (page: number) => string;
+  formatPage?: (page: number) => string;
 };
 
 /** First, last, and the current page's neighbours; gaps become ellipses. */
@@ -27,25 +33,29 @@ export default function Pagination({
   pageCount,
   onChange,
   label = "Pagination",
+  previousLabel = "Previous page",
+  nextLabel = "Next page",
+  pageLabel = (value) => `Page ${value}`,
+  formatPage = formatIndex,
 }: PaginationProps) {
   return (
-    <nav aria-label={label} className="pagination">
+    <nav aria-label={label} className={ccx("pagination")}>
       <button
         type="button"
-        className="pagination-step"
-        aria-label="Previous page"
+        className={ccx("pagination-step")}
+        aria-label={previousLabel}
         disabled={page === 1}
         onClick={() => onChange(page - 1)}
       >
         <ArrowLeft size={16} />
       </button>
-      <ol className="mono">
+      <ol className={ccx("mono")}>
         {visiblePages(page, pageCount).map((item, index) =>
           item === "gap" ? (
             <li
               key={`gap-${index}`}
               aria-hidden="true"
-              className="pagination-gap"
+              className={ccx("pagination-gap")}
             >
               …
             </li>
@@ -53,12 +63,12 @@ export default function Pagination({
             <li key={item}>
               <button
                 type="button"
-                className="pagination-page"
-                aria-label={`Page ${item}`}
+                className={ccx("pagination-page")}
+                aria-label={pageLabel(Number(item))}
                 aria-current={item === page ? "page" : undefined}
                 onClick={() => onChange(Number(item))}
               >
-                {formatIndex(Number(item))}
+                {formatPage(Number(item))}
               </button>
             </li>
           ),
@@ -66,8 +76,8 @@ export default function Pagination({
       </ol>
       <button
         type="button"
-        className="pagination-step"
-        aria-label="Next page"
+        className={ccx("pagination-step")}
+        aria-label={nextLabel}
         disabled={page === pageCount}
         onClick={() => onChange(page + 1)}
       >

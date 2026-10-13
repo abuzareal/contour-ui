@@ -1,0 +1,370 @@
+/* Kit — forms: underlined fields, checkboxes, radios, switches, and sliders. */
+
+.contour-field-control input, .contour-field-control select, .contour-field-control textarea {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+.contour-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.contour-field-label {
+  color: var(--contour-muted);
+  text-transform: uppercase;
+}
+
+.contour-field-required {
+  margin-inline-start: 4px;
+  color: var(--contour-olive);
+}
+
+.contour-field-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--contour-line-strong);
+  transition:
+    border-color var(--contour-duration-fast),
+    box-shadow var(--contour-duration-fast);
+}
+
+.contour-field-control:hover {
+  border-color: var(--contour-muted);
+}
+
+.contour-field-control:focus-within {
+  border-color: var(--contour-fg);
+  box-shadow: inset 0 -1px 0 var(--contour-fg);
+}
+
+.contour-field-control:has(:focus-visible) {
+  outline: 2px solid var(--contour-fg);
+  outline-offset: 3px;
+}
+
+.contour-field-control input,
+.contour-field-control select,
+.contour-field-control textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+}
+
+.contour-field-control textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.contour-field-control textarea[data-auto-resize] {
+  resize: none;
+  overflow: hidden;
+}
+
+.contour-field-control ::placeholder {
+  color: var(--contour-muted);
+  opacity: 0.8;
+}
+
+.contour-field-icon,
+.contour-field-trailing {
+  display: inline-flex;
+  align-items: center;
+  color: var(--contour-muted);
+}
+
+.contour-field-select select {
+  appearance: none;
+  padding-inline-end: 24px;
+  cursor: pointer;
+}
+
+.contour-field-select select option {
+  background: var(--contour-surface);
+  color: var(--contour-fg);
+}
+
+.contour-field-chevron {
+  margin-inline-start: -28px;
+  pointer-events: none;
+  color: var(--contour-muted);
+}
+
+.contour-field-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--contour-muted);
+}
+
+.contour-field-counter {
+  margin-inline-start: auto;
+}
+
+.contour-field-invalid .contour-field-control {
+  border-color: var(--contour-danger);
+  box-shadow: inset 0 -1px 0 var(--contour-danger);
+}
+
+.contour-field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--contour-danger);
+}
+
+.contour-field-disabled {
+  opacity: 0.5;
+}
+
+.contour-field-disabled .contour-field-control {
+  border-bottom-style: dashed;
+}
+
+/* Choice: checkbox and radio share the control, label, and description layout. */
+.contour-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contour-choice-control {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.contour-choice-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.contour-choice-box {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--contour-line-strong);
+  color: transparent;
+  pointer-events: none;
+  transition:
+    background var(--contour-duration-fast),
+    border-color var(--contour-duration-fast),
+    color var(--contour-duration-fast);
+}
+
+.contour-choice-input:hover + .contour-choice-box {
+  border-color: var(--contour-fg);
+}
+
+.contour-choice-input:checked + .contour-choice-box,
+.contour-choice-input:indeterminate + .contour-choice-box {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-choice-input:focus-visible + .contour-choice-box {
+  outline: 2px solid var(--contour-fg);
+  outline-offset: 3px;
+}
+
+.contour-choice-input:disabled,
+.contour-choice-input:disabled + .contour-choice-box {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.contour-choice-text {
+  display: grid;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.contour-choice-label {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contour-choice-description {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--contour-muted);
+}
+
+.contour-choice-error {
+  color: var(--contour-danger);
+}
+
+.contour-choice-invalid .contour-choice-box {
+  border-color: var(--contour-danger);
+}
+
+.contour-choice-radio .contour-choice-box {
+  border-radius: 50%;
+}
+
+.contour-choice-radio .contour-choice-input:checked + .contour-choice-box {
+  background: transparent;
+  border-color: var(--contour-fg);
+  box-shadow: inset 0 0 0 5px var(--contour-acid);
+}
+
+.contour-radio-group {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.contour-radio-group legend {
+  margin-bottom: 14px;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .contour-radio-group-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 32px;
+  }
+
+  .contour-radio-group-inline legend {
+    width: 100%;
+  }
+}
+
+.contour-switch {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.contour-switch-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border: 1px solid var(--contour-line-strong);
+  border-radius: var(--contour-radius-pill);
+  transition:
+    background var(--contour-duration-base) var(--contour-ease),
+    border-color var(--contour-duration-base);
+}
+
+.contour-switch-thumb {
+  position: absolute;
+  top: 3px;
+  inset-inline-start: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--contour-fg);
+  transition: transform var(--contour-duration-base) var(--contour-ease);
+}
+
+.contour-switch-track[aria-checked="true"] {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+}
+
+.contour-switch-track[aria-checked="true"] .contour-switch-thumb {
+  background: var(--contour-ink);
+  inset-inline-start: 23px;
+}
+
+.contour-switch-track:disabled {
+  opacity: 0.45;
+}
+
+.contour-slider {
+  display: grid;
+  gap: 12px;
+}
+
+.contour-slider-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contour-slider output {
+  color: var(--contour-fg);
+}
+
+.contour-slider input[type="range"] {
+  width: 100%;
+  height: 22px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.contour-slider input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--contour-fg) var(--contour-progress, var(--progress)),
+    var(--contour-line-strong) var(--contour-progress, var(--progress))
+  );
+}
+
+.contour-slider input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--contour-fg) var(--contour-progress, var(--progress)),
+    var(--contour-line-strong) var(--contour-progress, var(--progress))
+  );
+}
+
+.contour-slider input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -9px;
+  border: 2px solid var(--contour-fg);
+  border-radius: 50%;
+  background: var(--contour-acid);
+  transition: transform var(--contour-duration-fast);
+}
+
+.contour-slider input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--contour-fg);
+  border-radius: 50%;
+  background: var(--contour-acid);
+}
+
+.contour-slider input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+.contour-slider input[type="range"]:focus-visible {
+  outline: 2px solid var(--contour-fg);
+  outline-offset: 6px;
+}
+
+:dir(rtl) .contour-slider input[type="range"]::-webkit-slider-runnable-track,
+:dir(rtl) .contour-slider input[type="range"]::-moz-range-track {
+  background: linear-gradient(
+    to left,
+    var(--contour-fg) var(--contour-progress, var(--progress)),
+    var(--contour-line-strong) var(--contour-progress, var(--progress))
+  );
+}

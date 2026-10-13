@@ -3,7 +3,7 @@
 /** Two-sided card that flips in 3D; a button toggles it so the back is reachable without hover. */
 import { useState, version, type HTMLAttributes, type ReactNode } from "react";
 import { RefreshCw } from "lucide-react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type FlipCardProps = {
   front: ReactNode;
@@ -20,17 +20,17 @@ export default function FlipCard({ front, back, label }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <div className="flip-stage">
-      <div className={cx("flip-card", flipped && "is-flipped")}>
+    <div className={ccx("flip-stage")}>
+      <div className={ccx("flip-card", flipped && "is-flipped")}>
         <div
-          className="flip-face flip-front"
+          className={ccx("flip-face flip-front")}
           aria-hidden={flipped}
           {...(flipped ? inertAttributes : {})}
         >
           {front}
         </div>
         <div
-          className="flip-face flip-back"
+          className={ccx("flip-face flip-back")}
           aria-hidden={!flipped}
           {...(!flipped ? inertAttributes : {})}
         >
@@ -39,7 +39,7 @@ export default function FlipCard({ front, back, label }: FlipCardProps) {
       </div>
       <button
         type="button"
-        className="flip-toggle mono"
+        className={ccx("flip-toggle mono")}
         aria-pressed={flipped}
         onClick={() => setFlipped((value) => !value)}
       >

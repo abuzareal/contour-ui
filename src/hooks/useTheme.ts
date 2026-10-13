@@ -1,7 +1,13 @@
 "use client";
 
 /** Light/dark theme state: persisted choice, system fallback, and the animated switch. */
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+} from "react";
+import { ThemeScopeContext } from "../lib/themeScope.js";
 import { flushSync } from "react-dom";
 import { readStorage, storageKeys, writeStorage } from "../lib/storage.js";
 import { themeColors } from "../lib/themeBootstrap.js";
@@ -82,13 +88,19 @@ function subscribe(onChange: () => void) {
 }
 
 export default function useTheme(animate = true) {
+  const scope = useContext(ThemeScopeContext);
+  const scopedSubscribe = useCallback(
+    (listener: () => void) => (scope ? () => {} : subscribe(listener)),
+    [scope],
+  );
   const theme = useSyncExternalStore(
-    subscribe,
+    scopedSubscribe,
     readTheme,
     () => "light" as Theme,
   );
 
   useEffect(() => {
+    if (scope) return;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const followSystem = () => {
       if (readStorage("local", storageKeys.theme) !== null) return;
@@ -97,10 +109,14 @@ export default function useTheme(animate = true) {
     };
     media.addEventListener("change", followSystem);
     return () => media.removeEventListener("change", followSystem);
-  }, []);
+  }, [scope]);
 
   const toggle = useCallback(
     (origin: HTMLElement) => {
+      if (scope) {
+        scope.onThemeChange?.(scope.theme === "dark" ? "light" : "dark");
+        return;
+      }
       const next: Theme = readTheme() === "dark" ? "light" : "dark";
       writeStorage("local", storageKeys.theme, next);
       const commit = () => {
@@ -122,8 +138,12 @@ export default function useTheme(animate = true) {
       }
       animateReveal(document.startViewTransition(commit), origin);
     },
-    [animate],
+    [animate, scope],
   );
 
-  return { theme, toggle };
+  return {
+    theme: scope?.theme ?? theme,
+    toggle,
+    canToggle: scope ? !!scope.onThemeChange : true,
+  };
 }

@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useId, type InputHTMLAttributes } from "react";
 import { Check, Minus } from "lucide-react";
 import useControlRef from "../../hooks/useControlRef.js";
 import useFormReset from "../../hooks/useFormReset.js";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type CheckboxProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -43,14 +43,14 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
   });
 
   return (
-    <div className={cx("choice", error && "choice-invalid", className)}>
-      <span className="choice-control">
+    <div className={ccx("choice", error && "choice-invalid", className)}>
+      <span className={ccx("choice-control")}>
         <input
           {...rest}
           ref={attach}
           id={id}
           type="checkbox"
-          className="choice-input"
+          className={ccx("choice-input")}
           aria-invalid={error ? true : rest["aria-invalid"]}
           aria-describedby={
             [
@@ -62,7 +62,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
               .join(" ") || undefined
           }
         />
-        <span className="choice-box" aria-hidden="true">
+        <span className={ccx("choice-box")} aria-hidden="true">
           {indeterminate ? (
             <Minus size={13} strokeWidth={3} />
           ) : (
@@ -70,15 +70,15 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
           )}
         </span>
       </span>
-      <label htmlFor={id} className="choice-text">
-        <span className="choice-label">{label}</span>
+      <label htmlFor={id} className={ccx("choice-text")}>
+        <span className={ccx("choice-label")}>{label}</span>
         {description && (
-          <span id={`${id}-description`} className="choice-description">
+          <span id={`${id}-description`} className={ccx("choice-description")}>
             {description}
           </span>
         )}
         {error && (
-          <span id={`${id}-error`} className="choice-error mono">
+          <span id={`${id}-error`} className={ccx("choice-error mono")}>
             {error}
           </span>
         )}

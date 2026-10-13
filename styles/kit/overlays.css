@@ -10,10 +10,12 @@
   z-index: 40;
   width: max-content;
   max-width: 220px;
+  overflow: auto;
+  overflow-wrap: anywhere;
   padding: 6px 10px;
-  background: var(--ink);
-  color: var(--paper);
-  pointer-events: none;
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+  pointer-events: auto;
   opacity: 0;
   visibility: hidden;
   transition:
@@ -230,7 +232,9 @@
   position: absolute;
   top: calc(100% + 8px);
   z-index: 30;
-  min-width: 220px;
+  min-width: min(220px, calc(100vw - 16px));
+  overflow: auto;
+  overflow-wrap: anywhere;
   padding: 6px;
   border: 1px solid var(--line);
   background: var(--surface);

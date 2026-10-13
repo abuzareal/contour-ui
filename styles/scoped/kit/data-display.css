@@ -1,0 +1,492 @@
+/* Kit — data display: badges, tags, avatars, keys, stats, cards, tables, timelines, dividers, marquee, empty states. */
+
+.contour-badge {
+  --contour-badge-bg: var(--contour-acid);
+  --contour-badge-fg: #374014;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  background: var(--contour-badge-bg);
+  color: var(--contour-badge-fg);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.contour-badge-neutral {
+  --contour-badge-bg: color-mix(in srgb, var(--contour-fg) 8%, transparent);
+  --contour-badge-fg: var(--contour-fg);
+}
+
+.contour-badge-invert {
+  --contour-badge-bg: var(--contour-invert-bg);
+  --contour-badge-fg: var(--contour-invert-fg);
+}
+
+.contour-badge-success {
+  --contour-badge-bg: var(--contour-success-soft);
+  --contour-badge-fg: var(--contour-success);
+}
+
+.contour-badge-info {
+  --contour-badge-bg: var(--contour-info-soft);
+  --contour-badge-fg: var(--contour-info);
+}
+
+.contour-badge-warning {
+  --contour-badge-bg: var(--contour-warning-soft);
+  --contour-badge-fg: var(--contour-warning);
+}
+
+.contour-badge-danger {
+  --contour-badge-bg: var(--contour-danger-soft);
+  --contour-badge-fg: var(--contour-danger);
+}
+
+.contour-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.contour-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--contour-fg);
+}
+
+.contour-tag::before {
+  content: "+";
+  color: var(--contour-olive);
+}
+
+.contour-tag-removable {
+  padding: 3px 4px 3px 10px;
+  border: 1px solid var(--contour-line-strong);
+  border-radius: var(--contour-radius-pill);
+}
+
+.contour-tag-remove {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: var(--contour-muted);
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast);
+}
+
+.contour-tag-remove:hover {
+  background: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-avatar {
+  --contour-avatar-size: 44px;
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  width: var(--contour-avatar-size);
+  height: var(--contour-avatar-size);
+}
+
+.contour-avatar img,
+.contour-avatar-initials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.contour-avatar img {
+  object-fit: cover;
+  object-position: center 20%;
+  background: var(--contour-surface-sunken);
+}
+
+.contour-avatar-initials {
+  display: grid;
+  place-items: center;
+  background: var(--contour-invert-bg);
+  color: var(--contour-inverse-mark);
+  font: 600 calc(var(--contour-avatar-size) * 0.38) / 1 var(--contour-font-display);
+}
+
+.contour-avatar-sm {
+  --contour-avatar-size: 32px;
+}
+
+.contour-avatar-lg {
+  --contour-avatar-size: 64px;
+}
+
+.contour-avatar-xl {
+  --contour-avatar-size: 96px;
+}
+
+.contour-avatar-status {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  width: 26%;
+  height: 26%;
+  min-width: 8px;
+  min-height: 8px;
+  border: 2px solid var(--contour-bg);
+  border-radius: 50%;
+}
+
+.contour-avatar-status-online {
+  background: var(--contour-signal);
+}
+
+.contour-avatar-status-away {
+  background: var(--contour-warning);
+}
+
+/* Overlapping stack; each avatar is ringed in the page colour. */
+.contour-avatar-group {
+  display: flex;
+}
+
+.contour-avatar-group > .contour-avatar {
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--contour-bg);
+}
+
+.contour-avatar-group > .contour-avatar + .contour-avatar {
+  margin-inline-start: -10px;
+}
+
+.contour-kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding-inline: 7px;
+  border: 1px solid var(--contour-line-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--contour-radius-sm);
+  font: 12px / 1 var(--contour-font-mono);
+  color: var(--contour-fg);
+}
+
+.contour-stat {
+  display: grid;
+  gap: 8px;
+}
+
+.contour-stat strong {
+  font: 500 56px / 1 var(--contour-font-display);
+}
+
+.contour-stat-suffix {
+  color: var(--contour-olive);
+  font-size: 32px;
+}
+
+.contour-stat .contour-mono {
+  color: var(--contour-muted);
+}
+
+.contour-card {
+  --contour-card-bg: var(--contour-surface);
+  --contour-card-fg: var(--contour-fg);
+  --contour-card-muted: var(--contour-muted);
+  --contour-card-line: var(--contour-line);
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid var(--contour-card-line);
+  background: var(--contour-card-bg);
+  color: var(--contour-card-fg);
+  transition:
+    transform var(--contour-duration-slow) var(--contour-ease),
+    box-shadow var(--contour-duration-slow) var(--contour-ease);
+}
+
+.contour-card-ink {
+  --contour-card-bg: var(--contour-ink);
+  --contour-card-fg: var(--contour-paper);
+  --contour-card-muted: #b5baad;
+  --contour-card-line: #353733;
+}
+
+.contour-card-acid {
+  --contour-card-bg: var(--contour-acid);
+  --contour-card-fg: var(--contour-ink);
+  --contour-card-muted: #3b451f;
+  --contour-card-line: #a8c537;
+}
+
+.contour-card-interactive:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--contour-shadow-raised);
+}
+
+.contour-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: var(--contour-card-muted);
+  text-transform: uppercase;
+}
+
+.contour-card-icon {
+  display: inline-flex;
+  color: var(--contour-card-fg);
+}
+
+.contour-card-title {
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.contour-card-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--contour-card-muted);
+}
+
+.contour-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--contour-card-line);
+}
+
+.contour-table-scroll {
+  overflow-x: auto;
+  border-top: 1px solid var(--contour-fg);
+}
+
+.contour-table-scroll:focus-visible {
+  outline: 2px solid var(--contour-fg);
+  outline-offset: 4px;
+}
+
+.contour-data-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.contour-data-table th {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--contour-line);
+  text-align: start;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--contour-muted);
+}
+
+.contour-data-table th button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  text-transform: inherit;
+}
+
+.contour-data-table-idle {
+  opacity: 0.3;
+}
+
+.contour-data-table td {
+  padding: 16px 16px 16px 0;
+  border-bottom: 1px solid var(--contour-line);
+}
+
+.contour-data-table [data-align="end"] {
+  padding-inline-end: 0;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.contour-data-table [data-align="end"] button {
+  flex-direction: row-reverse;
+}
+
+.contour-data-table tbody tr {
+  transition: background var(--contour-duration-fast);
+}
+
+.contour-data-table tbody tr:hover {
+  background: color-mix(in srgb, var(--contour-fg) 4%, transparent);
+}
+
+.contour-timeline {
+  display: grid;
+}
+
+.contour-timeline-entry {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 0 0 28px 30px;
+}
+
+/* Rail and marker drawn from the entry so they never drift from the text. */
+.contour-timeline-entry::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--contour-fg);
+  border-radius: 50%;
+  background: var(--contour-bg);
+}
+
+.contour-timeline-entry:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  bottom: 2px;
+  left: 5px;
+  width: 1px;
+  background: var(--contour-line-strong);
+}
+
+.contour-timeline-current::before {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--contour-acid) 30%, transparent);
+}
+
+.contour-timeline-date {
+  color: var(--contour-muted);
+}
+
+.contour-timeline-title {
+  font: 500 20px / 1.3 var(--contour-font-display);
+}
+
+.contour-timeline-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--contour-muted);
+}
+
+.contour-divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border-top: 1px solid var(--contour-line);
+}
+
+.contour-divider-labelled {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 0;
+  height: auto;
+  color: var(--contour-muted);
+  text-transform: uppercase;
+}
+
+.contour-divider-labelled::before,
+.contour-divider-labelled::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--contour-line);
+}
+
+.contour-marquee {
+  overflow: hidden;
+  background: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.contour-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: contour-marquee var(--marquee-duration, 28s) linear infinite;
+}
+
+.contour-marquee:hover .contour-marquee-inner {
+  animation-play-state: paused;
+}
+
+.contour-marquee-track {
+  display: flex;
+}
+
+.contour-marquee-track li {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 28px 18px 0;
+  font: 500 28px / 1.1 var(--contour-font-display);
+  white-space: nowrap;
+}
+
+.contour-marquee-track svg {
+  color: var(--contour-inverse-accent);
+}
+
+@keyframes contour-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.contour-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.contour-empty-state-icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 8px;
+  border: 1px solid var(--contour-line-strong);
+  border-radius: 50%;
+  color: var(--contour-olive);
+}
+
+.contour-empty-state h3 {
+  font-size: 22px;
+}
+
+.contour-empty-state p {
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--contour-muted);
+}
+
+.contour-empty-state > :last-child:not(p) {
+  margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .contour-stat strong {
+    font-size: 48px;
+  }
+
+  .contour-marquee-track li {
+    font-size: 22px;
+  }
+}

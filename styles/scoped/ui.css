@@ -1,0 +1,127 @@
+/* Shared UI patterns: brand mark, section scaffolding, links, disclosures, and reveal animations. */
+
+.contour-brand {
+  font-family: var(--contour-font-display);
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.contour-brand > span {
+  color: var(--contour-olive);
+}
+
+.contour-section-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  text-transform: uppercase;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--contour-line);
+}
+
+.contour-text-link {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  border-bottom: 1px solid currentColor;
+  padding-block: 8px;
+  transition: gap 300ms var(--contour-ease);
+}
+
+.contour-text-link:hover {
+  gap: 26px;
+}
+
+/* Disclosure: native details/summary with a plus icon that rotates into a cross. */
+.contour-disclosure > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.contour-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.contour-disclosure-icon {
+  transition: transform 300ms;
+}
+
+.contour-disclosure[open] .contour-disclosure-icon {
+  transform: rotate(45deg);
+}
+
+/* Two-column intro + content layout used by Experience and Expertise. */
+
+/* Reveal: content fades up once, and heading lines slide up inside a clip. */
+.contour-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--contour-ease),
+    transform 700ms var(--contour-ease);
+}
+
+.contour-reveal.contour-is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contour-type-line {
+  display: block;
+  overflow: clip;
+  padding-block: 0.09em;
+  margin-block: -0.09em;
+}
+
+.contour-type-run {
+  display: block;
+  opacity: 0;
+  transform: translateY(105%);
+  transition:
+    transform 850ms var(--contour-ease),
+    opacity 650ms ease;
+}
+
+.contour-type-line:nth-child(2) .contour-type-run {
+  transition-delay: 110ms;
+}
+
+.contour-type-line:nth-child(3) .contour-type-run {
+  transition-delay: 220ms;
+}
+
+.contour-reveal.contour-is-visible .contour-type-run {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes contour-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1023px) {
+}
+
+@media (max-width: 767px) {
+  .contour-brand {
+    font-size: 30px;
+  }
+
+  .contour-section-label {
+    padding-bottom: 19px;
+  }
+
+  .contour-section-label > span:last-child {
+    display: none;
+  }
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 import { safeHref } from "../../lib/safeHref.js";
 /** The "aa." monogram; links to the top of the page unless given another href. */
 
@@ -17,7 +19,7 @@ export default function BrandMark({
   return (
     <a
       href={safeHref(href)}
-      className="brand"
+      className={ccx("brand")}
       aria-label={label}
       onClick={onClick}
     >

@@ -1,3 +1,4 @@
+import { ccx } from "../../lib/classNames.js";
 /** Native details/summary disclosure with a plus icon that turns into a cross when open. */
 import type { ReactNode } from "react";
 import { Plus } from "lucide-react";
@@ -20,11 +21,11 @@ export default function Disclosure({
   iconStrokeWidth = 1.25,
 }: DisclosureProps) {
   return (
-    <details className={`disclosure ${className}`} open={defaultOpen}>
+    <details className={ccx("disclosure", className)} open={defaultOpen}>
       <summary>
         {summary}
         <Plus
-          className="disclosure-icon"
+          className={ccx("disclosure-icon")}
           size={iconSize}
           strokeWidth={iconStrokeWidth}
           aria-hidden="true"

@@ -1,6 +1,6 @@
 /** Brand asterisk that spins as a loading indicator; announces its label to assistive tech. */
 import { Asterisk } from "lucide-react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type SpinnerProps = {
   size?: "sm" | "md" | "lg";
@@ -16,9 +16,12 @@ export default function Spinner({
   className,
 }: SpinnerProps) {
   return (
-    <span role="status" className={cx("spinner", `spinner-${size}`, className)}>
+    <span
+      role="status"
+      className={ccx("spinner", `spinner-${size}`, className)}
+    >
       <Asterisk size={iconSizes[size]} strokeWidth={1.6} aria-hidden="true" />
-      <span className="visually-hidden">{label}</span>
+      <span className={ccx("visually-hidden")}>{label}</span>
     </span>
   );
 }

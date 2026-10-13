@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Multi-line text input with optional auto-resize and character counter. */
 import {
   forwardRef,
@@ -72,7 +74,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             : undefined
         }
       >
-        <div className="field-control">
+        <div className={ccx("field-control")}>
           <textarea
             {...rest}
             ref={attach}

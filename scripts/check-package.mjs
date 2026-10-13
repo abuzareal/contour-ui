@@ -34,7 +34,7 @@ const archive = Array.isArray(result) ? result[0] : Object.values(result)[0];
 for (const { path } of archive.files) {
   assert.match(
     path,
-    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$|COMPOSITION\.md$|FORMS\.md$|examples\/forms\/(?:NativeSettingsForm\.tsx|HookFormSettingsForm\.tsx|ManualSettingsForm-0\.3\.0\.tsx|useSubmission\.ts|settings\.ts)$)/,
+    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$|COMPOSITION\.md$|FORMS\.md$|OVERLAYS\.md$|STYLING\.md$|SIZE\.md$|examples\/forms\/(?:NativeSettingsForm\.tsx|HookFormSettingsForm\.tsx|ManualSettingsForm-0\.3\.0\.tsx|useSubmission\.ts|settings\.ts)$)/,
   );
   assert.doesNotMatch(
     path,
@@ -61,6 +61,9 @@ for (const name of [
   "PUBLIC-API.md",
   "COMPOSITION.md",
   "FORMS.md",
+  "OVERLAYS.md",
+  "STYLING.md",
+  "SIZE.md",
   "examples/forms/NativeSettingsForm.tsx",
   "examples/forms/HookFormSettingsForm.tsx",
   "examples/forms/ManualSettingsForm-0.3.0.tsx",

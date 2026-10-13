@@ -16,9 +16,14 @@ export function nextIndexForKey(
   current: number,
   count: number,
   orientation: Orientation = "horizontal",
+  direction: "ltr" | "rtl" = "ltr",
 ): number | null {
   if (count <= 0) return null;
-  const { previous, next } = keysFor(orientation);
+  const keys = keysFor(orientation);
+  const { previous, next } =
+    orientation === "horizontal" && direction === "rtl"
+      ? { previous: keys.next, next: keys.previous }
+      : keys;
   if (key === next) return (current + 1) % count;
   if (key === previous) return (current - 1 + count) % count;
   if (key === "Home") return 0;

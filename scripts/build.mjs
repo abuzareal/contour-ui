@@ -1,5 +1,8 @@
 import { rm, cp, mkdir } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
+execFileSync(process.execPath, ["scripts/build-styles.mjs"], {
+  stdio: "inherit",
+});
 await rm(new URL("../dist/", import.meta.url), {
   recursive: true,
   force: true,
@@ -27,3 +30,5 @@ for (const [directory, font] of [
     `dist/fonts/${directory.split("/")[1]}-LICENSE.txt`,
   );
 }
+
+await cp("tokens/schema.json", "dist/tokens.json");

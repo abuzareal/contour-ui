@@ -1,6 +1,6 @@
 /** Numbered progress steps joined by a rule; completed steps show a check. */
 import { Check } from "lucide-react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 import { formatIndex } from "../../lib/format.js";
 
 export type StepperProps = {
@@ -16,7 +16,7 @@ export default function Stepper({
   label = "Progress",
 }: StepperProps) {
   return (
-    <ol className="stepper" aria-label={label}>
+    <ol className={ccx("stepper")} aria-label={label}>
       {steps.map((step, index) => {
         const state =
           index < current
@@ -27,24 +27,24 @@ export default function Stepper({
         return (
           <li
             key={step.label}
-            className={cx("stepper-step", `stepper-${state}`)}
+            className={ccx("stepper-step", `stepper-${state}`)}
             aria-current={state === "current" ? "step" : undefined}
           >
-            <span className="stepper-marker mono" aria-hidden="true">
+            <span className={ccx("stepper-marker mono")} aria-hidden="true">
               {state === "complete" ? (
                 <Check size={14} strokeWidth={2.5} />
               ) : (
                 formatIndex(index + 1)
               )}
             </span>
-            <span className="stepper-text">
-              <span className="stepper-label">{step.label}</span>
+            <span className={ccx("stepper-text")}>
+              <span className={ccx("stepper-label")}>{step.label}</span>
               {step.description && (
-                <span className="stepper-description mono">
+                <span className={ccx("stepper-description mono")}>
                   {step.description}
                 </span>
               )}
-              <span className="visually-hidden">({state})</span>
+              <span className={ccx("visually-hidden")}>({state})</span>
             </span>
           </li>
         );

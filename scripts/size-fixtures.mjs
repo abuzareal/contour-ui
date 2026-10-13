@@ -1,0 +1,13 @@
+/** Identical public-import journeys used by Vite and Next; no real persistence is claimed. */
+export const sizeFixtures = {
+  "button-icons": `import {Button} from '@abuzareal/contour-ui';import {ArrowRight} from 'lucide-react';export default function Demo(){return <main className="contour-root"><h1>Single action with icon</h1><Button variant="accent" icon={<ArrowRight size={16}/>}>Continue</Button></main>}`,
+  button: `import {Button} from '@abuzareal/contour-ui'; export default function Demo(){return <main className="contour-root"><h1>Single action</h1><Button variant="accent">Continue</Button></main>}`,
+  settings: `import {useState} from 'react';import {Button,TextField,TextArea,Checkbox,Switch,Slider,RadioGroup,SelectField} from '@abuzareal/contour-ui';export default function Demo(){const [payload,setPayload]=useState('');return <main className="contour-root"><h1>Settings fixture</h1><form onSubmit={e=>{e.preventDefault();setPayload(JSON.stringify(Object.fromEntries(new FormData(e.currentTarget))))}}><TextField label="Name" name="name" defaultValue="Ada" required/><TextArea label="Notes" name="notes" defaultValue="Local fixture"/><SelectField label="Role" name="role" options={[{value:'reader',label:'Reader'},{value:'editor',label:'Editor'}]}/><Checkbox label="Terms" name="terms" defaultChecked/><Switch label="Updates" name="updates" defaultChecked/><Slider label="Amount" name="amount" defaultValue={40}/><RadioGroup label="Plan" name="plan" options={[{value:'basic',label:'Basic'},{value:'plus',label:'Plus'}]} defaultValue="basic"/><Button type="submit">Inspect payload</Button><Button type="reset" variant="secondary">Reset</Button></form><output aria-label="Fixture payload">{payload}</output></main>}`,
+  table: `import {useState} from 'react';import {DataTable,Pagination,Button,TextField} from '@abuzareal/contour-ui';const rows=[{id:'a',name:'Ada',count:4},{id:'b',name:'Grace',count:7},{id:'c',name:'Lin',count:2}];const columns=[{key:'name',header:'Name',sortable:true},{key:'count',header:'Count',sortable:true,align:'end'}];export default function Demo(){const [page,setPage]=useState(1);return <main className="contour-root"><h1>Table fixture</h1><TextField label="Filter"/><DataTable caption="Fixture rows" rows={rows} columns={columns} rowKey="id"/><Pagination page={page} pageCount={3} onChange={setPage}/><Button>Export fixture</Button></main>}`,
+};
+export const selectiveStyles = {
+  "button-icons": ["actions"],
+  button: ["actions"],
+  settings: ["actions", "forms"],
+  table: ["actions", "forms", "data-display", "navigation"],
+};

@@ -15,7 +15,7 @@ import {
   type ToastContextValue,
   type ToastInput,
 } from "../../hooks/useToast.js";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 type ToastItem = ToastInput & { id: number };
 
@@ -24,9 +24,11 @@ const autoDismissAfter = 5000;
 function Toast({
   toast,
   onDismiss,
+  dismissLabel,
 }: {
   toast: ToastItem;
   onDismiss: (id: number) => void;
+  dismissLabel: string;
 }) {
   const [paused, setPaused] = useState(false);
 
@@ -41,21 +43,21 @@ function Toast({
 
   return (
     <li
-      className={cx("toast", `toast-${toast.tone ?? "neutral"}`)}
+      className={ccx("toast", `toast-${toast.tone ?? "neutral"}`)}
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <span className="toast-bar" aria-hidden="true" />
-      <div className="toast-content">
+      <span className={ccx("toast-bar")} aria-hidden="true" />
+      <div className={ccx("toast-content")}>
         <strong>{toast.title}</strong>
         {toast.message && <p>{toast.message}</p>}
       </div>
       <button
         type="button"
-        className="toast-close"
-        aria-label="Dismiss notification"
+        className={ccx("toast-close")}
+        aria-label={dismissLabel}
         onClick={() => onDismiss(toast.id)}
       >
         <X size={15} />
@@ -64,7 +66,16 @@ function Toast({
   );
 }
 
-export default function ToastProvider({ children }: { children: ReactNode }) {
+export type ToastProviderProps = {
+  children: ReactNode;
+  label?: string;
+  dismissLabel?: string;
+};
+export default function ToastProvider({
+  children,
+  label = "Notifications",
+  dismissLabel = "Dismiss notification",
+}: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const nextId = useRef(0);
 
@@ -88,12 +99,17 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={value}>
       {children}
       <ol
-        className="toast-viewport"
+        className={ccx("toast-viewport")}
         aria-live="polite"
-        aria-label="Notifications"
+        aria-label={label}
       >
         {toasts.map((toast) => (
-          <Toast key={toast.id} toast={toast} onDismiss={dismiss} />
+          <Toast
+            key={toast.id}
+            toast={toast}
+            onDismiss={dismiss}
+            dismissLabel={dismissLabel}
+          />
         ))}
       </ol>
     </ToastContext.Provider>

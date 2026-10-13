@@ -27,12 +27,12 @@
 
 /* The icon for the theme you can switch to is shown; the other spins away. */
 .theme-icon-sun,
-:root[data-theme="dark"] .theme-icon-moon {
+.theme-toggle[aria-pressed="true"] .theme-icon-moon {
   opacity: 0;
   transform: rotate(-120deg) scale(0.3);
 }
 
-:root[data-theme="dark"] .theme-icon-sun {
+.theme-toggle[aria-pressed="true"] .theme-icon-sun {
   opacity: 1;
   transform: none;
 }

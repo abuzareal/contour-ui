@@ -1,0 +1,209 @@
+/* Kit — actions: buttons, icon buttons, segmented control, and the magnetic wrapper. */
+
+.contour-button {
+  --contour-button-bg: var(--contour-invert-bg);
+  --contour-button-fg: var(--contour-invert-fg);
+  --contour-button-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding-inline: 22px;
+  border: 1px solid var(--contour-button-border);
+  border-radius: var(--contour-radius-pill);
+  background: var(--contour-button-bg);
+  color: var(--contour-button-fg);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast),
+    border-color var(--contour-duration-fast),
+    transform var(--contour-duration-base) var(--contour-ease);
+}
+
+.contour-button:hover:not(:disabled) {
+  --contour-button-bg: var(--contour-acid);
+  --contour-button-fg: var(--contour-ink);
+  --contour-button-border: var(--contour-acid);
+}
+
+.contour-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.contour-button:disabled {
+  opacity: 0.45;
+}
+
+/* Link inside running text: a hairline that thickens into an acid underline on hover. */
+.contour-inline-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition:
+    text-decoration-color var(--contour-duration-fast),
+    text-decoration-thickness var(--contour-duration-fast);
+}
+
+.contour-inline-link:hover {
+  text-decoration-color: var(--contour-olive);
+  text-decoration-thickness: 3px;
+}
+
+.contour-button[aria-busy="true"] {
+  opacity: 0.8;
+}
+
+.contour-button-icon {
+  display: inline-flex;
+  transition: transform var(--contour-duration-base) var(--contour-ease);
+}
+
+.contour-button:hover:not(:disabled) .contour-button-icon {
+  transform: translateX(3px);
+}
+
+.contour-button-accent {
+  --contour-button-bg: var(--contour-acid);
+  --contour-button-fg: var(--contour-ink);
+}
+
+.contour-button-accent:hover:not(:disabled) {
+  --contour-button-bg: var(--contour-invert-bg);
+  --contour-button-fg: var(--contour-invert-fg);
+  --contour-button-border: var(--contour-invert-bg);
+}
+
+.contour-button-secondary {
+  --contour-button-bg: transparent;
+  --contour-button-fg: var(--contour-fg);
+  --contour-button-border: color-mix(in srgb, currentColor 32%, transparent);
+}
+
+.contour-button-ghost {
+  --contour-button-bg: transparent;
+  --contour-button-fg: var(--contour-fg);
+}
+
+.contour-button-danger {
+  --contour-button-bg: var(--contour-danger);
+  --contour-button-fg: var(--contour-bg);
+}
+
+.contour-button-danger:hover:not(:disabled) {
+  --contour-button-bg: var(--contour-fg);
+  --contour-button-fg: var(--contour-bg);
+  --contour-button-border: var(--contour-fg);
+}
+
+.contour-button-sm {
+  height: 34px;
+  padding-inline: 16px;
+  font-size: 12px;
+}
+
+.contour-button-lg {
+  height: 54px;
+  padding-inline: 28px;
+  font-size: 14px;
+}
+
+.contour-icon-button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-radius: 50%;
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast),
+    border-color var(--contour-duration-fast),
+    transform var(--contour-duration-base) var(--contour-ease);
+}
+
+.contour-icon-button:hover:not(:disabled) {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-icon-button:disabled {
+  opacity: 0.45;
+}
+
+.contour-icon-button-spin:hover:not(:disabled) {
+  transform: rotate(45deg);
+}
+
+.contour-icon-button-solid {
+  background: var(--contour-invert-bg);
+  border-color: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+
+.contour-icon-button-accent {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-icon-button-accent:hover:not(:disabled) {
+  background: var(--contour-invert-bg);
+  border-color: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+
+.contour-icon-button-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.contour-icon-button-lg {
+  width: 56px;
+  height: 56px;
+}
+
+.contour-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--contour-line);
+  border-radius: var(--contour-radius-pill);
+}
+
+.contour-segmented-option {
+  height: 32px;
+  padding-inline: 16px;
+  border-radius: var(--contour-radius-pill);
+  font-size: 12px;
+  color: var(--contour-muted);
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast);
+}
+
+.contour-segmented-option:hover {
+  color: var(--contour-fg);
+}
+
+.contour-segmented-option[aria-checked="true"] {
+  background: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+
+.contour-segmented-option:focus-visible {
+  outline-offset: 2px;
+}
+
+.contour-magnetic {
+  display: inline-block;
+  transform: translate(var(--magnet, 0, 0));
+  transition: transform 450ms var(--contour-ease);
+}

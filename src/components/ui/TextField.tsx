@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Single-line text input with underline styling, optional icon/adornment, and character counter. */
 import {
   forwardRef,
@@ -67,8 +69,10 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             : undefined
         }
       >
-        <div className="field-control">
-          {leadingIcon && <span className="field-icon">{leadingIcon}</span>}
+        <div className={ccx("field-control")}>
+          {leadingIcon && (
+            <span className={ccx("field-icon")}>{leadingIcon}</span>
+          )}
           <input
             {...rest}
             ref={attach}
@@ -90,7 +94,9 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               onChange?.(event);
             }}
           />
-          {trailing && <span className="field-trailing">{trailing}</span>}
+          {trailing && (
+            <span className={ccx("field-trailing")}>{trailing}</span>
+          )}
         </div>
       </Field>
     );

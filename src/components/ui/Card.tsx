@@ -1,6 +1,6 @@
 /** Content card in surface, ink, or acid tones with eyebrow, title, body, and footer slots. */
 import type { ReactNode } from "react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type CardProps = {
   title: string;
@@ -24,17 +24,17 @@ export default function Card({
 }: CardProps) {
   return (
     <article
-      className={cx("card", `card-${tone}`, interactive && "card-interactive")}
+      className={ccx("card", `card-${tone}`, interactive && "card-interactive")}
     >
       {(eyebrow || icon) && (
-        <div className="card-top mono">
+        <div className={ccx("card-top mono")}>
           {eyebrow && <span>{eyebrow}</span>}
-          {icon && <span className="card-icon">{icon}</span>}
+          {icon && <span className={ccx("card-icon")}>{icon}</span>}
         </div>
       )}
-      <h3 className="card-title">{title}</h3>
-      {children && <div className="card-body">{children}</div>}
-      {footer && <div className="card-footer">{footer}</div>}
+      <h3 className={ccx("card-title")}>{title}</h3>
+      {children && <div className={ccx("card-body")}>{children}</div>}
+      {footer && <div className={ccx("card-footer")}>{footer}</div>}
     </article>
   );
 }

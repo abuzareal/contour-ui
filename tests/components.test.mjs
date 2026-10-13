@@ -10,6 +10,9 @@ for (const key of [
   "window",
   "document",
   "HTMLElement",
+  "Element",
+  "Node",
+  "getComputedStyle",
   "HTMLInputElement",
   "MutationObserver",
   "Event",
@@ -673,8 +676,14 @@ test("single controls expose native object/callback refs and retain them through
         title: "Updated",
       }),
     );
+    assert.equal(
+      calls.length,
+      1,
+      `${Component.displayName ?? Component.name ?? tag} stable callback attachment`,
+    );
     assert.deepEqual(calls, [node]);
     callbackView.unmount();
+    assert.equal(calls.length, 2, "one callback detach");
     assert.deepEqual(calls, [node, null]);
   }
 });
@@ -832,7 +841,10 @@ test("Dialog root and owned parts accept customization without dropping semantic
   assert.ok(
     root.current.getAttribute("aria-describedby").includes("external-help"),
   );
-  assert.equal(panel.current.className, "dialog-panel host-panel");
+  assert.equal(
+    panel.current.className,
+    "dialog-panel host-panel contour-dialog-panel",
+  );
   assert.equal(body.current.id, "settings-body");
   assert.equal(close.current.type, "button");
   assert.equal(close.current.getAttribute("aria-label"), "Close settings");
@@ -927,7 +939,7 @@ test("Tabs root/list/item parts preserve controlled selection, keyboard behavior
   };
   const view = render(React.createElement(Tabs, props));
   assert.equal(root.current.id, "views");
-  assert.equal(root.current.className, "tabs host-tabs");
+  assert.equal(root.current.className, "tabs host-tabs contour-tabs");
   assert.equal(list.current.getAttribute("role"), "tablist");
   assert.equal(button.current.id, "one-tab");
   assert.equal(button.current.getAttribute("aria-controls"), "one-panel");
@@ -989,7 +1001,10 @@ test("Popover owned root/trigger/panel refs and caller handlers compose with con
   };
   const view = render(React.createElement(Popover, props, "Details"));
   assert.equal(root.current.id, "help");
-  assert.equal(root.current.className, "popover popover-start host-popover");
+  assert.equal(
+    root.current.className,
+    "popover popover-start host-popover contour-popover contour-popover-start",
+  );
   assert.equal(trigger.current.getAttribute("aria-controls"), "help-panel");
   assert.equal(panel.current.hidden, true);
   fireEvent.click(trigger.current);

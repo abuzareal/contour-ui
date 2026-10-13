@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Number that counts up the first time it scrolls into view; screen readers get the final value. */
 import { useEffect, useRef, useState } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";
@@ -11,6 +13,7 @@ export type CountUpProps = {
   /** Pads to this many digits, e.g. 2 renders 05. */
   digits?: number;
   suffix?: string;
+  formatValue?: (value: number) => string;
 };
 
 const easeOutCubic = (progress: number) => 1 - (1 - progress) ** 3;
@@ -20,6 +23,7 @@ export default function CountUp({
   duration = 1400,
   digits = 0,
   suffix = "",
+  formatValue,
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const [current, setCurrent] = useState(0);
@@ -64,11 +68,13 @@ export default function CountUp({
   }, [to, duration]);
 
   const format = (value: number) =>
-    `${String(value).padStart(digits, "0")}${suffix}`;
+    formatValue
+      ? formatValue(value)
+      : `${String(value).padStart(digits, "0")}${suffix}`;
   return (
-    <span ref={ref} className="count-up">
+    <span ref={ref} className={ccx("count-up")}>
       <span aria-hidden="true">{format(current)}</span>
-      <span className="visually-hidden">{format(to)}</span>
+      <span className={ccx("visually-hidden")}>{format(to)}</span>
     </span>
   );
 }

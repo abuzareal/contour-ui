@@ -1,0 +1,710 @@
+{
+  "schemaVersion": 1,
+  "prefix": "--contour-",
+  "source": "Manual semantic roles reviewed against 0.4.0; generated isolated CSS",
+  "categories": [
+    "color",
+    "typography",
+    "spacing",
+    "shape",
+    "motion",
+    "elevation",
+    "layer"
+  ],
+  "tokens": [
+    {
+      "name": "--contour-ink",
+      "legacy": "--ink",
+      "category": "color",
+      "role": "ink",
+      "themeable": false,
+      "values": {
+        "light": "#171817",
+        "dark": "#171817"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-paper",
+      "legacy": "--paper",
+      "category": "color",
+      "role": "paper",
+      "themeable": false,
+      "values": {
+        "light": "#f2f3ee",
+        "dark": "#f2f3ee"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-white",
+      "legacy": "--white",
+      "category": "color",
+      "role": "white",
+      "themeable": false,
+      "values": {
+        "light": "#fcfcf9",
+        "dark": "#fcfcf9"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-acid",
+      "legacy": "--acid",
+      "category": "color",
+      "role": "acid",
+      "themeable": false,
+      "values": {
+        "light": "#d0f344",
+        "dark": "#d0f344"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-ease",
+      "legacy": "--ease",
+      "category": "motion",
+      "role": "ease",
+      "themeable": false,
+      "values": {
+        "light": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "dark": "cubic-bezier(0.22, 1, 0.36, 1)"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-font-sans",
+      "legacy": "--font-sans",
+      "category": "typography",
+      "role": "font sans",
+      "themeable": false,
+      "values": {
+        "light": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "dark": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-font-display",
+      "legacy": "--font-display",
+      "category": "typography",
+      "role": "font display",
+      "themeable": false,
+      "values": {
+        "light": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "dark": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-font-mono",
+      "legacy": "--font-mono",
+      "category": "typography",
+      "role": "font mono",
+      "themeable": false,
+      "values": {
+        "light": "ui-monospace, \"SFMono-Regular\", Consolas, monospace",
+        "dark": "ui-monospace, \"SFMono-Regular\", Consolas, monospace"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-radius-sm",
+      "legacy": "--radius-sm",
+      "category": "shape",
+      "role": "radius sm",
+      "themeable": false,
+      "values": {
+        "light": "4px",
+        "dark": "4px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-radius-md",
+      "legacy": "--radius-md",
+      "category": "shape",
+      "role": "radius md",
+      "themeable": false,
+      "values": {
+        "light": "8px",
+        "dark": "8px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-radius-pill",
+      "legacy": "--radius-pill",
+      "category": "shape",
+      "role": "radius pill",
+      "themeable": false,
+      "values": {
+        "light": "999px",
+        "dark": "999px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-duration-fast",
+      "legacy": "--duration-fast",
+      "category": "motion",
+      "role": "duration fast",
+      "themeable": false,
+      "values": {
+        "light": "160ms",
+        "dark": "160ms"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-duration-base",
+      "legacy": "--duration-base",
+      "category": "motion",
+      "role": "duration base",
+      "themeable": false,
+      "values": {
+        "light": "300ms",
+        "dark": "300ms"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-duration-slow",
+      "legacy": "--duration-slow",
+      "category": "motion",
+      "role": "duration slow",
+      "themeable": false,
+      "values": {
+        "light": "700ms",
+        "dark": "700ms"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-bg",
+      "legacy": "--bg",
+      "category": "color",
+      "role": "bg",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-paper)",
+        "dark": "#0f100d"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-fg",
+      "legacy": "--fg",
+      "category": "color",
+      "role": "fg",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-ink)",
+        "dark": "#eef0e6"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-muted",
+      "legacy": "--muted",
+      "category": "color",
+      "role": "muted",
+      "themeable": true,
+      "values": {
+        "light": "#63665f",
+        "dark": "#9a9e90"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-line",
+      "legacy": "--line",
+      "category": "color",
+      "role": "line",
+      "themeable": true,
+      "values": {
+        "light": "#d6d8d0",
+        "dark": "#2a2d24"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-line-strong",
+      "legacy": "--line-strong",
+      "category": "color",
+      "role": "line strong",
+      "themeable": true,
+      "values": {
+        "light": "#b4b8ac",
+        "dark": "#444939"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-surface",
+      "legacy": "--surface",
+      "category": "color",
+      "role": "surface",
+      "themeable": true,
+      "values": {
+        "light": "#fbfbf8",
+        "dark": "#171913"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-surface-sunken",
+      "legacy": "--surface-sunken",
+      "category": "color",
+      "role": "surface sunken",
+      "themeable": true,
+      "values": {
+        "light": "#e8e9e1",
+        "dark": "#0a0b09"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-overlay",
+      "legacy": "--overlay",
+      "category": "color",
+      "role": "overlay",
+      "themeable": true,
+      "values": {
+        "light": "#171817b8",
+        "dark": "#050605cc"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-shadow-raised",
+      "legacy": "--shadow-raised",
+      "category": "elevation",
+      "role": "shadow raised",
+      "themeable": true,
+      "values": {
+        "light": "0 1px 2px #1718170d, 0 10px 28px #17181712",
+        "dark": "0 1px 2px #0000004d, 0 10px 28px #00000059"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-shadow-floating",
+      "legacy": "--shadow-floating",
+      "category": "elevation",
+      "role": "shadow floating",
+      "themeable": true,
+      "values": {
+        "light": "0 24px 56px #1718172e",
+        "dark": "0 24px 56px #00000099"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-olive",
+      "legacy": "--olive",
+      "category": "color",
+      "role": "olive",
+      "themeable": true,
+      "values": {
+        "light": "#75901a",
+        "dark": "#c2e042"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-signal",
+      "legacy": "--signal",
+      "category": "color",
+      "role": "signal",
+      "themeable": true,
+      "values": {
+        "light": "#4d7522",
+        "dark": "var(--contour-acid)"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-success",
+      "legacy": "--success",
+      "category": "color",
+      "role": "success",
+      "themeable": true,
+      "values": {
+        "light": "#3f6119",
+        "dark": "#b5d33f"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-success-soft",
+      "legacy": "--success-soft",
+      "category": "color",
+      "role": "success soft",
+      "themeable": true,
+      "values": {
+        "light": "#e4ecc9",
+        "dark": "#222914"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-info",
+      "legacy": "--info",
+      "category": "color",
+      "role": "info",
+      "themeable": true,
+      "values": {
+        "light": "#2f6a82",
+        "dark": "#8fc0d6"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-info-soft",
+      "legacy": "--info-soft",
+      "category": "color",
+      "role": "info soft",
+      "themeable": true,
+      "values": {
+        "light": "#dbe8ec",
+        "dark": "#152227"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-warning",
+      "legacy": "--warning",
+      "category": "color",
+      "role": "warning",
+      "themeable": true,
+      "values": {
+        "light": "#7a5100",
+        "dark": "#f0c063"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-warning-soft",
+      "legacy": "--warning-soft",
+      "category": "color",
+      "role": "warning soft",
+      "themeable": true,
+      "values": {
+        "light": "#f5e6c3",
+        "dark": "#2b2311"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-danger",
+      "legacy": "--danger",
+      "category": "color",
+      "role": "danger",
+      "themeable": true,
+      "values": {
+        "light": "#a8321c",
+        "dark": "#ff8a70"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-danger-soft",
+      "legacy": "--danger-soft",
+      "category": "color",
+      "role": "danger soft",
+      "themeable": true,
+      "values": {
+        "light": "#f7dcd3",
+        "dark": "#2f1914"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-invert-bg",
+      "legacy": "--invert-bg",
+      "category": "color",
+      "role": "invert bg",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-ink)",
+        "dark": "var(--contour-paper)"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-invert-fg",
+      "legacy": "--invert-fg",
+      "category": "color",
+      "role": "invert fg",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-paper)",
+        "dark": "var(--contour-ink)"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-menu-shadow",
+      "legacy": "--menu-shadow",
+      "category": "color",
+      "role": "menu shadow",
+      "themeable": true,
+      "values": {
+        "light": "#00000012",
+        "dark": "#00000066"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-4",
+      "legacy": "--space-4",
+      "category": "spacing",
+      "role": "space 4",
+      "themeable": false,
+      "values": {
+        "light": "4px",
+        "dark": "4px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-8",
+      "legacy": "--space-8",
+      "category": "spacing",
+      "role": "space 8",
+      "themeable": false,
+      "values": {
+        "light": "8px",
+        "dark": "8px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-12",
+      "legacy": "--space-12",
+      "category": "spacing",
+      "role": "space 12",
+      "themeable": false,
+      "values": {
+        "light": "12px",
+        "dark": "12px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-16",
+      "legacy": "--space-16",
+      "category": "spacing",
+      "role": "space 16",
+      "themeable": false,
+      "values": {
+        "light": "16px",
+        "dark": "16px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-24",
+      "legacy": "--space-24",
+      "category": "spacing",
+      "role": "space 24",
+      "themeable": false,
+      "values": {
+        "light": "24px",
+        "dark": "24px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-32",
+      "legacy": "--space-32",
+      "category": "spacing",
+      "role": "space 32",
+      "themeable": false,
+      "values": {
+        "light": "32px",
+        "dark": "32px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-48",
+      "legacy": "--space-48",
+      "category": "spacing",
+      "role": "space 48",
+      "themeable": false,
+      "values": {
+        "light": "48px",
+        "dark": "48px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-64",
+      "legacy": "--space-64",
+      "category": "spacing",
+      "role": "space 64",
+      "themeable": false,
+      "values": {
+        "light": "64px",
+        "dark": "64px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-space-104",
+      "legacy": "--space-104",
+      "category": "spacing",
+      "role": "space 104",
+      "themeable": false,
+      "values": {
+        "light": "104px",
+        "dark": "104px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-text-body",
+      "legacy": "--text-body",
+      "category": "typography",
+      "role": "text body",
+      "themeable": false,
+      "values": {
+        "light": "15px",
+        "dark": "15px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-text-small",
+      "legacy": "--text-small",
+      "category": "typography",
+      "role": "text small",
+      "themeable": false,
+      "values": {
+        "light": "13px",
+        "dark": "13px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-text-label",
+      "legacy": "--text-label",
+      "category": "typography",
+      "role": "text label",
+      "themeable": false,
+      "values": {
+        "light": "11px",
+        "dark": "11px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-text-lead",
+      "legacy": "--text-lead",
+      "category": "typography",
+      "role": "text lead",
+      "themeable": false,
+      "values": {
+        "light": "24px",
+        "dark": "24px"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-text-display",
+      "legacy": "--text-display",
+      "category": "typography",
+      "role": "text display",
+      "themeable": false,
+      "values": {
+        "light": "clamp(48px, 8vw, 116px)",
+        "dark": "clamp(48px, 8vw, 116px)"
+      },
+      "legacyStatus": "compatibility; no removal in 0.5"
+    },
+    {
+      "name": "--contour-z-overlay",
+      "legacy": null,
+      "category": "layer",
+      "role": "nonmodal floating layer base; native modal top-layer ordering remains browser-owned",
+      "themeable": false,
+      "values": {
+        "light": "30",
+        "dark": "30"
+      },
+      "legacyStatus": "new in 0.5"
+    },
+    {
+      "name": "--contour-inverse-accent",
+      "legacy": null,
+      "category": "color",
+      "role": "Accent on the inverse surface",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-acid)",
+        "dark": "#5a7210"
+      },
+      "legacyStatus": "New scoped role; legacy CSS unchanged"
+    },
+    {
+      "name": "--contour-inverse-mark",
+      "legacy": null,
+      "category": "color",
+      "role": "High contrast mark on the inverse surface",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-acid)",
+        "dark": "var(--contour-ink)"
+      },
+      "legacyStatus": "New scoped role; legacy CSS unchanged"
+    },
+    {
+      "name": "--contour-depth-base",
+      "legacy": null,
+      "category": "color",
+      "role": "Base below a raised accent control",
+      "themeable": true,
+      "values": {
+        "light": "var(--contour-ink)",
+        "dark": "#5a7210"
+      },
+      "legacyStatus": "New scoped role; legacy CSS unchanged"
+    },
+    {
+      "name": "--contour-floating-outline",
+      "legacy": null,
+      "category": "color",
+      "role": "Outline of floating ink feedback",
+      "themeable": true,
+      "values": {
+        "light": "transparent",
+        "dark": "#353733"
+      },
+      "legacyStatus": "New scoped role; legacy CSS unchanged"
+    }
+  ],
+  "legacyProductTokens": [
+    "header-bg",
+    "header-bg-scrolled",
+    "header-fg",
+    "header-link",
+    "header-line",
+    "header-dot",
+    "header-underline",
+    "focus-band-bg",
+    "focus-band-fg",
+    "focus-band-line",
+    "focus-band-icon",
+    "about-bg",
+    "experience-bg",
+    "expertise-bg",
+    "work-bg",
+    "footer-bg"
+  ],
+  "density": {
+    "default": "comfortable",
+    "compact": "deferred: no application requirement; preserve current target sizes"
+  }
+}

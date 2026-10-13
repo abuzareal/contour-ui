@@ -1,0 +1,183 @@
+/* Owned component defaults; no page shell, global theme mutation or foreign element reset. */
+:where(.contour-root, [class*="contour-"]) {
+  box-sizing: border-box;
+}
+.contour-root {
+  color: var(--contour-fg);
+  background: var(--contour-bg);
+  font-family: var(--contour-font-sans);
+  line-height: 1.5;
+}
+button:where([class*="contour-"]) {
+  font: inherit;
+  font-family: var(--contour-font-sans);
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0 solid;
+  text-transform: none;
+  cursor: pointer;
+}
+button:where([class*="contour-"]):disabled {
+  cursor: default;
+}
+:where([class*="contour-"])[hidden] {
+  display: none;
+}
+:where([class*="contour-"]):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+.contour-root :where(h1, h2, h3, p, dl, dd, figure, ul, ol) {
+  margin: 0;
+}
+.contour-root :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.contour-root :where(img, svg, canvas) {
+  display: block;
+  vertical-align: middle;
+}
+.contour-root :where(svg) {
+  flex-shrink: 0;
+}
+.contour-root :where(a) {
+  color: inherit;
+}
+.contour-menu-list,
+.contour-popover-panel,
+.contour-dialog {
+  color: var(--contour-fg);
+  font-family: var(--contour-font-sans);
+}
+.contour-tooltip {
+  background: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+.contour-field-control :where(input, select, textarea),
+.contour-choice-input {
+  font-family: var(--contour-font-sans);
+}
+.contour-button,
+.contour-menu-trigger,
+.contour-field,
+.contour-tabs,
+.contour-data-table {
+  max-inline-size: 100%;
+}
+.contour-button,
+.contour-menu-trigger {
+  overflow-wrap: anywhere;
+}
+.contour-dialog-header h2 {
+  margin: 0;
+  font-family: var(--contour-font-display);
+  font-weight: 500;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([class*="contour-"]) {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  :where(.contour-reveal, .contour-type-run) {
+    opacity: 1;
+    transform: none;
+  }
+}
+[data-motion="off"] :where([class*="contour-"]) {
+  animation: none !important;
+  transition: none !important;
+}
+@media (forced-colors: active) {
+  :where(
+    .contour-button,
+    .contour-menu-trigger,
+    .contour-card,
+    .contour-dialog,
+    .contour-popover-panel,
+    .contour-menu-list,
+    .contour-field-control,
+    .contour-switch,
+    .contour-segmented-option
+  ) {
+    border: 1px solid ButtonText !important;
+  }
+  :where(
+    .contour-button,
+    .contour-menu-item,
+    .contour-tabs-tab,
+    .contour-segmented-option
+  ):focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 3px;
+  }
+  :where(
+    .contour-tabs-tab[aria-selected="true"],
+    .contour-segmented-option[aria-checked="true"],
+    .contour-switch-track[aria-checked="true"]
+  ) {
+    outline: 2px solid Highlight !important;
+  }
+  .contour-field-error,
+  .contour-choice-error {
+    color: CanvasText !important;
+  }
+  .contour-tooltip {
+    border: 1px solid CanvasText;
+  }
+}
+
+.contour-data-table :where(button) {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (forced-colors: active) {
+  .contour-choice-input:checked + .contour-choice-box,
+  .contour-choice-input:indeterminate + .contour-choice-box {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
+  .contour-choice-radio
+    .contour-choice-input:checked
+    + .contour-choice-box::after {
+    content: "";
+    inline-size: 8px;
+    block-size: 8px;
+    background: CanvasText;
+    forced-color-adjust: none;
+    border-radius: 50%;
+  }
+  .contour-switch-thumb {
+    background: ButtonText !important;
+    forced-color-adjust: none;
+  }
+  .contour-switch-track {
+    border: 1px solid ButtonText !important;
+  }
+  .contour-field-control:has([aria-invalid="true"]) {
+    border-block-end: 2px dashed CanvasText !important;
+  }
+  .contour-slider input[type="range"] {
+    appearance: auto !important;
+  }
+}
+
+.contour-tabs {
+  background: transparent;
+}
+.contour-menu,
+.contour-popover {
+  color: var(--contour-fg);
+}
+.contour-menu-trigger > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}

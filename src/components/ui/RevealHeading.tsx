@@ -1,3 +1,4 @@
+import { ccx } from "../../lib/classNames.js";
 /** Section heading whose lines slide up when the surrounding Reveal enters view. */
 import type { ReactNode } from "react";
 
@@ -18,9 +19,9 @@ export default function RevealHeading({ id, lines }: RevealHeadingProps) {
       {lines.map((line, index) => (
         <span
           key={index}
-          className={line.accent ? "type-line type-accent" : "type-line"}
+          className={ccx(line.accent ? "type-line type-accent" : "type-line")}
         >
-          <span className="type-run">{line.text}</span>
+          <span className={ccx("type-run")}>{line.text}</span>
         </span>
       ))}
     </h2>

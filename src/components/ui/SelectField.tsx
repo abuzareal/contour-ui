@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Native select styled as an underlined field with a chevron. */
 import { forwardRef, useId, type SelectHTMLAttributes } from "react";
 import { ChevronDown } from "lucide-react";
@@ -59,7 +61,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
         required={rest.required}
         disabled={rest.disabled}
       >
-        <div className="field-control field-select">
+        <div className={ccx("field-control field-select")}>
           <select
             {...rest}
             ref={attach}
@@ -82,7 +84,11 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
               </option>
             ))}
           </select>
-          <ChevronDown className="field-chevron" size={16} aria-hidden="true" />
+          <ChevronDown
+            className={ccx("field-chevron")}
+            size={16}
+            aria-hidden="true"
+          />
         </div>
       </Field>
     );

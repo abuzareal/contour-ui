@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Editorial data table with mono headers, optional column sorting, and horizontal scroll on small screens. */
 import { useMemo, useState, type ReactNode } from "react";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -9,6 +11,7 @@ export type TableColumn<Row> = {
   header: string;
   align?: "start" | "end";
   sortable?: boolean;
+  compare?: (a: Row, b: Row) => number;
   render?: (row: Row) => ReactNode;
 };
 
@@ -31,15 +34,18 @@ export default function DataTable<Row extends Record<string, string | number>>({
 
   const sortedRows = useMemo(() => {
     if (!sort) return rows;
+    const compare = columns.find((column) => column.key === sort.key)?.compare;
     const factor = sort.direction === "ascending" ? 1 : -1;
     return [...rows].sort((a, b) =>
-      a[sort.key] > b[sort.key]
-        ? factor
-        : a[sort.key] < b[sort.key]
-          ? -factor
-          : 0,
+      compare
+        ? factor * compare(a, b)
+        : a[sort.key] > b[sort.key]
+          ? factor
+          : a[sort.key] < b[sort.key]
+            ? -factor
+            : 0,
     );
-  }, [rows, sort]);
+  }, [rows, sort, columns]);
 
   const toggleSort = (key: string) =>
     setSort((current) =>
@@ -50,14 +56,14 @@ export default function DataTable<Row extends Record<string, string | number>>({
 
   return (
     <div
-      className="table-scroll"
+      className={ccx("table-scroll")}
       tabIndex={0}
       role="region"
       aria-label={caption}
     >
-      <table className="data-table">
-        <caption className="visually-hidden">{caption}</caption>
-        <thead className="mono">
+      <table className={ccx("data-table")}>
+        <caption className={ccx("visually-hidden")}>{caption}</caption>
+        <thead className={ccx("mono")}>
           <tr>
             {columns.map((column) => {
               const direction =
@@ -83,7 +89,9 @@ export default function DataTable<Row extends Record<string, string | number>>({
                         <ArrowUp
                           size={12}
                           aria-hidden="true"
-                          className={direction ? undefined : "data-table-idle"}
+                          className={ccx(
+                            direction ? undefined : "data-table-idle",
+                          )}
                         />
                       )}
                     </button>
