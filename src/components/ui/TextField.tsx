@@ -46,7 +46,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const [length, setLength] = useState(
       String(rest.value ?? rest.defaultValue ?? "").length,
     );
-    useFormReset(ref, () => setLength(ref.current?.value.length ?? 0));
+    useFormReset(ref, () => {
+      if (ref.current && rest.value !== undefined)
+        ref.current.value = String(rest.value);
+      setLength(ref.current?.value.length ?? 0);
+    });
 
     return (
       <Field

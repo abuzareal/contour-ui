@@ -1,22 +1,22 @@
 # Refs, parts, state and links
 
-Contract version **0.3.0**. These additions are absent from npm 0.2.1; a source heading does not establish publication. Use the version named by the release notes. Import components directly and load CSS once. This guide describes existing DOM parts; no copying step or polymorphic Button system is required.
+Contract version **0.4.0**. These additions are absent from npm 0.2.1; a source heading does not establish publication. Use the version named by the release notes. Import components directly and load CSS once. This guide describes existing DOM parts; no copying step or polymorphic Button system is required.
 
 ## Native ref targets
 
-| Export                                       | Target and use                                                                                     |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Button, IconButton, DepthButton, ThemeToggle | HTMLButtonElement: focus, measurement, external trigger adapter                                    |
-| ExternalLink                                 | HTMLAnchorElement: focus and native-link integration                                               |
-| TextField, Checkbox, Slider                  | HTMLInputElement: focus/measurement; Checkbox retains indeterminate behavior                       |
-| TextArea / SelectField                       | HTMLTextAreaElement / HTMLSelectElement; existing native reset/validation preserved                |
-| Dialog                                       | HTMLDialogElement: focus/measurement; open stays prop-owned, do not bypass it with showModal/close |
-| Tabs                                         | Root HTMLDivElement; list/button/panel parts have separate native refs                             |
-| Popover                                      | Root HTMLDivElement; triggerProps.ref is its owned button, panelProps.ref its local panel          |
+| Export                                               | Target and use                                                                                     |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Button, IconButton, DepthButton, ThemeToggle, Switch | HTMLButtonElement: focus, measurement, external trigger adapter                                    |
+| ExternalLink                                         | HTMLAnchorElement: focus and native-link integration                                               |
+| TextField, Checkbox, Slider                          | HTMLInputElement: focus/measurement; Checkbox retains indeterminate behavior                       |
+| TextArea / SelectField                               | HTMLTextAreaElement / HTMLSelectElement; existing native reset/validation preserved                |
+| Dialog                                               | HTMLDialogElement: focus/measurement; open stays prop-owned, do not bypass it with showModal/close |
+| Tabs                                                 | Root HTMLDivElement; list/button/panel parts have separate native refs                             |
+| Popover                                              | Root HTMLDivElement; triggerProps.ref is its owned button, panelProps.ref its local panel          |
 
 Object refs become null on unmount/ref replacement. Callback refs receive the node then null; on React 19 they may return cleanup instead. Internal refs coexist with caller refs. Stable callback identities avoid deliberate ref replacement. Targets remain mounted while a dialog/panel is closed/hidden.
 
-RadioGroup, SegmentedControl, Pagination and DropdownMenu contain multiple controls; no singular input/action ref is claimed. Field is a frame, Tooltip describes a caller-owned child, Disclosure has native details semantics, and FlipCard/Tag have conditional controls. Presentation/scene wrappers receive no arbitrary native control handle. Part refs for those require a demonstrated reusable need.
+RadioGroup, SegmentedControl, Pagination and DropdownMenu contain multiple controls; no singular input/action ref is claimed. RadioGroup now exposes per-option native input refs through inputProps for form controllers. Field is a frame, Tooltip describes a caller-owned child, Disclosure has native details semantics, and FlipCard/Tag have conditional controls. Presentation/scene wrappers receive no arbitrary native control handle. Part refs for those require a demonstrated reusable need.
 
 React 18 compatibility uses forwardRef; React 19 uses the same JSX API. Render through React; do not call exports as plain functions or depend on typeof being function. [React ref guidance](https://react.dev/reference/react/forwardRef) explains why low-level controls expose DOM nodes.
 
@@ -112,7 +112,7 @@ Popover still has local absolute placement and the known nested-dismissal limit.
 
 ## Event composition
 
-For the composed action handlers on Dialog, Tabs and Popover, the caller handler on the same owned element runs first. preventDefault vetoes internal tab click/arrow selection, popover trigger toggle, and dialog close-button/backdrop dismissal. stopPropagation controls propagation, not this cancellation contract. Root bubbling handlers run after descendant handlers; intercept through the relevant part or capture phase.
+For the composed action handlers on Dialog, Tabs, Popover and the Switch button, the caller handler on the same owned element runs first. preventDefault vetoes internal tab click/arrow selection, popover/switch toggling, and dialog close-button/backdrop dismissal. stopPropagation controls propagation, not this cancellation contract. Root bubbling handlers run after descendant handlers; intercept through the relevant part or capture phase.
 
 Dialog onCancel receives the native event. Caller preventDefault vetoes onClose; Contour always prevents the browser from closing independently of open. An allowed cancel requests onClose and the parent must update open. Native disabled buttons cannot activate; Button loading also disables it. Native field counter/resize bookkeeping runs before its caller input/change handler and remains intact; preventDefault on those notifications is not a counter-reset API.
 
@@ -135,22 +135,22 @@ If dismissal is suppressed, provide a usable cancel/recovery path. Do not disabl
 
 ## State and callback audit
 
-| Family                                     | Existing ownership/callback contract                                                                          |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| Button/IconButton/DepthButton/ExternalLink | Native events; supported button disabled/loading; navigation remains browser/router-owned                     |
-| TextField/TextArea/SelectField/Checkbox    | Native event callbacks; controlled value/checked or native defaults; refs, validity/reset remain intact       |
-| Slider / Switch                            | Required number value / boolean checked, onChange(value); no new name/form/default/reset API                  |
-| RadioGroup / SegmentedControl              | Required string value, onChange(value); generated radio name / button group                                   |
-| Tabs                                       | activeTabId + onTabChange(id), or internal defaultTabId; invalid/removed IDs fall back to first available     |
-| Popover / DropdownMenu                     | open + onOpenChange(boolean), or internal defaultOpen; unchanged values do not notify                         |
-| Dialog                                     | Required open and onClose() request; no independent imperative ownership                                      |
-| Disclosure                                 | defaultOpen on native details; no controlled open/onOpenChange                                                |
-| Pagination                                 | page/pageCount and onChange(page); app owns URL/fetch/bounds                                                  |
-| FlipCard / Tooltip                         | Internal flipped / hover-focus state; no new controlled API                                                   |
-| ThemeToggle/useTheme                       | Shared document theme/preference, not scoped provider                                                         |
-| Tag, EmptyState, Alert, toast APIs         | Caller removal/actions or supplied feedback/library toast commands; no business operation/persistence implied |
+| Family                                     | Existing ownership/callback contract                                                                                             |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Button/IconButton/DepthButton/ExternalLink | Native events; supported button disabled/loading; navigation remains browser/router-owned                                        |
+| TextField/TextArea/SelectField/Checkbox    | Native event callbacks; controlled value/checked or native defaults; refs, validity/reset remain intact                          |
+| Slider / Switch                            | Number value / boolean checked or captured default; value callbacks; named form/reset support in 0.4.0                           |
+| RadioGroup / SegmentedControl              | RadioGroup has controlled/default string selection and native form names; SegmentedControl remains a required value/button group |
+| Tabs                                       | activeTabId + onTabChange(id), or internal defaultTabId; invalid/removed IDs fall back to first available                        |
+| Popover / DropdownMenu                     | open + onOpenChange(boolean), or internal defaultOpen; unchanged values do not notify                                            |
+| Dialog                                     | Required open and onClose() request; no independent imperative ownership                                                         |
+| Disclosure                                 | defaultOpen on native details; no controlled open/onOpenChange                                                                   |
+| Pagination                                 | page/pageCount and onChange(page); app owns URL/fetch/bounds                                                                     |
+| FlipCard / Tooltip                         | Internal flipped / hover-focus state; no new controlled API                                                                      |
+| ThemeToggle/useTheme                       | Shared document theme/preference, not scoped provider                                                                            |
+| Tag, EmptyState, Alert, toast APIs         | Caller removal/actions or supplied feedback/library toast commands; no business operation/persistence implied                    |
 
-Do not switch controlled/uncontrolled ownership mid-mount. A later default does not reset established state. Controlled callbacks never silently overwrite parent state. Native event callbacks are not cosmetically renamed into value callbacks. Switch/Slider/RadioGroup form integration remains FORM scope.
+Do not switch controlled/uncontrolled ownership mid-mount. A later default does not reset established state. Controlled callbacks never silently overwrite parent state. Native event callbacks are not cosmetically renamed into value callbacks. See [the form guide](FORMS.md) for 0.4.0 named submission, defaults, validation and reset. SegmentedControl remains application-state submission.
 
 ## Native and router links
 

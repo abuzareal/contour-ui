@@ -1,5 +1,5 @@
 import { packedArchive } from "./packed-archive.mjs";
-import { mkdtemp, writeFile, readFile, rm, stat } from "node:fs/promises";
+import { cp, mkdtemp, writeFile, readFile, rm, stat } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -47,7 +47,7 @@ try {
     "--no-fund",
     "--strict-peer-deps",
   ]);
-  for (const optional of ["three", "lenis"]) {
+  for (const optional of ["three", "lenis", "react-hook-form"]) {
     await assert.rejects(stat(join(temporary, "node_modules", optional)), {
       code: "ENOENT",
     });
@@ -108,6 +108,30 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
   );
   for (const [index, source] of completeExamples.entries())
     await writeFile(join(temporary, `composition-${index}.tsx`), source);
+  const formGuide = await readFile(
+    join(temporary, "node_modules/@abuzareal/contour-ui/FORMS.md"),
+    "utf8",
+  );
+  const formExamples = [...formGuide.matchAll(/```tsx\n([\s\S]*?)```/g)].map(
+    (match) => match[1],
+  );
+  assert.equal(formExamples.length, 2, "complete core form guide examples");
+  for (const [index, source] of formExamples.entries())
+    await writeFile(join(temporary, `forms-${index}.tsx`), source);
+  for (const file of [
+    "NativeSettingsForm.tsx",
+    "settings.ts",
+    "useSubmission.ts",
+  ]) {
+    await cp(
+      join(
+        temporary,
+        "node_modules/@abuzareal/contour-ui/examples/forms",
+        file,
+      ),
+      join(temporary, file),
+    );
+  }
   await writeFile(
     join(temporary, "tsconfig.json"),
     JSON.stringify({
@@ -121,7 +145,14 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         skipLibCheck: false,
         allowArbitraryExtensions: true,
       },
-      include: ["main.tsx", "composition-*.tsx"],
+      include: [
+        "main.tsx",
+        "composition-*.tsx",
+        "forms-*.tsx",
+        "NativeSettingsForm.tsx",
+        "settings.ts",
+        "useSubmission.ts",
+      ],
     }),
   );
   execFileSync(
@@ -140,7 +171,11 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
     },
   });
   // Exercise the packed runtime, not repository-relative source or dist imports.
-  for (const file of ["components.test.mjs", "public-api.test.mjs"]) {
+  for (const file of [
+    "components.test.mjs",
+    "public-api.test.mjs",
+    "forms.test.mjs",
+  ]) {
     const testSource = (await readFile(join("tests", file), "utf8")).replaceAll(
       "../dist/index.js",
       "@abuzareal/contour-ui",
@@ -149,7 +184,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
   }
   execFileSync(
     process.execPath,
-    ["--test", "components.test.mjs", "public-api.test.mjs"],
+    ["--test", "components.test.mjs", "public-api.test.mjs", "forms.test.mjs"],
     {
       cwd: temporary,
       stdio: "inherit",
