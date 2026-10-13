@@ -1,6 +1,6 @@
 /** Thin progress rule (like the opening's acid line); omit `value` for an indeterminate sweep. */
 import type { CSSProperties } from "react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type ProgressBarProps = {
   label: string;
@@ -16,8 +16,8 @@ export default function ProgressBar({
 }: ProgressBarProps) {
   const indeterminate = value === undefined;
   return (
-    <div className={cx("progress", `progress-${tone}`)}>
-      <div className="progress-header mono">
+    <div className={ccx("progress", `progress-${tone}`)}>
+      <div className={ccx("progress-header mono")}>
         <span>{label}</span>
         {!indeterminate && <span>{Math.round(value)}%</span>}
       </div>
@@ -27,13 +27,13 @@ export default function ProgressBar({
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={indeterminate ? undefined : value}
-        className={cx(
+        className={ccx(
           "progress-track",
           indeterminate && "progress-indeterminate",
         )}
         style={{ "--progress": `${value ?? 0}%` } as CSSProperties}
       >
-        <span className="progress-fill" />
+        <span className={ccx("progress-fill")} />
       </div>
     </div>
   );

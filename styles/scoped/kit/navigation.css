@@ -1,0 +1,266 @@
+/* Kit — navigation: tabs, breadcrumbs, pagination, and stepper. */
+
+.contour-tabs {
+  display: grid;
+  gap: 24px;
+}
+
+.contour-tabs-list {
+  position: relative;
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--contour-line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.contour-tabs-list::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: var(--contour-indicator-left, var(--indicator-left));
+  width: var(--contour-indicator-width, var(--indicator-width));
+  height: 2px;
+  background: var(--contour-fg);
+  transition:
+    left var(--contour-duration-base) var(--contour-ease),
+    width var(--contour-duration-base) var(--contour-ease);
+}
+
+.contour-tabs-tab {
+  flex-shrink: 0;
+  padding: 12px 0 14px;
+  font-size: 13px;
+  color: var(--contour-muted);
+  transition: color var(--contour-duration-fast);
+}
+
+.contour-tabs-tab:hover,
+.contour-tabs-tab[aria-selected="true"] {
+  color: var(--contour-fg);
+}
+
+.contour-tabs-tab:focus-visible {
+  outline-offset: -2px;
+}
+
+.contour-tabs-panel {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--contour-muted);
+}
+
+.contour-tabs-panel:focus-visible {
+  outline-offset: 4px;
+}
+
+.contour-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.contour-breadcrumbs li {
+  display: flex;
+  align-items: center;
+  color: var(--contour-muted);
+}
+
+.contour-breadcrumbs li + li::before {
+  content: "/";
+  margin-inline: 10px;
+  color: var(--contour-line-strong);
+}
+
+.contour-breadcrumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--contour-duration-fast),
+    border-color var(--contour-duration-fast);
+}
+
+.contour-breadcrumbs a:hover {
+  color: var(--contour-fg);
+  border-color: currentColor;
+}
+
+.contour-breadcrumbs [aria-current="page"] {
+  color: var(--contour-fg);
+}
+
+.contour-pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contour-pagination ol {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.contour-pagination-page,
+.contour-pagination-step {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: var(--contour-radius-pill);
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast);
+}
+
+.contour-pagination-page {
+  color: var(--contour-muted);
+}
+
+.contour-pagination-page:hover {
+  color: var(--contour-fg);
+  background: color-mix(in srgb, var(--contour-fg) 7%, transparent);
+}
+
+.contour-pagination-page[aria-current="page"] {
+  background: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+
+.contour-pagination-step {
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+}
+
+.contour-pagination-step:hover:not(:disabled) {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-pagination-step:disabled {
+  opacity: 0.35;
+}
+
+.contour-pagination-gap {
+  min-width: 20px;
+  text-align: center;
+  color: var(--contour-muted);
+}
+
+.contour-stepper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}
+
+.contour-stepper-step {
+  position: relative;
+  display: grid;
+  gap: 12px;
+}
+
+.contour-stepper-step:not(:last-child) {
+  padding-inline-end: 12px;
+}
+
+/* Connector rule from this marker to the next, kept inside the step. */
+.contour-stepper-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 40px;
+  right: 8px;
+  height: 1px;
+  background: var(--contour-line-strong);
+}
+
+.contour-stepper-complete:not(:last-child)::after {
+  background: var(--contour-fg);
+}
+
+.contour-stepper-marker {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--contour-line-strong);
+  border-radius: 50%;
+  color: var(--contour-muted);
+}
+
+.contour-stepper-complete .contour-stepper-marker {
+  background: var(--contour-invert-bg);
+  border-color: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+}
+
+.contour-stepper-current .contour-stepper-marker {
+  background: var(--contour-acid);
+  border-color: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+.contour-stepper-text {
+  display: grid;
+  gap: 2px;
+}
+
+.contour-stepper-label {
+  font-size: 14px;
+}
+
+.contour-stepper-upcoming .contour-stepper-label {
+  color: var(--contour-muted);
+}
+
+.contour-stepper-description {
+  color: var(--contour-muted);
+}
+
+@media (max-width: 639px) {
+  .contour-stepper {
+    grid-auto-flow: row;
+    gap: 12px;
+  }
+
+  .contour-stepper-step {
+    grid-template-columns: 32px 1fr;
+    align-items: center;
+    padding-inline-end: 0;
+  }
+
+  .contour-stepper-step:not(:last-child)::after {
+    top: 40px;
+    left: 16px;
+    right: auto;
+    width: 1px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 479px) {
+  .contour-pagination {
+    gap: 6px;
+  }
+
+  .contour-pagination ol {
+    gap: 2px;
+  }
+
+  .contour-pagination-page,
+  .contour-pagination-step {
+    min-width: 30px;
+    height: 30px;
+  }
+
+  .contour-pagination-gap {
+    min-width: 14px;
+  }
+}
+
+:dir(rtl) .contour-pagination-step svg {
+  transform: scaleX(-1);
+}

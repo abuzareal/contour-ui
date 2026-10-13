@@ -1,0 +1,6 @@
+/* Optional global normalization. Page layout, colors and typography belong to the application. */
+*, ::before, ::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+button, input, select, textarea { font: inherit; }
+[hidden]:where(:not([hidden="until-found"])) { display: none; }

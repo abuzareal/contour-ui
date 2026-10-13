@@ -1,6 +1,6 @@
 /** Compact mono label for status and metadata; tones follow the status palette. */
 import type { ReactNode } from "react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type BadgeTone =
   "accent" | "neutral" | "invert" | "success" | "info" | "warning" | "danger";
@@ -20,8 +20,8 @@ export default function Badge({
   icon,
 }: BadgeProps) {
   return (
-    <span className={cx("badge mono", `badge-${tone}`)}>
-      {dot && <span className="badge-dot" aria-hidden="true" />}
+    <span className={ccx("badge mono", `badge-${tone}`)}>
+      {dot && <span className={ccx("badge-dot")} aria-hidden="true" />}
       {icon}
       {children}
     </span>

@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",
@@ -18,7 +18,10 @@
     "PUBLIC-API.md",
     "COMPOSITION.md",
     "FORMS.md",
-    "examples/forms"
+    "examples/forms",
+    "OVERLAYS.md",
+    "STYLING.md",
+    "SIZE.md"
   ],
   "sideEffects": [
     "**/*.css"
@@ -48,7 +51,18 @@
     "./reset.css": "./dist/reset.css",
     "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
-    "./fonts-latin.css": "./dist/fonts-latin.css"
+    "./fonts-latin.css": "./dist/fonts-latin.css",
+    "./scoped.css": "./dist/scoped.css",
+    "./scoped-tokens.css": "./dist/scoped-tokens.css",
+    "./minimal-reset.css": "./dist/minimal-reset.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./actions.css": "./dist/actions.css",
+    "./forms.css": "./dist/forms.css",
+    "./navigation.css": "./dist/navigation.css",
+    "./data-display.css": "./dist/data-display.css",
+    "./feedback.css": "./dist/feedback.css",
+    "./overlays.css": "./dist/overlays.css",
+    "./effects.css": "./dist/effects.css"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -57,16 +71,22 @@
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node --test tests/*.browser.mjs",
     "check:package": "node scripts/check-package.mjs",
-    "validate": "npm run typecheck && npm run lint && npm run build && npm test && npm run test:browser && npm run check:package",
+    "validate": "npm run check:styles && npm run typecheck && npm run lint && npm run build && npm test && npm run test:browser && npm run check:package",
     "prepublishOnly": "node scripts/verify-release.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
     "test:compat": "node scripts/test-compat.mjs",
     "test:optional": "node scripts/test-optional-consumer.mjs",
     "test:next": "npm run build && node scripts/test-next.mjs",
     "verify:release": "node scripts/verify-release.mjs",
-    "test:form-recipes": "node scripts/test-form-recipes.mjs"
+    "test:form-recipes": "node scripts/test-form-recipes.mjs",
+    "build:styles": "node scripts/build-styles.mjs",
+    "measure:size": "node scripts/measure-size.mjs",
+    "check:size": "node scripts/measure-size.mjs --check",
+    "check:api-docs": "node scripts/check-api-docs.mjs",
+    "check:styles": "node scripts/build-styles.mjs --check"
   },
   "dependencies": {
+    "@floating-ui/dom": "1.8.0",
     "@fontsource-variable/dm-sans": "^5.3.0",
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@fontsource/dm-mono": "^5.3.0",
@@ -95,6 +115,7 @@
     "jsdom": "^30.1.2",
     "lenis": "^1.3.26",
     "oxlint": "^1.81.0",
+    "postcss": "8.5.29",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "three": "^0.186.1",

@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { nextIndexForKey } from "../../lib/keyboard.js";
-import { cx } from "../../lib/classNames.js";
+import { cx, ccx } from "../../lib/classNames.js";
 import useTabRefs from "../../hooks/useTabRefs.js";
 import type { NativePartProps } from "../../lib/componentProps.js";
 
@@ -93,10 +93,10 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
     tab.panelProps?.id ?? `${baseId}-panel-${tab.id}`;
 
   return (
-    <div {...rest} ref={ref} id={id} className={cx("tabs", className)}>
+    <div {...rest} ref={ref} id={id} className={ccx("tabs", className)}>
       <div
         {...listProps}
-        className={cx("tabs-list", listProps?.className)}
+        className={ccx("tabs-list", listProps?.className)}
         role="tablist"
         aria-label={label}
         style={
@@ -120,7 +120,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
               aria-selected={selected}
               aria-controls={panelId(tab)}
               tabIndex={selected ? 0 : -1}
-              className={cx("tabs-tab", tab.buttonProps?.className)}
+              className={ccx("tabs-tab", tab.buttonProps?.className)}
               onClick={(event) => {
                 tab.buttonProps?.onClick?.(event);
                 if (!event.defaultPrevented) select(tab);
@@ -128,7 +128,17 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
               onKeyDown={(event) => {
                 tab.buttonProps?.onKeyDown?.(event);
                 if (event.defaultPrevented) return;
-                const next = nextIndexForKey(event.key, index, tabs.length);
+                const next = nextIndexForKey(
+                  event.key,
+                  index,
+                  tabs.length,
+                  "horizontal",
+                  event.currentTarget.ownerDocument.defaultView?.getComputedStyle(
+                    event.currentTarget,
+                  ).direction === "rtl"
+                    ? "rtl"
+                    : "ltr",
+                );
                 if (next === null) return;
                 event.preventDefault();
                 select(tabs[next], true);
@@ -151,7 +161,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
           )}
           hidden={tab.id !== selectedId}
           tabIndex={0}
-          className={cx("tabs-panel", tab.panelProps?.className)}
+          className={ccx("tabs-panel", tab.panelProps?.className)}
         >
           {tab.content}
         </div>

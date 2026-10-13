@@ -9,7 +9,7 @@ import {
   type CSSProperties,
   type InputHTMLAttributes,
 } from "react";
-import { cx } from "../../lib/classNames.js";
+import { cx, ccx } from "../../lib/classNames.js";
 import useControlRef from "../../hooks/useControlRef.js";
 import useFormReset from "../../hooks/useFormReset.js";
 
@@ -88,9 +88,9 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
       ? Math.min(100, Math.max(0, ((readout - min) / (max - min)) * 100))
       : 0;
   return (
-    <div className="slider">
-      <div className="slider-header mono">
-        <label htmlFor={id} className="field-label">
+    <div className={ccx("slider")}>
+      <div className={ccx("slider-header mono")}>
+        <label htmlFor={id} className={ccx("field-label")}>
           {label}
         </label>
         <output htmlFor={id}>{format(readout)}</output>
@@ -126,12 +126,12 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
         }}
       />
       {hint && (
-        <span id={`${id}-hint`} className="choice-description">
+        <span id={`${id}-hint`} className={ccx("choice-description")}>
           {hint}
         </span>
       )}
       {error && (
-        <span id={`${id}-error`} className="choice-error mono">
+        <span id={`${id}-error`} className={ccx("choice-error mono")}>
           {error}
         </span>
       )}

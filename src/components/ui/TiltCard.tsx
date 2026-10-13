@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Card that tilts in 3D toward a fine pointer with a moving glare highlight. */
 import { useRef, type ReactNode } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";
@@ -14,10 +16,10 @@ export default function TiltCard({ children, maxTilt = 12 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="tilt-stage">
+    <div className={ccx("tilt-stage")}>
       <div
         ref={ref}
-        className="tilt-card"
+        className={ccx("tilt-card")}
         onPointerMove={(event) => {
           const element = ref.current;
           if (
@@ -47,7 +49,7 @@ export default function TiltCard({ children, maxTilt = 12 }: TiltCardProps) {
         }}
       >
         {children}
-        <span className="tilt-glare" aria-hidden="true" />
+        <span className={ccx("tilt-glare")} aria-hidden="true" />
       </div>
     </div>
   );

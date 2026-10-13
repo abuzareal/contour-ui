@@ -1,10 +1,12 @@
 /** Round avatar showing a photo or Space Grotesk initials, with an optional presence dot. */
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type AvatarProps = {
   name: string;
+  initials?: string;
   src?: string;
   size?: "sm" | "md" | "lg" | "xl";
+  statusLabel?: string;
   status?: "online" | "away";
 };
 
@@ -18,24 +20,26 @@ const initialsOf = (name: string) =>
 
 export default function Avatar({
   name,
+  initials,
   src,
   size = "md",
   status,
+  statusLabel,
 }: AvatarProps) {
   return (
-    <span className={cx("avatar", `avatar-${size}`)}>
+    <span className={ccx("avatar", `avatar-${size}`)}>
       {src ? (
         <img src={src} alt={name} loading="lazy" decoding="async" />
       ) : (
-        <span role="img" aria-label={name} className="avatar-initials">
-          {initialsOf(name)}
+        <span role="img" aria-label={name} className={ccx("avatar-initials")}>
+          {initials ?? initialsOf(name)}
         </span>
       )}
       {status && (
         <span
-          className={cx("avatar-status", `avatar-status-${status}`)}
+          className={ccx("avatar-status", `avatar-status-${status}`)}
           role="img"
-          aria-label={status === "online" ? "Online" : "Away"}
+          aria-label={statusLabel ?? (status === "online" ? "Online" : "Away")}
         />
       )}
     </span>

@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "node": "v26.10.0",
+    "react": "19.3.0",
+    "next": "16.4.0",
+    "vite": "8.3.2",
+    "compression": "gzip level 9 per file; independent gzip samples are not summed into an application total",
+    "externalDependencies": [],
+    "excluded": "Source maps, images (none in fixtures), optional Three.js/Lenis entries; Next disk totals include only fetched client assets, not server output",
+    "network": "Fresh page requests after DOM/network idle and document.fonts.ready; transfer/encoded/decoded bytes from Resource Timing plus navigation",
+    "sourceCommit": "b5a95c8f39311bf97e635126e548271a87c08b5b",
+    "workingTreeDirty": true,
+    "playwright": "1.63.0",
+    "archive": {
+      "sha256": "727ee8bfbd62e673d2a12538b3fa704383373106b0cd108ea5a1f38604368ace",
+      "compressedBytes": 204822,
+      "unpackedBytes": 633757,
+      "files": 259
+    },
+    "package": {
+      "name": "@abuzareal/contour-ui",
+      "version": "0.5.0",
+      "dependencies": {
+        "@floating-ui/dom": "1.8.0",
+        "@fontsource-variable/dm-sans": "^5.3.0",
+        "@fontsource-variable/space-grotesk": "^5.3.0",
+        "@fontsource/dm-mono": "^5.3.0",
+        "lucide-react": "^1.49.0"
+      }
+    },
+    "lockfileSha256": "7dff1f13aed0b4cdef68cf1e5d510a622e2f5c58975f853c834d620aa1168869",
+    "chromium": "153.0.8010.12"
+  },
+  "policy": "Baseline production raw fetched JS/CSS totals. Gate allows 10 percent plus 1024 bytes for chunk/minifier drift; review deliberate growth. Gzip values stay per-file. Exact tool and package versions recorded.",
+  "baseline": {
+    "vite/button-icons-aggregate": {
+      "jsRawBytes": 227336,
+      "cssRawBytes": 45908,
+      "fontRequests": 0
+    },
+    "vite/button-icons-selective": {
+      "jsRawBytes": 227336,
+      "cssRawBytes": 13889,
+      "fontRequests": 0
+    },
+    "vite/button-aggregate": {
+      "jsRawBytes": 227152,
+      "cssRawBytes": 45908,
+      "fontRequests": 0
+    },
+    "vite/button-selective": {
+      "jsRawBytes": 227152,
+      "cssRawBytes": 13889,
+      "fontRequests": 0
+    },
+    "vite/settings-aggregate": {
+      "jsRawBytes": 239319,
+      "cssRawBytes": 45908,
+      "fontRequests": 0
+    },
+    "vite/settings-selective": {
+      "jsRawBytes": 239319,
+      "cssRawBytes": 22795,
+      "fontRequests": 0
+    },
+    "vite/table-aggregate": {
+      "jsRawBytes": 233022,
+      "cssRawBytes": 45908,
+      "fontRequests": 0
+    },
+    "vite/table-selective": {
+      "jsRawBytes": 233022,
+      "cssRawBytes": 38769,
+      "fontRequests": 0
+    },
+    "next/button": {
+      "jsRawBytes": 457751,
+      "cssRawBytes": 44859,
+      "fontRequests": 0
+    },
+    "next/settings": {
+      "jsRawBytes": 470670,
+      "cssRawBytes": 44859,
+      "fontRequests": 0
+    },
+    "next/table": {
+      "jsRawBytes": 464123,
+      "cssRawBytes": 44859,
+      "fontRequests": 0
+    }
+  },
+  "budgets": {
+    "vite/button-icons-aggregate": {
+      "jsRawBytes": 251094,
+      "cssRawBytes": 51523,
+      "fontRequests": 0
+    },
+    "vite/button-icons-selective": {
+      "jsRawBytes": 251094,
+      "cssRawBytes": 16302,
+      "fontRequests": 0
+    },
+    "vite/button-aggregate": {
+      "jsRawBytes": 250892,
+      "cssRawBytes": 51523,
+      "fontRequests": 0
+    },
+    "vite/button-selective": {
+      "jsRawBytes": 250892,
+      "cssRawBytes": 16302,
+      "fontRequests": 0
+    },
+    "vite/settings-aggregate": {
+      "jsRawBytes": 264275,
+      "cssRawBytes": 51523,
+      "fontRequests": 0
+    },
+    "vite/settings-selective": {
+      "jsRawBytes": 264275,
+      "cssRawBytes": 26099,
+      "fontRequests": 0
+    },
+    "vite/table-aggregate": {
+      "jsRawBytes": 257349,
+      "cssRawBytes": 51523,
+      "fontRequests": 0
+    },
+    "vite/table-selective": {
+      "jsRawBytes": 257349,
+      "cssRawBytes": 43670,
+      "fontRequests": 0
+    },
+    "next/button": {
+      "jsRawBytes": 504551,
+      "cssRawBytes": 50369,
+      "fontRequests": 0
+    },
+    "next/settings": {
+      "jsRawBytes": 518762,
+      "cssRawBytes": 50369,
+      "fontRequests": 0
+    },
+    "next/table": {
+      "jsRawBytes": 511560,
+      "cssRawBytes": 50369,
+      "fontRequests": 0
+    }
+  }
+}

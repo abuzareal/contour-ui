@@ -6,7 +6,7 @@ Use it when you want this visual style with typed controls, feedback, navigation
 
 [Live catalogue](https://contour.abuzr.in/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
 
-This source checkout targets **0.4.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+This source checkout targets **0.5.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 [Public API and maturity register](PUBLIC-API.md) · [Architecture, scope and compatibility](CONTRACTS.md)
 
@@ -14,44 +14,54 @@ Version 0.3.0 adds native refs for actions/choices and typed root/part props for
 
 Version 0.4.0 adds native named/external form submission and controlled/default/reset support for Switch, Slider and RadioGroup, plus caller IDs for Checkbox. See [the form guide](FORMS.md) and the copyable native/RHF source recipes shipped in examples/forms. React Hook Form is an application dependency; no runtime dependency or CSS rewrite is added. New form props are absent from 0.3.0.
 
+Version 0.5 adds topmost overlay dismissal, hoverable hints, collision-aware body/modal portals, scoped/prefixed CSS and themes, local labels/formatters, selective style entries and measured size gates. Floating UI DOM is a new runtime positioning dependency. Default portal DOM placement changes ancestor selectors; see [overlay migration](OVERLAYS.md), [styling and embedding](STYLING.md) and [measured costs](SIZE.md). Legacy styles/imports remain available. This is an early 0.x release, not a 1.0 milestone.
+
 ## Install
 
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.4.0 --save-exact
+npm install @abuzareal/contour-ui@0.5.0 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
 
 ## First component
 
-Import the styles once in your application entry. Import components directly from the package; no generated files or local re-exports are needed.
+Import the styles once in your application entry. This isolated first-use recipe uses system fonts and no global reset; its scope owns only local theme state. Import components directly from the package; no generated files or local re-exports are needed.
 
 ```tsx
 import { useState } from "react";
-import "@abuzareal/contour-ui/reset.css";
-import "@abuzareal/contour-ui/fonts.css";
-import "@abuzareal/contour-ui/styles.css";
-import { Button, TextField, ThemeToggle } from "@abuzareal/contour-ui";
+import "@abuzareal/contour-ui/scoped.css";
+import {
+  Button,
+  TextField,
+  ThemeToggle,
+  ThemeScope,
+} from "@abuzareal/contour-ui";
 
 export default function App() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [name, setName] = useState("");
   const [savedName, setSavedName] = useState("");
 
   return (
-    <main data-motion="off">
-      <ThemeToggle animate={false} />
-      <TextField
-        label="Name"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
-      <Button variant="accent" onClick={() => setSavedName(name)}>
-        Save locally
-      </Button>
-      <p role="status">{savedName && `Saved for this session: ${savedName}`}</p>
-    </main>
+    <ThemeScope theme={theme} onThemeChange={setTheme}>
+      <main data-motion="off">
+        <ThemeToggle animate={false} />
+        <TextField
+          label="Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <Button variant="accent" onClick={() => setSavedName(name)}>
+          Save locally
+        </Button>
+        <p role="status">
+          {savedName && `Saved for this session: ${savedName}`}
+        </p>
+      </main>
+    </ThemeScope>
   );
 }
 ```
@@ -72,13 +82,15 @@ import "@abuzareal/contour-ui/fonts-latin.css";
 
 | Import            | Purpose                                                                                                                                            |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styles.css`      | Required for the supplied appearance: tokens, component styles, and utilities.                                                                     |
+| `styles.css`      | Legacy global aggregate: tokens, component styles and layout compatibility utilities.                                                              |
 | `reset.css`       | Optional global reset. Omit it if your app already has equivalent native-control defaults, border-box sizing, focus styles, and a `[hidden]` rule. |
 | `fonts-latin.css` | Optional Latin-only WOFF2 fonts, available since 0.1.2. Use instead of `fonts.css`, not alongside it.                                              |
 | `fonts.css`       | Optional self-hosted Space Grotesk, DM Sans, and DM Mono via Fontsource. Your bundler emits the font assets.                                       |
 | `tokens.css`      | Tokens alone, for an app that supplies its own component styles. Already included by `styles.css`.                                                 |
 
-Override semantic tokens after importing the styles:
+For new integrations, prefer `scoped.css`, optional `minimal-reset.css`, and `--contour-*` overrides. Family entries and the shipped `tokens.json` schema are documented in [STYLING.md](STYLING.md) and [SIZE.md](SIZE.md). The table and override example below describe **legacy compatibility imports**.
+
+Override legacy semantic tokens after importing those styles:
 
 ```css
 :root {
@@ -92,13 +104,13 @@ Override semantic tokens after importing the styles:
 }
 ```
 
-Styles use global component classes and document-level theme tokens. Scope your application's classes to avoid collisions with names such as `.card` and `.button`. Contour's CSS isn't isolated with Shadow DOM or CSS Modules.
+Legacy styles use global component classes and document-level theme tokens; isolated styles use prefixed hooks and ThemeScope. Scope your application's classes to avoid collisions with names such as `.card` and `.button`. Contour's CSS isn't isolated with Shadow DOM or CSS Modules.
 
-The three Fontsource packages and `lucide-react` are direct dependencies. Omitting `fonts.css` keeps its font assets out of your application's bundle; the font packages still install. React and React DOM are peers. Three.js and Lenis are optional peers. Development tools aren't installed as Contour's consumer dependencies; tests and tooling are excluded from the npm archive.
+The three Fontsource packages, `lucide-react` and `@floating-ui/dom` are direct dependencies. Omitting `fonts.css` keeps its font assets out of your application's bundle; the font packages still install. React and React DOM are peers. Three.js and Lenis are optional peers. Development tools aren't installed as Contour's consumer dependencies; tests and tooling are excluded from the npm archive.
 
 ## Theme and motion
 
-Set `data-theme="light"` or `"dark"` on `<html>`. `ThemeToggle` and `useTheme(animate)` read the same document state. The hook returns `{ theme, toggle }`; call `toggle(buttonElement)` from a user action. Preferences use the `aa-theme` local-storage key and are local to the site's origin.
+For embedded/mixed themes, use controlled ThemeScope with isolated CSS; scoped toggles do not write document state or storage. For legacy document ownership, set `data-theme="light"` or `"dark"` on `<html>`. `ThemeToggle` and `useTheme(animate)` read the same document state. The hook returns `{ theme, toggle, canToggle }`; call `toggle(buttonElement)` from a user action. Preferences use the `aa-theme` local-storage key and are local to the site's origin.
 
 For theme selection before first paint, inject `themeBootstrapScript` from `@abuzareal/contour-ui/theme-bootstrap` into the HTML head at build time. The exported string has no user interpolation. With a strict Content Security Policy, authorize that script with a nonce or hash.
 
@@ -166,7 +178,7 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 **0.2.0** adds native field refs, controlled tabs and popover/menu open state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.4.0 --save-exact
+npm install @abuzareal/contour-ui@0.5.0 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
@@ -187,6 +199,8 @@ npm pack --dry-run
 ```
 
 `validate` checks types, lint, builds, Node/component tests, dialog, native form/composition and Three.js browser behavior, and archive contents. `test:compat` builds packed React 18/19 consumers and compiles the source with React 19 types. `test:consumer` checks one packed consumer, with optional peers absent. `test:optional` verifies strict `/three` and `/scroll` declarations and builds their imports with explicit peers and Three.js types. The compatibility gate also runs shipped native/RHF recipe browser checks on React 18/19 and compiles the legacy form recipe against npm 0.3.0. It runs both optional/core checks and verifies the Latin font assets. Compatibility runs need registry access for clean installs.
+
+`measure:size` / `check:size` build real Vite/Next consumers and keep JS/CSS/fonts/archive/install/network costs separate. `build:styles` generates isolated CSS from the token schema; public source links are checked against declarations.
 
 `src/` owns components, hooks, helpers, and public entries. `styles/` owns CSS. `tests/` owns regressions and browser checks; `scripts/` owns builds and package/consumer checks. `dist/` is generated. `RELEASING.md` in the source checkout and package archive covers validation and publication.
 
@@ -238,7 +252,7 @@ Custom `useThreeStage` setup can register disposal through `context.onDispose?.(
 
 ## Compatibility boundaries
 
-Styles are global, not a scoped CSS engine. Existing class names such as `.field` and `.menu` can collide with host CSS. Import Contour styles before deliberate application overrides; keep application selectors area-prefixed. The optional reset and fonts affect the document. Tokens use root `data-theme`; `useTheme` retains the legacy `aa-theme` local-storage key for compatibility. A multi-library page must decide which system owns its root theme.
+Legacy aggregate styles remain global. The new isolated CSS path is documented in STYLING.md; it is not Shadow DOM or immunity from arbitrary host selectors. Existing class names such as `.field` and `.menu` can collide with host CSS. Import Contour styles before deliberate application overrides; keep application selectors area-prefixed. The optional reset and fonts affect the document. Tokens use root `data-theme`; `useTheme` retains the legacy `aa-theme` local-storage key for compatibility. A multi-library page must decide which system owns its root theme.
 
 Menus and popovers remain local panels without portals or collision detection; use them where the container can accommodate their content. No submenu or arbitrary trigger-composition contract is claimed. BrandMark and page/editorial helpers preserve existing identity and layout assumptions; they are optional exports rather than universal primitives. Do not copy private internals or deep-import them.
 

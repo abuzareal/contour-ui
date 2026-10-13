@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
@@ -11,7 +11,9 @@ const directory =
   process.env.CONTOUR_RELEASE_DIR ??
   (await mkdtemp(join(tmpdir(), "contour-release-")));
 try {
+  await mkdir(directory, { recursive: true });
   run("npm", ["run", "validate"]);
+  run("npm", ["run", "check:api-docs"]);
   const archive = await packedArchive(directory);
   const checksum = createHash("sha256")
     .update(await readFile(archive))
@@ -22,6 +24,10 @@ try {
   run(process.execPath, ["scripts/test-next.mjs"], {
     ...env,
     CONTOUR_NEXT_OPTIONAL: "1",
+  });
+  run("npm", ["run", "check:size"], {
+    ...env,
+    CONTOUR_SIZE_OUTPUT: join(directory, "size-report.json"),
   });
   run("npm", ["audit", "--audit-level=low"]);
   if (

@@ -6,6 +6,18 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.5.0
+
+Combined overlay, styling and size work. This heading records source work, not npm publication.
+
+- Shared owner-document topmost dismissal and matching paint order for nested/sibling/portaled layers; cancellation, outside focus, ancestor visibility, native backdrop priority and cleanup are covered by regressions. Mobile-menu dismissal cooperates with the same registry.
+- Popover/Menu/Tooltip gain collision-aware placement, bounded scrolling, RTL and CSS-zoom handling via Floating UI DOM 1.8.0. Default body/native-modal portals escape clipping and carry theme values/direction. Default DOM placement changes ancestor selectors; use direct part hooks or portal=false for a deliberate local integration. Public refs/state callbacks and void useDismiss remain compatible.
+- Hoverable/persistent supplemental tooltips retain descriptions/names and Escape suppression. Public button renderTrigger and focus policies avoid nested controls; native Dialog preserves focus/scroll/lifecycle behavior and accepts explicit initial focus.
+- Add isolated scoped.css, prefixed classes/tokens, controlled ThemeScope, minimal-reset.css, token JSON generation, forced-color states, logical RTL layouts and configurable internal labels/formatters. Legacy globals, branded fonts and application-layout compatibility remain; no consumer migration is performed. Compact density is deferred pending a concrete need.
+- Add measured Vite/Next Button/settings/table fixtures, selected-icon comparison, actual network/install/archive categories, selective CSS entries and reviewed regression budgets. System fonts make no font requests; Fontsource/Lucide install costs are retained and disclosed. Three.js/Lenis remain optional and absent from core fixtures.
+
+See OVERLAYS.md, STYLING.md and SIZE.md for migration, behavior, measurements and evidence boundaries. Independent applications/site versions are not upgraded by this package release.
+
 ## 0.4.0
 
 Native forms and tested application recipes. This heading records source work, not npm publication.

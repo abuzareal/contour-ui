@@ -1,3 +1,4 @@
+import { ccx } from "../../lib/classNames.js";
 /** Placeholder for empty, error, or success moments: large icon, title, message, and an optional action. */
 import type { ReactNode } from "react";
 
@@ -15,8 +16,8 @@ export default function EmptyState({
   action,
 }: EmptyStateProps) {
   return (
-    <div className="empty-state">
-      <span className="empty-state-icon" aria-hidden="true">
+    <div className={ccx("empty-state")}>
+      <span className={ccx("empty-state-icon")} aria-hidden="true">
         {icon}
       </span>
       <h3>{title}</h3>

@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Thin acid bar fixed to the top of the viewport that tracks page scroll progress. */
 import { useEffect, useRef } from "react";
 
@@ -27,5 +29,7 @@ export default function ScrollProgress() {
     };
   }, []);
 
-  return <div ref={ref} className="scroll-progress" aria-hidden="true" />;
+  return (
+    <div ref={ref} className={ccx("scroll-progress")} aria-hidden="true" />
+  );
 }

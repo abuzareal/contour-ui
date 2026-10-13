@@ -1,3 +1,4 @@
+import { ccx } from "../../lib/classNames.js";
 /** Endless horizontal ticker of items; pauses on hover and stays still for reduced motion. */
 import type { CSSProperties } from "react";
 import { Asterisk } from "lucide-react";
@@ -12,7 +13,7 @@ export type MarqueeProps = {
 export default function Marquee({ items, label, duration = 28 }: MarqueeProps) {
   // The track is rendered twice so the loop has no visible seam.
   const track = (hidden: boolean) => (
-    <ul className="marquee-track" aria-hidden={hidden || undefined}>
+    <ul className={ccx("marquee-track")} aria-hidden={hidden || undefined}>
       {items.map((item) => (
         <li key={item}>
           <Asterisk size={18} aria-hidden="true" />
@@ -24,12 +25,12 @@ export default function Marquee({ items, label, duration = 28 }: MarqueeProps) {
 
   return (
     <div
-      className="marquee"
+      className={ccx("marquee")}
       role="region"
       aria-label={label}
       style={{ "--marquee-duration": `${duration}s` } as CSSProperties}
     >
-      <div className="marquee-inner">
+      <div className={ccx("marquee-inner")}>
         {track(false)}
         {track(true)}
       </div>

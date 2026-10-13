@@ -1,6 +1,6 @@
 /** Shimmering placeholder block shown while content loads. */
 import type { CSSProperties } from "react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type SkeletonProps = {
   shape?: "line" | "block" | "circle";
@@ -16,7 +16,7 @@ export default function Skeleton({
   return (
     <span
       aria-hidden="true"
-      className={cx("skeleton", `skeleton-${shape}`)}
+      className={ccx("skeleton", `skeleton-${shape}`)}
       style={{ width, height } as CSSProperties}
     />
   );

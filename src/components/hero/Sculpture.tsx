@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Hero sculpture: three chrome/lime links that follow the pointer and drift while motion is on. */
 import { useRef } from "react";
 import * as THREE from "three";
@@ -79,6 +81,10 @@ export default function Sculpture({ motionEnabled }: SculptureProps) {
   });
 
   return (
-    <div ref={hostRef} className="sculpture-canvas" data-state="loading" />
+    <div
+      ref={hostRef}
+      className={ccx("sculpture-canvas")}
+      data-state="loading"
+    />
   );
 }

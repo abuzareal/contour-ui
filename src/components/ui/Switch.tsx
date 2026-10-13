@@ -10,7 +10,7 @@ import {
   type ButtonHTMLAttributes,
   type FormEventHandler,
 } from "react";
-import { cx } from "../../lib/classNames.js";
+import { cx, ccx } from "../../lib/classNames.js";
 import useControlRef from "../../hooks/useControlRef.js";
 import useFormReset from "../../hooks/useFormReset.js";
 
@@ -30,6 +30,7 @@ export type SwitchProps = Omit<
   /** Submitted only when checked; defaults to the native checkbox value "on". */
   value?: string;
   required?: boolean;
+  requiredMessage?: string;
   description?: string;
   error?: string;
   /** Native invalid event from the backing checkbox; preventDefault owns feedback/focus. */
@@ -46,6 +47,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
     error,
     disabled,
     required,
+    requiredMessage = "Turn on this option to continue.",
     name,
     form,
     value = "on",
@@ -66,9 +68,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
   const current = checked ?? localChecked;
   const { ref: button, attach } = useControlRef(forwardedRef);
   const input = useRef<HTMLInputElement>(null);
-  const message =
-    error ??
-    (invalid && !current ? "Turn on this option to continue." : undefined);
+  const message = error ?? (invalid && !current ? requiredMessage : undefined);
   useLayoutEffect(() => {
     if (input.current) {
       input.current.defaultChecked = initial;
@@ -83,7 +83,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
   });
 
   return (
-    <div className="switch">
+    <div className={ccx("switch")}>
       <button
         {...rest}
         ref={attach}
@@ -104,7 +104,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
           ) || undefined
         }
         disabled={disabled}
-        className={cx("switch-track", className)}
+        className={ccx("switch-track", className)}
         onClick={(event) => {
           onClick?.(event);
           if (event.defaultPrevented) return;
@@ -117,7 +117,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
           onChange?.(!current);
         }}
       >
-        <span className="switch-thumb" />
+        <span className={ccx("switch-thumb")} />
       </button>
       <input
         ref={input}
@@ -144,17 +144,17 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
           }
         }}
       />
-      <label htmlFor={id} className="choice-text">
-        <span id={`${id}-label`} className="choice-label">
+      <label htmlFor={id} className={ccx("choice-text")}>
+        <span id={`${id}-label`} className={ccx("choice-label")}>
           {label}
         </span>
         {description && (
-          <span id={`${id}-description`} className="choice-description">
+          <span id={`${id}-description`} className={ccx("choice-description")}>
             {description}
           </span>
         )}
         {message && (
-          <span id={`${id}-error`} className="choice-error mono">
+          <span id={`${id}-error`} className={ccx("choice-error mono")}>
             {message}
           </span>
         )}

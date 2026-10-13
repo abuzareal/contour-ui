@@ -1,6 +1,6 @@
 # Next.js App Router integration
 
-This guide describes **Contour 0.4.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
+This guide describes **Contour 0.5.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
 
 In `app/layout.tsx`, load CSS once:
 
@@ -53,3 +53,5 @@ Run `npm run test:next` to rebuild and consume the candidate archive. The fixtur
 The 0.4.0 fixture also verifies Button native-ref focus and styled Next Link ordinary/canceled/middle-click navigation. Use [the composition guide](COMPOSITION.md#native-and-router-links) for the Link recipe; Button remains an action rather than a polymorphic navigation component.
 
 Named form/reset APIs and copyable form recipes are described in [FORMS.md](FORMS.md). They remain client interactions; server-side validation and persistence belong to your application.
+
+For embedded first use, substitute scoped.css, omit fonts/bootstrap/reset, and wrap client controls in controlled ThemeScope. The size fixture separately measures Button/settings/table routes with system fonts on the same pinned webpack configuration. Existing document-owned/branded integration above remains compatible; new portal migration and family imports are described in OVERLAYS.md and SIZE.md.

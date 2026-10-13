@@ -1,0 +1,20 @@
+/* Kit — feedback: alerts, toasts, progress, spinner, and skeletons. */
+
+/* Banner: one-line announcement strip on the inverted surface. */
+
+.contour-spinner {
+  display: inline-grid;
+  place-items: center;
+  color: var(--contour-olive);
+}
+
+.contour-spinner svg {
+  animation: contour-spin 1.1s linear infinite;
+}
+
+.contour-button .contour-spinner {
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+}

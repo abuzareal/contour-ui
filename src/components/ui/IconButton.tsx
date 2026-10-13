@@ -2,7 +2,7 @@
 
 /** Circular icon-only button (the portfolio's source/copy button), with a required accessible label. */
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import { cx } from "../../lib/classNames.js";
+import { ccx } from "../../lib/classNames.js";
 
 export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
@@ -34,7 +34,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         type={type}
         aria-label={label}
         title={rest.title ?? label}
-        className={cx(
+        className={ccx(
           "icon-button",
           `icon-button-${variant}`,
           `icon-button-${size}`,

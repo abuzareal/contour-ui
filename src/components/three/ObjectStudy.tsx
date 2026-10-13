@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Lays out a set of 3D objects in a responsive grid; each turns slowly and the set leans toward the pointer. */
 import { useRef } from "react";
 import * as THREE from "three";
@@ -101,7 +103,7 @@ export default function ObjectStudy({
   return (
     <div
       ref={hostRef}
-      className="stage-canvas"
+      className={ccx("stage-canvas")}
       data-state="loading"
       role="img"
       aria-label={label}

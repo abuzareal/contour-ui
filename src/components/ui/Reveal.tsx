@@ -1,6 +1,7 @@
 "use client";
 
 /** Fades and lifts its children into view the first time they enter the viewport. */
+import { ccx } from "../../lib/classNames.js";
 import { useEffect, useRef, type ReactNode } from "react";
 
 export type RevealProps = {
@@ -21,13 +22,13 @@ export default function Reveal({
     const element = ref.current;
     if (!element) return;
     if (typeof IntersectionObserver === "undefined") {
-      element.classList.add("is-visible");
+      element.classList.add("is-visible", "contour-is-visible");
       return;
     }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        element.classList.add("is-visible");
+        element.classList.add("is-visible", "contour-is-visible");
         observer.disconnect();
       },
       { threshold: 0, rootMargin: "0px 0px -24px 0px" },
@@ -39,7 +40,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`}
+      className={ccx("reveal", className)}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

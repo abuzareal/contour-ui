@@ -34,6 +34,7 @@ try {
           "@types/react-dom": `^${typeMajor}.0.0`,
           "@testing-library/react": "^16.3.3",
           jsdom: "^30.1.2",
+          postcss: "8.5.29",
         },
       },
       null,
@@ -118,6 +119,28 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
   assert.equal(formExamples.length, 2, "complete core form guide examples");
   for (const [index, source] of formExamples.entries())
     await writeFile(join(temporary, `forms-${index}.tsx`), source);
+  for (const guide of ["STYLING.md", "OVERLAYS.md"]) {
+    const source = await readFile(
+      join(temporary, "node_modules/@abuzareal/contour-ui", guide),
+      "utf8",
+    );
+    const examples = [...source.matchAll(/```tsx\n([\s\S]*?)```/g)].map(
+      (match) => match[1],
+    );
+    assert.equal(
+      examples.length,
+      guide === "STYLING.md" ? 2 : 1,
+      `complete ${guide} examples`,
+    );
+    for (const [index, example] of examples.entries())
+      await writeFile(
+        join(
+          temporary,
+          `${guide.replace(".md", "").toLowerCase()}-${index}.tsx`,
+        ),
+        example,
+      );
+  }
   for (const file of [
     "NativeSettingsForm.tsx",
     "settings.ts",
@@ -149,6 +172,8 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         "main.tsx",
         "composition-*.tsx",
         "forms-*.tsx",
+        "styling-*.tsx",
+        "overlays-*.tsx",
         "NativeSettingsForm.tsx",
         "settings.ts",
         "useSubmission.ts",
@@ -175,6 +200,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
     "components.test.mjs",
     "public-api.test.mjs",
     "forms.test.mjs",
+    "overlays.test.mjs",
   ]) {
     const testSource = (await readFile(join("tests", file), "utf8")).replaceAll(
       "../dist/index.js",
@@ -184,7 +210,13 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
   }
   execFileSync(
     process.execPath,
-    ["--test", "components.test.mjs", "public-api.test.mjs", "forms.test.mjs"],
+    [
+      "--test",
+      "components.test.mjs",
+      "public-api.test.mjs",
+      "forms.test.mjs",
+      "overlays.test.mjs",
+    ],
     {
       cwd: temporary,
       stdio: "inherit",

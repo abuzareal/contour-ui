@@ -1,0 +1,58 @@
+/* Kit — data display: badges, tags, avatars, keys, stats, cards, tables, timelines, dividers, marquee, empty states. */
+
+/* Overlapping stack; each avatar is ringed in the page colour. */
+
+/* Rail and marker drawn from the entry so they never drift from the text. */
+
+.contour-marquee {
+  overflow: hidden;
+  background: var(--contour-invert-bg);
+  color: var(--contour-invert-fg);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.contour-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: contour-marquee var(--marquee-duration, 28s) linear infinite;
+}
+
+.contour-marquee:hover .contour-marquee-inner {
+  animation-play-state: paused;
+}
+
+.contour-marquee-track {
+  display: flex;
+}
+
+.contour-marquee-track li {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 28px 18px 0;
+  font: 500 28px / 1.1 var(--contour-font-display);
+  white-space: nowrap;
+}
+
+.contour-marquee-track svg {
+  color: var(--contour-inverse-accent);
+}
+
+@keyframes contour-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .contour-marquee-track li {
+    font-size: 22px;
+  }
+}

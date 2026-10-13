@@ -1,5 +1,7 @@
 "use client";
 
+import { ccx } from "../../lib/classNames.js";
+
 /** Pulls its child toward a fine pointer while hovered, then springs back (an awwwards staple). */
 import { useRef, type ReactNode } from "react";
 import { motionDisabledFor } from "../../lib/motion.js";
@@ -17,7 +19,7 @@ export default function Magnetic({ children, strength = 0.35 }: MagneticProps) {
   return (
     <span
       ref={ref}
-      className="magnetic"
+      className={ccx("magnetic")}
       onPointerMove={(event) => {
         const element = ref.current;
         if (

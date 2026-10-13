@@ -1,0 +1,309 @@
+/* Kit — feedback: alerts, toasts, progress, spinner, and skeletons. */
+
+.contour-alert {
+  --contour-alert-accent: var(--contour-fg);
+  --contour-alert-bg: var(--contour-surface);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-inline-start: 3px solid var(--contour-alert-accent);
+  background: var(--contour-alert-bg);
+}
+
+.contour-alert-accent {
+  --contour-alert-accent: var(--contour-olive);
+  --contour-alert-bg: color-mix(in srgb, var(--contour-acid) 22%, var(--contour-surface));
+}
+
+.contour-alert-success {
+  --contour-alert-accent: var(--contour-success);
+  --contour-alert-bg: var(--contour-success-soft);
+}
+
+.contour-alert-info {
+  --contour-alert-accent: var(--contour-info);
+  --contour-alert-bg: var(--contour-info-soft);
+}
+
+.contour-alert-warning {
+  --contour-alert-accent: var(--contour-warning);
+  --contour-alert-bg: var(--contour-warning-soft);
+}
+
+.contour-alert-danger {
+  --contour-alert-accent: var(--contour-danger);
+  --contour-alert-bg: var(--contour-danger-soft);
+}
+
+.contour-alert-icon {
+  display: inline-flex;
+  margin-top: 1px;
+  color: var(--contour-alert-accent);
+}
+
+.contour-alert-content {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.contour-alert-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contour-alert-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--contour-fg) 80%, transparent);
+}
+
+.contour-alert-action {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.contour-alert-dismiss {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin: -4px -6px 0 0;
+  border-radius: 50%;
+  color: var(--contour-muted);
+  transition:
+    background var(--contour-duration-fast),
+    color var(--contour-duration-fast);
+}
+
+.contour-alert-dismiss:hover {
+  background: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+/* Banner: one-line announcement strip on the inverted surface. */
+.contour-alert-banner {
+  --contour-alert-accent: var(--contour-inverse-accent);
+  --contour-alert-bg: var(--contour-invert-bg);
+  align-items: center;
+  border-inline-start: 0;
+  color: var(--contour-invert-fg);
+}
+
+.contour-alert-banner .contour-alert-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.contour-alert-banner .contour-alert-body,
+.contour-alert-banner .contour-alert-dismiss {
+  color: color-mix(in srgb, var(--contour-invert-fg) 72%, transparent);
+}
+
+.contour-toast-viewport {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 80;
+  display: grid;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+}
+
+.contour-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 16px 16px 0;
+  overflow: hidden;
+  background: var(--contour-ink);
+  color: var(--contour-paper);
+  box-shadow: var(--contour-shadow-floating);
+  animation: contour-toast-in var(--contour-duration-slow) var(--contour-ease) both;
+  border: 1px solid var(--contour-floating-outline);
+}
+
+.contour-toast-bar {
+  align-self: stretch;
+  width: 3px;
+  margin-block: -16px;
+  background: var(--contour-acid);
+}
+
+.contour-toast-success .contour-toast-bar {
+  background: #b5d33f;
+}
+
+.contour-toast-info .contour-toast-bar {
+  background: #8fc0d6;
+}
+
+.contour-toast-warning .contour-toast-bar {
+  background: #f0c063;
+}
+
+.contour-toast-danger .contour-toast-bar {
+  background: #ff8a70;
+}
+
+.contour-toast-content {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+}
+
+.contour-toast-content strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contour-toast-content p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #c0c5b8;
+}
+
+.contour-toast-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -4px;
+  border-radius: 50%;
+  color: #c0c5b8;
+}
+
+.contour-toast-close:hover {
+  background: var(--contour-acid);
+  color: var(--contour-ink);
+}
+
+@keyframes contour-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+.contour-progress {
+  display: grid;
+  gap: 10px;
+}
+
+.contour-progress-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--contour-muted);
+  text-transform: uppercase;
+}
+
+.contour-progress-track {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  background: var(--contour-line);
+}
+
+.contour-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--contour-progress, var(--progress));
+  background: var(--contour-fg);
+  transition: width var(--contour-duration-slow) var(--contour-ease);
+}
+
+.contour-progress-accent .contour-progress-fill {
+  background: var(--contour-olive);
+}
+
+.contour-progress-success .contour-progress-fill {
+  background: var(--contour-success);
+}
+
+.contour-progress-danger .contour-progress-fill {
+  background: var(--contour-danger);
+}
+
+.contour-progress-indeterminate .contour-progress-fill {
+  width: 35%;
+  animation: contour-progress-sweep 1.3s var(--contour-ease) infinite;
+}
+
+@keyframes contour-progress-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+.contour-spinner {
+  display: inline-grid;
+  place-items: center;
+  color: var(--contour-olive);
+}
+
+.contour-spinner svg {
+  animation: contour-spin 1.1s linear infinite;
+}
+
+.contour-button .contour-spinner {
+  color: inherit;
+}
+
+@keyframes contour-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.contour-skeleton {
+  display: block;
+  background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in srgb, var(--contour-bg) 70%, transparent) 50%,
+      transparent 70%
+    )
+    var(--contour-surface-sunken);
+  background-size: 220% 100%;
+  animation: contour-shimmer 1.6s linear infinite;
+}
+
+.contour-skeleton-line {
+  width: 100%;
+  height: 12px;
+}
+
+.contour-skeleton-block {
+  width: 100%;
+  height: 120px;
+}
+
+.contour-skeleton-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+@keyframes contour-shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .contour-toast-viewport {
+    right: 16px;
+    bottom: 16px;
+  }
+}

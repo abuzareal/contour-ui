@@ -1,27 +1,24 @@
 "use client";
-
-/** Calls onDismiss on Escape or a pointer press outside the container while `active`. */
-import { useEffect, type RefObject } from "react";
-
+import type { RefObject } from "react";
+import useLayerDismiss from "./useLayerDismiss.js";
+import type { DismissReason } from "../lib/layers.js";
+export type DismissOptions = {
+  /** Additional owned elements, including portaled content and the trigger. */
+  layerElement?: RefObject<HTMLElement | null>;
+  branches?: RefObject<HTMLElement | null>[];
+  /** Native modal backdrops own outside-click behavior. */
+  outside?: boolean;
+};
+/** Topmost layer dismissal in the container's document; caller cancellation is respected. */
+/** Preserves the public void-returning dismissal hook; built-in layers use an internal handle. */
 export default function useDismiss(
   container: RefObject<HTMLElement | null>,
   active: boolean,
-  onDismiss: (reason: "escape" | "outside") => void,
+  onDismiss: (
+    reason: DismissReason,
+    event: KeyboardEvent | PointerEvent,
+  ) => void,
+  options: DismissOptions = {},
 ) {
-  useEffect(() => {
-    if (!active) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onDismiss("escape");
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      if (!container.current?.contains(event.target as Node))
-        onDismiss("outside");
-    };
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [container, active, onDismiss]);
+  useLayerDismiss(container, active, onDismiss, options);
 }

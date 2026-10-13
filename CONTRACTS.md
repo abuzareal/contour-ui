@@ -1,6 +1,6 @@
 # Architecture, scope and compatibility
 
-Contract version **0.4.0**, reviewed 13 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
+Contract version **0.5.0**, reviewed 13 October 2026. Contour is an early 0.x React library with typed controls, paper/ink surfaces, a lime accent, light/dark themes, restrained motion and separate optional depth/scene APIs. The [public API and maturity register](PUBLIC-API.md) lists every exported value, type and stylesheet, its maintainer, status, use and limits.
 
 ## Intended adoption scope
 
@@ -91,3 +91,9 @@ Formal deprecation identifies replacement/affected versions, marks the API/docs 
 Releases choose an unused version, align manifest/lock/tag/changelog, validate a candidate archive and state material limits. Consumers keep exact pins until the released version is installed, their lockfile updated and relevant checks pass. Package publication does not deploy an application.
 
 1.0 requires settled supported contracts, appropriate docs/evidence, successful outside-use workflows and no known critical/high-impact defect in the promoted scope. Complete stabilization, then rerun final release gates. Deferred component backlog completion is not a prerequisite.
+
+## 0.5 overlay/style/size contract
+
+Default floating portals render in the owner body or active native modal, carrying scoped values/direction. Topmost dismissal, focus customization, closed-ancestor suspension and hover persistence follow OVERLAYS.md. Default portal DOM placement is an explicit 0.x migration; local placement remains available. Stable ref targets and the public void useDismiss return remain unchanged.
+
+Legacy aggregate/reset/tokens/classes remain compatibility mode. Isolated CSS, prefixed schema, controlled ThemeScope, optional minimal reset and measured family entries follow STYLING.md. Product/layout tokens remain legacy/app-owned. Scope persistence is caller-owned; document hooks retain aa-theme behavior. Compact density and a font-install packaging migration were evaluated and deferred with reasons in STYLING.md/SIZE.md. No zero-dependency, universal RTL/AT or production performance claim is added.
