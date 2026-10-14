@@ -27,9 +27,12 @@ export default function useInitialHashScroll() {
       window.addEventListener(event, markScrolled, { passive: true }),
     );
     document.fonts.ready.then(align);
-    return () =>
+    return () => {
+      // Font readiness cannot be cancelled; an unmounted owner must not scroll a later page.
+      userScrolled = true;
       userScrollEvents.forEach((event) =>
         window.removeEventListener(event, markScrolled),
       );
+    };
   }, []);
 }

@@ -72,6 +72,9 @@ import { Button, IconButton, DepthButton, ExternalLink, Checkbox, Slider, Switch
 import '@abuzareal/contour-ui/reset.css';
 import '@abuzareal/contour-ui/fonts.css';
 import '@abuzareal/contour-ui/styles.css';
+import JSSettingsForm from './onboarding/SettingsForm.jsx';
+import TSSettingsForm from './onboarding/SettingsForm.js';
+import {ClipboardExample, MotionExample, DismissExample, IdleExample, ScopedThemeExample, ToastExample} from './reference/HookExamples.js';
 function RefConsumer() {
   const container = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
@@ -93,7 +96,7 @@ function RefConsumer() {
   </div>;
 }
 const props: ButtonProps = { variant: 'accent', children: 'Forecast' };
-createRoot(document.getElementById('root')!).render(<main data-motion="off"><RefConsumer/><ThemeToggle animate={false}/><TextField label="City"/><Button {...props}/></main>);
+createRoot(document.getElementById('root')!).render(<main data-motion="off"><RefConsumer/><JSSettingsForm/><TSSettingsForm/><ClipboardExample/><MotionExample/><DismissExample/><IdleExample/><ScopedThemeExample/><ToastExample/><ThemeToggle animate={false}/><TextField label="City"/><Button {...props}/></main>);
 `,
   );
   const compositionGuide = await readFile(
@@ -167,6 +170,16 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
       join(temporary, file),
     );
   }
+  await cp(
+    join(temporary, "node_modules/@abuzareal/contour-ui/examples/reference"),
+    join(temporary, "reference"),
+    { recursive: true },
+  );
+  await cp(
+    join(temporary, "node_modules/@abuzareal/contour-ui/examples/onboarding"),
+    join(temporary, "onboarding"),
+    { recursive: true },
+  );
   await writeFile(
     join(temporary, "tsconfig.json"),
     JSON.stringify({
@@ -179,6 +192,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         noEmit: true,
         skipLibCheck: false,
         allowArbitraryExtensions: true,
+        allowJs: true,
       },
       include: [
         "main.tsx",
@@ -188,6 +202,8 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         "overlays-*.tsx",
         "combobox-*.tsx",
         "getting-started-*.tsx",
+        "onboarding/*",
+        "reference/*",
         "NativeSettingsForm.tsx",
         "settings.ts",
         "useSubmission.ts",
@@ -216,6 +232,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
     "forms.test.mjs",
     "overlays.test.mjs",
     "expansion.test.mjs",
+    "lifecycle.test.mjs",
   ]) {
     const testSource = (await readFile(join("tests", file), "utf8")).replaceAll(
       "../dist/index.js",
@@ -232,6 +249,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
       "forms.test.mjs",
       "overlays.test.mjs",
       "expansion.test.mjs",
+      "lifecycle.test.mjs",
     ],
     {
       cwd: temporary,

@@ -1,5 +1,12 @@
 import { execFileSync } from "node:child_process";
-import { mkdir, mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  writeFile,
+  rm,
+  access,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
@@ -12,6 +19,17 @@ const directory =
   (await mkdtemp(join(tmpdir(), "contour-release-")));
 try {
   await mkdir(directory, { recursive: true });
+  let previousIdentity = false;
+  try {
+    await access(join(directory, "verified-archive.json"));
+    previousIdentity = true;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  if (previousIdentity)
+    throw Error(
+      "Release directory already contains a verified identity; preserve it and choose a fresh directory.",
+    );
   run("npm", ["run", "validate"]);
   run("npm", ["run", "check:api-docs"]);
   const archive = await packedArchive(directory);
@@ -31,6 +49,8 @@ try {
     CONTOUR_SIZE_OUTPUT: join(directory, "size-report.json"),
   });
   run("npm", ["audit", "--audit-level=low"]);
+  // A known accessibility failure is still a failed release gate; never write verified identity afterward.
+  run("npm", ["run", "test:qa"]);
   if (
     createHash("sha256")
       .update(await readFile(archive))

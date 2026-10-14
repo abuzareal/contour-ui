@@ -1,4 +1,4 @@
-# Combobox — 0.6.0
+# Combobox — 0.6.1
 
 Search a list and choose **one allowed value**. Use native SelectField when its simpler platform interaction is sufficient. Combobox is not free-text autocomplete, global search, a command menu, a multi-select, or a virtualized picker. Selection is a string ID or null; query text is never a submitted selection. It needs no provider or consumer-installed foundation package. [Foundation decision](FOUNDATION.md).
 
@@ -42,7 +42,7 @@ This is local inspection, not persistence. The application's server must validat
 
 ## Types and defaults
 
-[ComboboxProps and ComboboxOption](PUBLIC-API.md) are emitted declarations; inherited native part props remain typed. [Released implementation](https://github.com/abuzareal/contour-ui/blob/v0.6.0/src/components/ui/Combobox.tsx). The ref targets the **visible HTMLInputElement**, including focus, selection and measurement; it does not target the hidden form input or popup.
+[ComboboxProps and ComboboxOption](PUBLIC-API.md) are emitted declarations; inherited native part props remain typed. [Released implementation](https://github.com/abuzareal/contour-ui/blob/v0.6.1/src/components/ui/Combobox.tsx). The ref targets the **visible HTMLInputElement**, including focus, selection and measurement; it does not target the hidden form input or popup.
 
 | Props                                                                  | Contract / default                                                                                                                                                                                                                                                                                                   |
 | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -82,6 +82,6 @@ Inherited theme and direction travel into portals; collision bounds and long lab
 
 Automated Chromium keyboard, touch emulation, synthetic composition, RTL, forced colors, native-dialog and packed React tests are evidence for those fixtures only. Manual screen-reader, physical keyboard/IME and mobile keyboard checks remain separate; no universal accessibility certification is claimed.
 
-**Open-state accessibility review:** the foundation temporarily hides background content from the accessibility tree while the list is active. Static axe checks report `aria-hidden-focus` on that background. Browser regressions verify that Tab/Shift+Tab close the list and restore visibility before focus remains on an outside control. This is retained as a finding requiring manual VoiceOver/NVDA review, not waived as a universal false positive or reported as a zero-finding scan. The [ACT rule's assumptions](https://www.w3.org/WAI/standards-guidelines/act/rules/6cfa84/) explicitly distinguish interactions that change aria-hidden. Do not claim WCAG conformance from these fixtures.
+**Open-state accessibility correction in 0.6.1:** Contour uses a labelled non-modal popup region and listbox, retaining Base UI's public selection/navigation/positioning parts. Opening it no longer hides the surrounding page. Whole-document axe scans pass in the selected Chromium/WebKit fixtures with no excluded rules; Tab and Shift+Tab close it while preserving native traversal. The older Base UI Popup composition's failing diagnostic remains available separately. See [support evidence and limitations](SUPPORT.md); manual VoiceOver/NVDA review remains pending. These fixtures do not establish WCAG conformance.
 
-[Report Combobox 0.6.0](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Combobox%200.6.0%3A%20&component=Combobox&version=0.6.0), using the [public minimal reproduction](examples/reproduction). Source links for this version resolve when its release tag is published.
+[Report Combobox 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Combobox%200.6.1%3A%20&component=Combobox&version=0.6.1), using the [public minimal reproduction](examples/reproduction). Source links for this version resolve when its release tag is published.

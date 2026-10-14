@@ -8,8 +8,12 @@ export default function usePrintPreparation() {
     const root = document.documentElement;
     let expanded: HTMLDetailsElement[] = [];
     let screenTheme: string | undefined;
+    let printing = false;
 
     const prepare = () => {
+      // Some browsers repeat beforeprint while the same print preview is open.
+      if (printing) return;
+      printing = true;
       expanded = [
         ...document.querySelectorAll<HTMLDetailsElement>("details:not([open])"),
       ];
@@ -18,9 +22,12 @@ export default function usePrintPreparation() {
       root.dataset.theme = "light";
     };
     const restore = () => {
+      if (!printing) return;
+      printing = false;
       expanded.forEach((details) => (details.open = false));
       expanded = [];
-      if (screenTheme) root.dataset.theme = screenTheme;
+      if (screenTheme === undefined) delete root.dataset.theme;
+      else root.dataset.theme = screenTheme;
     };
 
     window.addEventListener("beforeprint", prepare);
@@ -28,6 +35,7 @@ export default function usePrintPreparation() {
     return () => {
       window.removeEventListener("beforeprint", prepare);
       window.removeEventListener("afterprint", restore);
+      restore();
     };
   }, []);
 }

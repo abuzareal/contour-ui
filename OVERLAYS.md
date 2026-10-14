@@ -50,3 +50,7 @@ Production checks cover nested/sibling/portaled layers, native modal portals, to
 Keep a portal container stable while open. Changing its DOM target can remount the portaled subtree; keep unsaved child state in the owner when container changes are required.
 
 Default-open children choose an enclosing native dialog even before its open attribute is set. When Dialog calls showModal in the same commit, these children enter its top layer without an additional click or render.
+
+## Version and reproduction
+
+Reference version **0.6.1** (candidate until published). [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.1/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Overlays 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Overlays&version=0.6.1), using the [public minimal reproduction](examples/reproduction) and synthetic data.

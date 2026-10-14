@@ -29,7 +29,7 @@ jobs:
         run: node scripts/check-scope.mjs
       - run: npm ci --ignore-scripts
       - name: Types, lint, build and archive contents
-        run: npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:package && npm run check:api-docs && npm run check:docs
+        run: npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:package && npm run check:api-docs && npm run check:docs && npm run check:reference && npm run check:onboarding
       - if: steps.scope.outputs.runtime == 'true'
         run: npm test
       - if: steps.scope.outputs.runtime == 'true'
@@ -58,3 +58,15 @@ jobs:
           CONTOUR_SIZE_OUTPUT: ${{ runner.temp }}/contour-sizes.json
         run: npm run check:size
       - run: npm audit --audit-level=low
+
+      - name: Strict accessibility and visual QA
+        if: steps.scope.outputs.runtime == 'true'
+        run: npm run test:qa
+      - name: Retain failed QA evidence
+        if: failure() && steps.scope.outputs.runtime == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: contour-qa-failure
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",
@@ -30,7 +30,19 @@
     "examples/recipes",
     "examples/starters",
     "examples/reproduction",
-    "examples/optional"
+    "examples/optional",
+    "HOOKS.md",
+    "HELPERS.md",
+    "THREE.md",
+    "REFERENCE.md",
+    "PROP-REFERENCE.md",
+    "MIGRATION.md",
+    "MODELS.md",
+    "SUPPORT.md",
+    "MANUAL-QA.md",
+    "docs/prop-metadata.json",
+    "examples/onboarding",
+    "examples/reference"
   ],
   "sideEffects": [
     "**/*.css"
@@ -80,7 +92,7 @@
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node --test tests/*.browser.mjs",
     "check:package": "node scripts/check-package.mjs",
-    "validate": "npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:docs && npm test && npm run test:browser && npm run check:package",
+    "validate": "npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:docs && npm run check:reference && npm run check:onboarding && npm test && npm run test:browser && npm run check:package",
     "prepublishOnly": "node scripts/verify-release.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
     "test:compat": "node scripts/test-compat.mjs",
@@ -95,7 +107,12 @@
     "check:styles": "node scripts/build-styles.mjs --check",
     "test:adoption-recipes": "node scripts/test-adoption-recipes.mjs",
     "test:starters": "node scripts/test-starters.mjs",
-    "check:docs": "node scripts/check-docs.mjs"
+    "check:docs": "node scripts/check-docs.mjs",
+    "test:qa": "playwright test --config playwright.qa.config.mjs",
+    "check:reference": "node scripts/check-reference.mjs",
+    "check:onboarding": "node scripts/build-onboarding.mjs",
+    "qa:preview": "node scripts/qa-preview.mjs",
+    "test:diagnostic:upstream": "playwright test --config playwright.upstream.config.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
@@ -120,6 +137,7 @@
     }
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0",
     "@tanstack/react-store": "0.11.2",
     "@tanstack/react-table": "9.3.1",

@@ -24,3 +24,7 @@ coverage/
 /local-notes/
 /docs/content-strategy.md
 /docs/why-contour.md
+
+# Playwright QA artifacts
+/test-results/
+/playwright-report/
