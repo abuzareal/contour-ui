@@ -22,7 +22,7 @@ const runtime =
 const next =
   !paths?.length ||
   paths.some((path) =>
-    /^(package(?:-lock)?\.json|src\/|styles\/|scripts\/(?:build|test-next|packed-archive)|\.github\/workflows\/)/.test(
+    /^(package(?:-lock)?\.json|src\/|styles\/|examples\/|scripts\/(?:build|test-next|test-starters|test-adoption|size-fixtures|measure-size|packed-archive)|\.github\/workflows\/)/.test(
       path,
     ),
   );

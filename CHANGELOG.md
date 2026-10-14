@@ -6,6 +6,18 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.6.0
+
+Add allowed-value selection and public adoption material. This heading records source work, not npm publication.
+
+- Add single-select Combobox backed by pinned Base UI 1.9.0, with stable string IDs, controlled/default selection and query, visible input refs/native form association, missing-value validation, translated status strings, loading/error/retry and Contour theme/layer/native-dialog integration. Existing native controls and overlay APIs remain compatible; Base UI adds installed dependency cost that is disclosed and measured.
+- Add semantic Table with caption, native table ref/props and scroll-region part access. DataTable reuses the presentation frame while retaining its existing scalar/local-sort contract. TanStack Table 9.3.1/Store 0.11.2 stay application/development dependencies for a copyable controlled remote recipe.
+- Publish executable async search, destructive Dialog confirmation and input composition recipes with cancellation/stale-response guards and truthful failures. Record explicit NumberField, adornment, password and Text/Heading scope decisions rather than speculative new exports.
+- Ship independent pinned Vite/Next starters, an existing-app path, providers/forms/navigation/optional-feature guidance, script hash/nonce CSP integration and a public minimal reproduction. Add documentation coverage/issue links, copied-source checks and candidate-versus-registry starter verification.
+- Keep existing production size budgets; introduce separate measured Combobox journeys. Expand same-archive React 18/19, package/declaration, browser, starter and CI gates. Manual screen-reader/physical device evidence and private catalogue changes remain separate.
+
+See COMBOBOX.md, RECIPES.md, GETTING-STARTED.md, FOUNDATION.md and DOCS.md. This is an additive 0.x release, not a declaration of 1.0 readiness.
+
 ## 0.5.0
 
 Combined overlay, styling and size work. This heading records source work, not npm publication.

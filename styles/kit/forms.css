@@ -370,3 +370,37 @@ textarea {
     var(--line-strong) var(--progress)
   );
 }
+
+/* Combobox uses the same native field frame; the popup is an allowed-value list. */
+.combobox { min-width: 0; }
+.combobox-control { display: flex; align-items: center; gap: 8px; }
+.combobox-control input { min-width: 0; flex: 1; }
+.combobox-trigger, .combobox-retry {
+  border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer;
+}
+.combobox-trigger { display: grid; place-items: center; min-width: 36px; min-height: 36px; flex: none; }
+.combobox-trigger:disabled { cursor: default; opacity: .45; }
+.combobox-positioner { z-index: 30; }
+.combobox-popup {
+  width: var(--anchor-width, 16rem);
+  max-width: var(--available-width, calc(100vw - 16px));
+  max-height: min(320px, var(--available-height, 320px));
+  overflow: auto; overscroll-behavior: contain;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--fg); padding: 4px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / .12);
+}
+.combobox-list { outline: none; }
+.combobox-option { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; overflow-wrap: anywhere; cursor: default; }
+.combobox-option[data-highlighted] { background: var(--invert-bg); color: var(--invert-fg); outline: 2px solid currentColor; outline-offset: -2px; }
+.combobox-option[data-disabled] { opacity: .45; }
+.combobox-status { padding: 12px; font-size: 14px; }
+.combobox-retry { padding: 10px 12px; text-decoration: underline; }
+.combobox-trigger:focus-visible, .combobox-retry:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (forced-colors: active) {
+  .combobox-popup { border-color: CanvasText; background: Canvas; color: CanvasText; }
+  .combobox-option[data-highlighted] { background: Highlight; color: HighlightText; }
+  .combobox-option[data-disabled] { color: GrayText; opacity: 1; }
+}
+/* Keep the live region mounted without a blank row when there is no message. */
+.combobox-status:empty { padding: 0; }

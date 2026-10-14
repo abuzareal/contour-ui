@@ -1,6 +1,20 @@
 name: Bug report
 description: Report a reproducible component or package defect
 body:
+  - type: input
+    id: component
+    attributes:
+      label: Component or integration
+      description: Name the public component or recipe.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Installed Contour version
+      description: Exact package version, not the catalogue version.
+    validations:
+      required: true
   - type: textarea
     id: reproduction
     attributes:

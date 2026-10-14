@@ -4,6 +4,7 @@ import { ccx } from "../../lib/classNames.js";
 
 /** Editorial data table with mono headers, optional column sorting, and horizontal scroll on small screens. */
 import { useMemo, useState, type ReactNode } from "react";
+import Table from "./Table.js";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 export type TableColumn<Row> = {
@@ -55,66 +56,53 @@ export default function DataTable<Row extends Record<string, string | number>>({
     );
 
   return (
-    <div
-      className={ccx("table-scroll")}
-      tabIndex={0}
-      role="region"
-      aria-label={caption}
-    >
-      <table className={ccx("data-table")}>
-        <caption className={ccx("visually-hidden")}>{caption}</caption>
-        <thead className={ccx("mono")}>
-          <tr>
-            {columns.map((column) => {
-              const direction =
-                sort?.key === column.key ? sort.direction : undefined;
-              return (
-                <th
-                  key={column.key}
-                  scope="col"
-                  aria-sort={
-                    column.sortable ? (direction ?? "none") : undefined
-                  }
-                  data-align={column.align}
-                >
-                  {column.sortable ? (
-                    <button
-                      type="button"
-                      onClick={() => toggleSort(column.key)}
-                    >
-                      {column.header}
-                      {direction === "descending" ? (
-                        <ArrowDown size={12} aria-hidden="true" />
-                      ) : (
-                        <ArrowUp
-                          size={12}
-                          aria-hidden="true"
-                          className={ccx(
-                            direction ? undefined : "data-table-idle",
-                          )}
-                        />
-                      )}
-                    </button>
-                  ) : (
-                    column.header
-                  )}
-                </th>
-              );
-            })}
+    <Table caption={caption}>
+      <thead className={ccx("mono")}>
+        <tr>
+          {columns.map((column) => {
+            const direction =
+              sort?.key === column.key ? sort.direction : undefined;
+            return (
+              <th
+                key={column.key}
+                scope="col"
+                aria-sort={column.sortable ? (direction ?? "none") : undefined}
+                data-align={column.align}
+              >
+                {column.sortable ? (
+                  <button type="button" onClick={() => toggleSort(column.key)}>
+                    {column.header}
+                    {direction === "descending" ? (
+                      <ArrowDown size={12} aria-hidden="true" />
+                    ) : (
+                      <ArrowUp
+                        size={12}
+                        aria-hidden="true"
+                        className={ccx(
+                          direction ? undefined : "data-table-idle",
+                        )}
+                      />
+                    )}
+                  </button>
+                ) : (
+                  column.header
+                )}
+              </th>
+            );
+          })}
+        </tr>
+      </thead>
+      <tbody>
+        {sortedRows.map((row) => (
+          <tr key={String(row[rowKey])}>
+            {columns.map((column) => (
+              <td key={column.key} data-align={column.align}>
+                {column.render ? column.render(row) : row[column.key]}
+              </td>
+            ))}
           </tr>
-        </thead>
-        <tbody>
-          {sortedRows.map((row) => (
-            <tr key={String(row[rowKey])}>
-              {columns.map((column) => (
-                <td key={column.key} data-align={column.align}>
-                  {column.render ? column.render(row) : row[column.key]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        ))}
+      </tbody>
+    </Table>
   );
 }

@@ -277,10 +277,16 @@
 }
 
 .data-table {
+  color: var(--fg);
   width: 100%;
   min-width: 560px;
   border-collapse: collapse;
   font-size: 14px;
+}
+
+.data-table caption {
+  color: inherit;
+  text-align: left;
 }
 
 .data-table th {

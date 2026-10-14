@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
   mkdtemp,
+  cp,
   readFile,
   readdir,
   rm,
@@ -85,6 +86,11 @@ function App() {
 createRoot(document.getElementById('root')!).render(<App/>);
 `,
   );
+  await cp(
+    join(temporary, "node_modules/@abuzareal/contour-ui/examples/optional"),
+    join(temporary, "examples"),
+    { recursive: true },
+  );
   await writeFile(
     join(temporary, "tsconfig.json"),
     JSON.stringify({
@@ -99,7 +105,7 @@ createRoot(document.getElementById('root')!).render(<App/>);
         noEmit: true,
         types: ["react", "react-dom"],
       },
-      include: ["main.tsx"],
+      include: ["main.tsx", "examples/**/*"],
     }),
   );
   execFileSync(

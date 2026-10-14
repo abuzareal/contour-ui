@@ -368,3 +368,37 @@
     var(--contour-line-strong) var(--contour-progress, var(--progress))
   );
 }
+
+/* Combobox uses the same native field frame; the popup is an allowed-value list. */
+.contour-combobox { min-width: 0; }
+.contour-combobox-control { display: flex; align-items: center; gap: 8px; }
+.contour-combobox-control input { min-width: 0; flex: 1; }
+.contour-combobox-trigger, .contour-combobox-retry {
+  border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer;
+}
+.contour-combobox-trigger { display: grid; place-items: center; min-width: 36px; min-height: 36px; flex: none; }
+.contour-combobox-trigger:disabled { cursor: default; opacity: .45; }
+.contour-combobox-positioner { z-index: 30; }
+.contour-combobox-popup {
+  width: var(--anchor-width, 16rem);
+  max-width: var(--available-width, calc(100vw - 16px));
+  max-height: min(320px, var(--available-height, 320px));
+  overflow: auto; overscroll-behavior: contain;
+  border: 1px solid var(--contour-line); border-radius: var(--contour-radius-sm);
+  background: var(--contour-bg); color: var(--contour-fg); padding: 4px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / .12);
+}
+.contour-combobox-list { outline: none; }
+.contour-combobox-option { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; overflow-wrap: anywhere; cursor: default; }
+.contour-combobox-option[data-highlighted] { background: var(--contour-invert-bg); color: var(--contour-invert-fg); outline: 2px solid currentColor; outline-offset: -2px; }
+.contour-combobox-option[data-disabled] { opacity: .45; }
+.contour-combobox-status { padding: 12px; font-size: 14px; }
+.contour-combobox-retry { padding: 10px 12px; text-decoration: underline; }
+.contour-combobox-trigger:focus-visible, .contour-combobox-retry:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (forced-colors: active) {
+  .contour-combobox-popup { border-color: CanvasText; background: Canvas; color: CanvasText; }
+  .contour-combobox-option[data-highlighted] { background: Highlight; color: HighlightText; }
+  .contour-combobox-option[data-disabled] { color: GrayText; opacity: 1; }
+}
+/* Keep the live region mounted without a blank row when there is no message. */
+.contour-combobox-status:empty { padding: 0; }

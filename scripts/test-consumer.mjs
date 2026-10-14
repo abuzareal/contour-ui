@@ -48,7 +48,14 @@ try {
     "--no-fund",
     "--strict-peer-deps",
   ]);
-  for (const optional of ["three", "lenis", "react-hook-form"]) {
+  for (const optional of [
+    "three",
+    "lenis",
+    "react-hook-form",
+    "@tanstack/react-table",
+    "date-fns",
+    "@date-fns/tz",
+  ]) {
     await assert.rejects(stat(join(temporary, "node_modules", optional)), {
       code: "ENOENT",
     });
@@ -119,7 +126,12 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
   assert.equal(formExamples.length, 2, "complete core form guide examples");
   for (const [index, source] of formExamples.entries())
     await writeFile(join(temporary, `forms-${index}.tsx`), source);
-  for (const guide of ["STYLING.md", "OVERLAYS.md"]) {
+  for (const guide of [
+    "STYLING.md",
+    "OVERLAYS.md",
+    "COMBOBOX.md",
+    "GETTING-STARTED.md",
+  ]) {
     const source = await readFile(
       join(temporary, "node_modules/@abuzareal/contour-ui", guide),
       "utf8",
@@ -174,6 +186,8 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         "forms-*.tsx",
         "styling-*.tsx",
         "overlays-*.tsx",
+        "combobox-*.tsx",
+        "getting-started-*.tsx",
         "NativeSettingsForm.tsx",
         "settings.ts",
         "useSubmission.ts",
@@ -201,6 +215,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
     "public-api.test.mjs",
     "forms.test.mjs",
     "overlays.test.mjs",
+    "expansion.test.mjs",
   ]) {
     const testSource = (await readFile(join("tests", file), "utf8")).replaceAll(
       "../dist/index.js",
@@ -216,6 +231,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
       "public-api.test.mjs",
       "forms.test.mjs",
       "overlays.test.mjs",
+      "expansion.test.mjs",
     ],
     {
       cwd: temporary,
