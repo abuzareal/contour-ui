@@ -1,6 +1,6 @@
-# Application recipes — 0.6.0
+# Application recipes — 0.6.1
 
-The source linked here is the code copied, compiled and exercised by the package checks. These files are application code, not additional exports. Import components directly from the public package; copy only the recipe needed. There are no live services or fabricated successful operations. [Source at this release](https://github.com/abuzareal/contour-ui/tree/v0.6.0/examples/recipes).
+The source linked here is the code copied, compiled and exercised by the package checks. These files are application code, not additional exports. Import components directly from the public package; copy only the recipe needed. There are no live services or fabricated successful operations. [Source at this release](https://github.com/abuzareal/contour-ui/tree/v0.6.1/examples/recipes).
 
 ## Async single-select
 
@@ -40,4 +40,4 @@ The optional **password visibility recipe** keeps the same input mounted, name a
 
 Use native p/span and h1–h6 with [typography tokens](STYLING.md). Heading level follows the document outline; size/weight are CSS choices. No Text/Heading wrappers are added without an independent semantic/variant contract. These explicit scope decisions do not complete deferred NumberField, full grid, calendar or other optional features.
 
-[Report Table/recipes 0.6.0](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Table%20recipes%200.6.0%3A%20&component=Table%20recipes&version=0.6.0); [standalone reproduction](examples/reproduction). See [public API](PUBLIC-API.md) for exact types, [styling](STYLING.md) and [onboarding](GETTING-STARTED.md). Release source links become available with the published tag.
+[Report Table/recipes 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Table%20recipes%200.6.1%3A%20&component=Table%20recipes&version=0.6.1); [standalone reproduction](examples/reproduction). See [public API](PUBLIC-API.md) for exact types, [styling](STYLING.md) and [onboarding](GETTING-STARTED.md). Release source links become available with the published tag.

@@ -8,11 +8,16 @@ const activationLine = 0.3;
 
 export default function useScrollSpy(ids: string[]) {
   const [activeId, setActiveId] = useState("");
-  const key = ids.join("|");
+  const key = JSON.stringify(ids);
 
   useEffect(() => {
-    const elements = key
-      .split("|")
+    const parsed: unknown = JSON.parse(key);
+    if (
+      !Array.isArray(parsed) ||
+      !parsed.every((id: unknown): id is string => typeof id === "string")
+    )
+      return;
+    const elements = parsed
       .map((id) => document.getElementById(id))
       .filter((element): element is HTMLElement => element !== null);
     let frame = 0;

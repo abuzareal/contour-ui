@@ -191,3 +191,7 @@ Anchors have no native disabled state. Render a suitable non-link explanation wh
 ## Abstraction review
 
 Each addition serves a bounded need: native focus/measurement/trigger refs; existing Dialog/Tabs/Popover root/part access; ID-based reorder-safe tab focus; caller handler cancellation. Private helpers implement those lifecycles. No runtime dependency, provider, build/distribution/styling system, generic component-replacement API or blanket polymorphism is introduced. Existing menu disabled items, keyboard opening, typeahead, stable identity and focus return remain covered.
+
+## Version and reproduction
+
+Reference version **0.6.1** (candidate until published). [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.1/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Composition 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Composition&version=0.6.1), using the [public minimal reproduction](examples/reproduction) and synthetic data.

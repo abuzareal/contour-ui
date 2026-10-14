@@ -85,7 +85,19 @@ for (const target of [
 ])
   await access(target);
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
-for (const guide of ["COMBOBOX.md", "RECIPES.md", "GETTING-STARTED.md"]) {
+for (const guide of [
+  "COMBOBOX.md",
+  "RECIPES.md",
+  "GETTING-STARTED.md",
+  "HOOKS.md",
+  "HELPERS.md",
+  "THREE.md",
+  "PROP-REFERENCE.md",
+  "MIGRATION.md",
+  "MODELS.md",
+  "SUPPORT.md",
+  "MANUAL-QA.md",
+]) {
   const text = await readFile(guide, "utf8");
   assert.ok(text.includes(pkg.version), `${guide} version`);
   assert.ok(text.includes("examples/reproduction"), `${guide} reproduction`);

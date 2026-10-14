@@ -91,6 +91,12 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
     () => composeRefs(attach, inputProps?.ref, setAnchor),
     [attach, inputProps?.ref],
   );
+  const actions = useRef<BaseCombobox.Root.Actions | null>(null);
+  // The custom non-modal popup has no exit animation. Complete the public close
+  // lifecycle after it is hidden so controlled query text returns to the selected label.
+  useLayoutEffect(() => {
+    if (!visible) actions.current?.unmount();
+  }, [visible]);
   const root = useRef<HTMLDivElement>(null);
   const attachRoot = useMemo(
     () => composeRefs(root, rootProps?.ref),
@@ -154,9 +160,13 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
           Number.isFinite(collisionPadding) ? Math.max(0, collisionPadding) : 8
         }
       >
-        <BaseCombobox.Popup
+        {/* Keep the labelled list non-modal; the enclosing Dialog owns any focus containment. */}
+        <div
+          role="region"
+          aria-labelledby={`${id}-label`}
           {...popupProps}
           className={ccx("combobox-popup", popupProps?.className)}
+          hidden={!visible}
         >
           <BaseCombobox.Empty className={ccx("combobox-status")}>
             {loading ? loadingText : (searchError ?? emptyText)}
@@ -170,7 +180,10 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
               {retryLabel}
             </button>
           )}
-          <BaseCombobox.List className={ccx("combobox-list")}>
+          <BaseCombobox.List
+            className={ccx("combobox-list")}
+            aria-labelledby={`${id}-label`}
+          >
             {(option: ComboboxOption) => (
               <BaseCombobox.Item
                 className={ccx("combobox-option")}
@@ -185,7 +198,7 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
               </BaseCombobox.Item>
             )}
           </BaseCombobox.List>
-        </BaseCombobox.Popup>
+        </div>
       </BaseCombobox.Positioner>
     </FloatingScope>
   );
@@ -198,6 +211,7 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
         className={ccx("combobox", rootProps?.className)}
       >
         <BaseCombobox.Root
+          actionsRef={actions}
           items={collection}
           filteredItems={results}
           value={missing ? null : value}
@@ -228,7 +242,10 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
               details.cancel();
               return;
             }
-            if (!next) setQuery(null);
+            if (!next) {
+              details.preventUnmountOnClose();
+              setQuery(null);
+            }
             changeOpen(next);
           }}
           name={name}
@@ -269,6 +286,12 @@ const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
                     (event.key === "Escape" && !visible)
                   )
                     event.preventBaseUIHandler();
+                  else if (event.key === "Tab" && visible) {
+                    // Close even when native traversal leaves the document (for example Safari's last field).
+                    // Do not preventDefault: the browser still owns the next keyboard target.
+                    event.preventBaseUIHandler();
+                    close();
+                  }
                 }}
                 ref={attachInput}
                 id={id}

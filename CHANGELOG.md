@@ -6,6 +6,10 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.6.1
+
+Compatible source corrections; publication is pending. Restore print theme/disclosures on repeated events or unmount, cancel delayed hash alignment after unmount, preserve delimiter-containing scroll-spy IDs, and close an open Combobox on Tab without cancelling native traversal or changing selection. Add hook/helper/optional-entry references, emitted prop/example drift checks, JavaScript onboarding and migration/history material. Correct the open Combobox background hiding with a labelled non-modal popup, keeping Base UI selection/navigation/positioning parts. Strict whole-document accessibility scans now pass in selected Chromium/WebKit fixtures; the unmodified upstream composition remains a separate failing diagnostic. Add visual QA without excluding axe rules. Manual screen-reader checks remain pending; no universal accessibility claim is made.
+
 ## 0.6.0
 
 Add allowed-value selection and public adoption material. This heading records source work, not npm publication.

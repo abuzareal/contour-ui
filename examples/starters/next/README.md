@@ -9,7 +9,7 @@ npm run build
 npm start
 ```
 
-Direct versions: Contour 0.6.0, Next 16.4.0, React/React DOM 19.3.0, TypeScript 7.0.2; webpack explicitly selected. Commit the generated application lockfile and use npm ci afterward. There are no workspace aliases, optional Three/Lenis peers, fonts or required providers. To opt into branded fonts, import `@abuzareal/contour-ui/fonts-latin.css` in app/layout.tsx. Root CSS and route composition belong to the application.
+Direct versions: Contour 0.6.1, Next 16.4.0, React/React DOM 19.3.0, TypeScript 7.0.2; webpack explicitly selected. Commit the generated application lockfile and use npm ci afterward. There are no workspace aliases, optional Three/Lenis peers, fonts or required providers. To opt into branded fonts, import `@abuzareal/contour-ui/fonts-latin.css` in app/layout.tsx. Root CSS and route composition belong to the application.
 
 layout.tsx and the page are server components. Demo.tsx owns client state, refs and handlers. The pure theme-bootstrap subpath is server-safe; before-paint script changes only the root theme attribute and theme-color. The root's suppressHydrationWarning is narrowly for this attribute, not a workaround for arbitrary mismatches.
 

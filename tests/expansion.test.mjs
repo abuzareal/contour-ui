@@ -9,6 +9,7 @@ for (const key of [
   "window",
   "document",
   "Node",
+  "NodeFilter",
   "Element",
   "HTMLElement",
   "HTMLInputElement",
@@ -196,4 +197,31 @@ test("closed Combobox Escape preserves selection and reaches the enclosing layer
   );
   assert.deepEqual(changes, []);
   assert.equal(input.value, "Café");
+});
+
+test("open Combobox requests closure on Tab without cancelling native traversal or changing selection", () => {
+  const changed = [];
+  const view = render(
+    h(Combobox, {
+      label: "Tab selection",
+      options,
+      defaultValue: "c",
+      defaultOpen: true,
+      onOpenChange: (value) => changed.push(value),
+    }),
+  );
+  const input = view.getByRole("combobox", {
+    name: "Tab selection",
+    exact: true,
+  });
+  const native = new KeyboardEvent("keydown", {
+    key: "Tab",
+    bubbles: true,
+    cancelable: true,
+  });
+  act(() => input.dispatchEvent(native));
+  assert.equal(native.defaultPrevented, false);
+  assert.equal(input.getAttribute("aria-expanded"), "false");
+  assert.equal(input.value, "Café");
+  assert.deepEqual(changed, [false]);
 });

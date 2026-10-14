@@ -66,3 +66,7 @@ Caller content/labels remain application-owned. New local overrides cover Button
 Promoted forms, horizontal Tabs/SegmentedControl, pagination icons, menu placement and text alignment are checked in RTL; the keyboard helper accepts an optional direction while retaining LTR defaults. CSS uses logical inline spacing/borders where applicable. Coordinate-driven tab indicators remain physical measurements. No universal RTL promise is made for experimental 3D/effects or application scenes.
 
 Forced-color rules preserve focus, selected control outlines, radio marks, invalid field borders and floating panel boundaries. Production emulation checks both themes and focus; they do not certify every Windows theme or manual screen-reader workflow. Branded paper/ink/lime colors, outlines, typography and depth are retained by compatibility mode and by the isolated branded-font recipe; system-font first use is an intentional option.
+
+## Version and reproduction
+
+Reference version **0.6.1** (candidate until published). [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.1/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Styles 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Styles&version=0.6.1), using the [public minimal reproduction](examples/reproduction) and synthetic data.

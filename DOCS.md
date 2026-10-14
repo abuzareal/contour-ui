@@ -1,6 +1,6 @@
 # Public documentation contract and coverage
 
-For Contour 0.6.0, the public package/repository is an independent source of installation, API, recipe and reproduction material. The separate catalogue can describe an older installed release; its visual demos are not proof that this source version is installed there. Catalogue editing and per-component website promotion are separate work.
+For Contour 0.6.1, the public package/repository is an independent source of installation, API, recipe and reproduction material. The separate catalogue can describe an older installed release; its visual demos are not proof that this source version is installed there. Catalogue editing and per-component website promotion are separate work.
 
 ## Contract for a promoted guide
 
@@ -77,4 +77,10 @@ The coverage register below maps public UI components to an explicit shared refe
 
 ## Remaining promotion work
 
-The original website per-component pages, search/pattern discovery, legacy URL preservation, generated prop metadata and versioned website archives remain separate work. Existing shared guides must be audited against this contract before each component is promoted. Manual screen-reader/physical device evidence is tracked separately from automated fixture results. This register deliberately leaves those gaps visible.
+The original website per-component pages, search/pattern discovery, legacy URL preservation, full website prop-page generation and versioned website archives remain separate work. A bounded emitted-declaration prototype and drift gate now live in PROP-REFERENCE.md and docs/prop-metadata.json; REFERENCE.md maps all symbols and style/data paths. Existing shared guides must be audited against this contract before each component is promoted. Manual screen-reader/physical device evidence is tracked separately from automated fixture results. This register deliberately leaves those gaps visible.
+
+## Library reference work
+
+[HOOKS.md](HOOKS.md), [HELPERS.md](HELPERS.md) and [THREE.md](THREE.md) document non-component contracts and lifecycle ownership. [PROP-REFERENCE.md](PROP-REFERENCE.md) audits the nine historical guides and explains generated versus authored metadata. [MIGRATION.md](MIGRATION.md) preserves version-specific contracts and upgrade/rollback steps; [MODELS.md](MODELS.md) distinguishes package/source/company documentation models. [SUPPORT.md](SUPPORT.md) records automated/manual results and failures. Full PAGE website promotion remains separate.
+
+JavaScript and TypeScript onboarding use the same source contract: scripts/build-onboarding.mjs strips types into the shipped JSX example and check:onboarding detects drift. The examples are copied from the actual archive for strict TS/build checks and exercised as independent browser journeys. No private workspace guidance is required to consume them.
