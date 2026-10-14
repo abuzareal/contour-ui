@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  background: var(--contour-bg);
+  color: var(--contour-fg);
+}
+.starter {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  gap: 1.25rem;
+}
+.starter form {
+  display: grid;
+  gap: 1rem;
+}
+.starter output {
+  overflow-wrap: anywhere;
+}

@@ -6,7 +6,7 @@ Use it when you want this visual style with typed controls, feedback, navigation
 
 [Live catalogue](https://contour.abuzr.in/) · [npm package](https://www.npmjs.com/package/@abuzareal/contour-ui) · [Maintainer](https://github.com/abuzareal)
 
-This source checkout targets **0.5.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+This source checkout targets **0.6.0**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 [Public API and maturity register](PUBLIC-API.md) · [Architecture, scope and compatibility](CONTRACTS.md)
 
@@ -16,12 +16,14 @@ Version 0.4.0 adds native named/external form submission and controlled/default/
 
 Version 0.5 adds topmost overlay dismissal, hoverable hints, collision-aware body/modal portals, scoped/prefixed CSS and themes, local labels/formatters, selective style entries and measured size gates. Floating UI DOM is a new runtime positioning dependency. Default portal DOM placement changes ancestor selectors; see [overlay migration](OVERLAYS.md), [styling and embedding](STYLING.md) and [measured costs](SIZE.md). Legacy styles/imports remain available. This is an early 0.x release, not a 1.0 milestone.
 
+Version 0.6 adds a single-select [Combobox](COMBOBOX.md) backed by pinned Base UI, a semantic [Table and application recipes](RECIPES.md), public standalone Vite/Next starters, CSP setup and a minimal reproduction. [Start here](GETTING-STARTED.md); [foundation decision and measured dependency cost](FOUNDATION.md); [documentation coverage](DOCS.md). DataTable retains local scalar sorting. Async requests, deletion and remote table state stay application-owned. The private catalogue and independent consumers are not upgraded by this release.
+
 ## Install
 
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.5.0 --save-exact
+npm install @abuzareal/contour-ui@0.6.0 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
@@ -121,9 +123,9 @@ For theme selection before first paint, inject `themeBootstrapScript` from `@abu
 | Area                        | Public exports                                                                                                                                                  |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Actions                     | `Button`, `IconButton`, `ExternalLink`, `SegmentedControl`, `ThemeToggle`                                                                                       |
-| Forms                       | `Field`, `TextField`, `TextArea`, `SelectField`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`                                                                   |
+| Forms                       | `Field`, `TextField`, `TextArea`, `SelectField`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`                                                       |
 | Navigation                  | `Tabs`, `Breadcrumbs`, `Pagination`, `Stepper`, `DropdownMenu`                                                                                                  |
-| Data and layout             | `Avatar`, `Badge`, `Card`, `DataTable`, `Disclosure`, `Divider`, `EmptyState`, `Kbd`, `SectionLabel`, `Stat`, `Tag`, `Timeline`                                 |
+| Data and layout             | `Avatar`, `Badge`, `Card`, `DataTable`, `Table`, `Disclosure`, `Divider`, `EmptyState`, `Kbd`, `SectionLabel`, `Stat`, `Tag`, `Timeline`                        |
 | Feedback                    | `Alert`, `ProgressBar`, `Skeleton`, `Spinner`, `ToastProvider`, `useToast`                                                                                      |
 | Motion and identity         | `BrandMark`, `CountUp`, `DepthButton`, `FlipCard`, `Magnetic`, `Marquee`, `Reveal`, `RevealHeading`, `ScrollProgress`, `TiltCard`, `GitHubIcon`, `LinkedInIcon` |
 | Overlays and scene fallback | `Dialog`, `Popover`, `Tooltip`, `SceneBoundary`                                                                                                                 |
@@ -178,7 +180,7 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 **0.2.0** adds native field refs, controlled tabs and popover/menu open state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.5.0 --save-exact
+npm install @abuzareal/contour-ui@0.6.0 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.

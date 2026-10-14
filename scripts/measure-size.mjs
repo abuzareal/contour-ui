@@ -410,7 +410,7 @@ try {
         )
         .map((f) => f.path),
       definition:
-        "Intersection of JS URLs actually requested by all three fresh routes; not an estimate of library-only cost",
+        "Intersection of JS URLs actually requested by all measured fresh routes; not an estimate of library-only cost",
     };
     for (const route of routes)
       route.routeSpecificJs = route.files

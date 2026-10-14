@@ -34,7 +34,7 @@ const archive = Array.isArray(result) ? result[0] : Object.values(result)[0];
 for (const { path } of archive.files) {
   assert.match(
     path,
-    /^(dist\/|package\.json$|README\.md$|LICENSE$|CHANGELOG\.md$|SECURITY\.md$|RELEASING\.md$|CONTRIBUTING\.md$|CODE_OF_CONDUCT\.md$|NEXTJS\.md$|CONTRACTS\.md$|PUBLIC-API\.md$|COMPOSITION\.md$|FORMS\.md$|OVERLAYS\.md$|STYLING\.md$|SIZE\.md$|examples\/forms\/(?:NativeSettingsForm\.tsx|HookFormSettingsForm\.tsx|ManualSettingsForm-0\.3\.0\.tsx|useSubmission\.ts|settings\.ts)$)/,
+    /^(dist\/|package\.json$|(?:README|LICENSE|CHANGELOG|SECURITY|RELEASING|CONTRIBUTING|CODE_OF_CONDUCT|NEXTJS|CONTRACTS|PUBLIC-API|COMPOSITION|FORMS|OVERLAYS|STYLING|SIZE|FOUNDATION|COMBOBOX|RECIPES|GETTING-STARTED|DOCS)(?:\.md)?$|examples\/forms\/(?:NativeSettingsForm\.tsx|HookFormSettingsForm\.tsx|ManualSettingsForm-0\.3\.0\.tsx|useSubmission\.ts|settings\.ts)$|examples\/recipes\/(?:AsyncProjectPicker\.tsx|DeleteProjectConfirmation\.tsx|InputCompositions\.tsx|RemoteRecordsTable\.tsx|useRemoteResource\.ts)$|examples\/optional\/(?:LazyScene\.tsx|OptionalSmoothScroll\.tsx|SmoothScrollOwner\.tsx|optional\.css)$|examples\/(?:starters\/(?:vite|next)|reproduction)\/(?:package\.json|tsconfig\.json|README\.md|index\.html|vite\.config\.ts|next\.config\.mjs|next-env\.d\.ts|proxy\.ts|src\/(?:main\.tsx|style\.css)|app\/(?:layout\.tsx|page\.tsx|Demo\.tsx|style\.css|next-page\/page\.tsx))$)/,
   );
   assert.doesNotMatch(
     path,
@@ -64,6 +64,16 @@ for (const name of [
   "OVERLAYS.md",
   "STYLING.md",
   "SIZE.md",
+  "FOUNDATION.md",
+  "COMBOBOX.md",
+  "RECIPES.md",
+  "GETTING-STARTED.md",
+  "DOCS.md",
+  "examples/starters/vite/package.json",
+  "examples/starters/next/package.json",
+  "examples/reproduction/package.json",
+  "examples/recipes/AsyncProjectPicker.tsx",
+  "examples/optional/LazyScene.tsx",
   "examples/forms/NativeSettingsForm.tsx",
   "examples/forms/HookFormSettingsForm.tsx",
   "examples/forms/ManualSettingsForm-0.3.0.tsx",
@@ -77,6 +87,8 @@ for (const name of [
 }
 for (const file of [
   "components/ui/Button.js",
+  "components/ui/Combobox.js",
+  "components/ui/Table.js",
   "components/ui/IconButton.js",
   "components/ui/DepthButton.js",
   "components/ui/ExternalLink.js",

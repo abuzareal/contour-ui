@@ -39,7 +39,7 @@ export default function Field({
         htmlFor={id}
         className={ccx("field-label mono", hideLabel && "visually-hidden")}
       >
-        {label}
+        <span id={`${id}-label`}>{label}</span>
         {required && (
           <span className={ccx("field-required")} aria-hidden="true">
             *

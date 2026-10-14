@@ -273,10 +273,16 @@
 }
 
 .contour-data-table {
+  color: var(--contour-fg);
   width: 100%;
   min-width: 560px;
   border-collapse: collapse;
   font-size: 14px;
+}
+
+.contour-data-table caption {
+  color: inherit;
+  text-align: start;
 }
 
 .contour-data-table th {

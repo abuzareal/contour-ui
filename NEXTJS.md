@@ -1,6 +1,6 @@
 # Next.js App Router integration
 
-This guide describes **Contour 0.5.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
+This guide describes **Contour 0.6.0**. npm 0.1.2 does not include the client directives, native refs or relative Latin font files described here. Check npm for release availability before installing. The fixture pins Next 16.4.0 with React/React DOM 19.3.0, uses the webpack production build, and consumes an npm archive. It does not establish every Next version, Turbopack, Pages Router, scroll entries or hosting platform. A separate optional mode checks a lazy Three.js scene with SSR disabled and disposal on navigation.
 
 In `app/layout.tsx`, load CSS once:
 
@@ -55,3 +55,5 @@ The 0.4.0 fixture also verifies Button native-ref focus and styled Next Link ord
 Named form/reset APIs and copyable form recipes are described in [FORMS.md](FORMS.md). They remain client interactions; server-side validation and persistence belong to your application.
 
 For embedded first use, substitute scoped.css, omit fonts/bootstrap/reset, and wrap client controls in controlled ThemeScope. The size fixture separately measures Button/settings/table routes with system fonts on the same pinned webpack configuration. Existing document-owned/branded integration above remains compatible; new portal migration and family imports are described in OVERLAYS.md and SIZE.md.
+
+The standalone [Next starter](examples/starters/next) adds a tested per-request nonce CSP and dynamic layout using Next 16.4.0/React 19.3.0/webpack and TypeScript 7.0.2. Its strict DOM/ES2024 declaration check is separate from the older generated JS fixture. Follow [onboarding](GETTING-STARTED.md) for the existing-app, provider and optional-feature paths.

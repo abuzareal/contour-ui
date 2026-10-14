@@ -134,3 +134,11 @@ export type * from "./components/ui/ThemeScope.js";
 export type { FloatingOptions } from "./hooks/useFloatingPanel.js";
 export type { PanelFocusOptions } from "./hooks/usePanelFocus.js";
 export type { DismissReason } from "./lib/layers.js";
+
+export { default as Table, type TableProps } from "./components/ui/Table.js";
+
+export {
+  default as Combobox,
+  type ComboboxProps,
+  type ComboboxOption,
+} from "./components/ui/Combobox.js";

@@ -20,6 +20,7 @@ try {
     .digest("hex");
   const env = { ...process.env, CONTOUR_ARCHIVE: archive };
   run("npm", ["run", "test:compat"], env);
+  run(process.execPath, ["scripts/test-starters.mjs"], env);
   run(process.execPath, ["scripts/test-next.mjs"], env);
   run(process.execPath, ["scripts/test-next.mjs"], {
     ...env,

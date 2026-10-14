@@ -1,6 +1,6 @@
 # Package and application size
 
-A package archive, installed dependencies and a browser download are different costs. Contour does not claim to be zero-dependency or the lightest library. `scripts/measure-size.mjs` builds public-import Button, settings-form and table journeys in Vite and pinned Next App Router/webpack, loads fresh browser pages, and writes a JSON report. An additional Button-with-ArrowRight fixture measures the incremental selected-icon journey; it is not an isolated icon-function byte count.
+A package archive, installed dependencies and a browser download are different costs. Contour does not claim to be zero-dependency or the lightest library. `scripts/measure-size.mjs` builds public-import Button, settings-form, table and Combobox journeys in Vite and pinned Next App Router/webpack, loads fresh browser pages, and writes a JSON report. An additional Button-with-ArrowRight fixture measures the incremental selected-icon journey; it is not an isolated icon-function byte count.
 
 ```sh
 npm run build
@@ -8,7 +8,7 @@ CONTOUR_SIZE_OUTPUT=/absolute/path/sizes.json npm run measure:size
 CONTOUR_SIZE_OUTPUT=/absolute/path/check.json npm run check:size
 ```
 
-Set `CONTOUR_ARCHIVE` to the already packed candidate to reuse it. Fixtures install React/React DOM 19.3.0; Next uses 16.4.0, and Vite/Chromium/Node versions are recorded from the running tools. The report names package/source commit/dirty state, archive checksum/files/compressed/unpacked bytes, the fresh dependency lock hash, resolved dependency versions, fixtures, exclusions, raw/gzip file sizes and actual Resource Timing transfers. These are reproducible fixtures, not latency or production-site benchmarks. No React/framework externals are removed from the application totals. Next shared JS is the intersection of actually fetched URLs across the three fresh routes; route-specific JS is listed separately. Server build output is excluded from client bytes.
+Set `CONTOUR_ARCHIVE` to the already packed candidate to reuse it. Fixtures install React/React DOM 19.3.0; Next uses 16.4.0, and Vite/Chromium/Node versions are recorded from the running tools. The report names package/source commit/dirty state, archive checksum/files/compressed/unpacked bytes, the fresh dependency lock hash, resolved dependency versions, fixtures, exclusions, raw/gzip file sizes and actual Resource Timing transfers. These are reproducible fixtures, not latency or production-site benchmarks. No React/framework externals are removed from the application totals. Next shared JS is the intersection of actually fetched URLs across the measured fresh routes; route-specific JS is listed separately. Server build output is excluded from client bytes.
 
 Raw minified JS/CSS is reported per actual fetched file and by fixture. Gzip level 9 is reported **per file**, never summed and advertised as an application gzip total. Network transfer, encoded body and decoded body measurements are kept separately, including document/RSC resources. CSS/font requests, archive size and library dependency-closure installed file bytes are separate categories. Install counts exclude Next/Vite/development tooling and record React peers separately. Optional Three.js, Lenis and RHF are absent from core fixtures.
 
@@ -23,7 +23,7 @@ The 13 October Vite comparison used identical React 19.3.0 journeys against 0.4.
 | actions.css      | Button/IconButton/DepthButton, SegmentedControl, Magnetic, ThemeToggle; required loading Spinner styles |
 | forms.css        | Field/TextField/TextArea/SelectField, Checkbox/RadioGroup/Switch/Slider                                 |
 | navigation.css   | Tabs, Breadcrumbs, Pagination, Stepper                                                                  |
-| data-display.css | Card/Avatar/Badge/Tag/Stat, DataTable/Timeline and value-display patterns                               |
+| data-display.css | Card/Avatar/Badge/Tag/Stat, Table/DataTable/Timeline and value-display patterns                         |
 | feedback.css     | Alert, ToastProvider, ProgressBar, Spinner, Skeleton, EmptyState                                        |
 | overlays.css     | Tooltip, Popover, DropdownMenu, Dialog/drawers                                                          |
 | effects.css      | TiltCard/FlipCard/Marquee and CSS effects                                                               |
@@ -43,3 +43,9 @@ Three.js/Lenis stay optional peers behind their entries. Core imports do not ins
 ## Regression policy
 
 `scripts/size-baseline.json` records the actual measured baseline and budgets. The gate allows 10% plus 1,024 bytes on raw fetched JS/CSS totals for deliberate review and chunk/minifier drift, and requires zero font requests in system-font fixtures. Update a baseline only after reviewing a real report and explaining intentional growth; do not automatically ratchet it to pass. Source/package/dependency changes can alter results even with the same components. Release verification and CI use the same packed archive and run this gate. The library-only samples from earlier research are not substituted for these application measurements.
+
+## 0.6 Combobox measurement
+
+On 14 October 2026, an initial 0.6.0 candidate used the same production fixtures to measure the new Combobox journey with React 19.3.0, Vite 8.3.2, Next 16.4.0/webpack, Node 26.10.0 and Chromium 153. A fresh Vite page fetched 365,549 raw JS bytes; selective forms/actions CSS fetched 24,729 bytes (aggregate 47,625). The Next Combobox route fetched 593,605 raw client JS bytes and 46,807 CSS bytes, including framework/shared assets. These are dated candidate measurements, not immutable final-archive byte counts. The release gate remeasures its exact archive. These whole-application fixtures are not an isolated component size or an upstream bundle-size badge. Per-file gzip and actual Resource Timing are retained in the report; independent gzip files are not advertised as an additive component total.
+
+Every previous journey stays within its existing budget. Initial Combobox budgets are added separately under the same 10% plus 1,024-byte policy; old budgets are not reset to the new measurements. The root Button fixture remains 227,291 raw Vite JS bytes with zero font requests; importing one component does not require downloading the Combobox route's full client code. All runtime dependencies still install with the package. Base UI adds installed files and an unstyled interaction dependency; see FOUNDATION.md for the identical-host comparison and its limitations. Its optional date/time peers are absent from core consumers. TanStack Table/Store and RHF are recipe dependencies only.

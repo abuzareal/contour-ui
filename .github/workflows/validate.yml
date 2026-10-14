@@ -29,7 +29,7 @@ jobs:
         run: node scripts/check-scope.mjs
       - run: npm ci --ignore-scripts
       - name: Types, lint, build and archive contents
-        run: npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:package && npm run check:api-docs
+        run: npm run check:styles && npm run typecheck && npm run lint && npm run build && npm run check:package && npm run check:api-docs && npm run check:docs
       - if: steps.scope.outputs.runtime == 'true'
         run: npm test
       - if: steps.scope.outputs.runtime == 'true'
@@ -49,6 +49,9 @@ jobs:
         run: npm run test:compat
       - if: steps.scope.outputs.runtime == 'true' && steps.scope.outputs.next == 'true'
         run: node scripts/test-next.mjs
+      - name: Public standalone starters
+        if: steps.scope.outputs.runtime == 'true' && steps.scope.outputs.next == 'true'
+        run: node scripts/test-starters.mjs
       - name: Production size budgets
         if: steps.scope.outputs.runtime == 'true' && steps.scope.outputs.next == 'true'
         env:
