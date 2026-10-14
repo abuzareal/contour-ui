@@ -10,7 +10,7 @@ export default defineConfig({
   timeout: 30000,
   reporter: "list",
   outputDir: "test-results/qa",
-  snapshotPathTemplate: "{testDir}/snapshots/{arg}{ext}",
+  snapshotPathTemplate: "{testDir}/snapshots/{platform}/{arg}{ext}",
   expect: {
     toHaveScreenshot: { animations: "disabled", maxDiffPixelRatio: 0.005 },
   },
