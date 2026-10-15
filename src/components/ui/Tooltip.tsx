@@ -118,6 +118,7 @@ export default function Tooltip({
           ref={panel}
           id={id}
           role="tooltip"
+          hidden={!open}
           className={ccx(
             "tooltip mono",
             `tooltip-${placement}`,

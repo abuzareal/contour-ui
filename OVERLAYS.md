@@ -43,6 +43,8 @@ Menu enters the first enabled action; ArrowUp from its trigger enters the last. 
 
 ## Supplemental hints
 
+From 0.6.2, closed Tooltip content uses native hidden state. This prevents fallback placement on the body portal from widening a standards-mode page. The trigger retains its linked supplemental accessible description; opening/dismissal and collision placement remain unchanged.
+
 Tooltip content is a noninteractive string. Hover and keyboard focus cooperate; leaving the pointer does not erase a focused hint. Trigger-to-content travel stays available through a bounded pointer corridor; the hint remains while pointer/focus applies. Escape suppresses it until the current hover/focus conditions end and a new session begins. Existing `aria-describedby` values and the child's accessible name/ref/events are retained. Pointer content is hoverable; tooltip content is never a substitute for a visible label, essential instruction, validation error or interactive panel. Touch users must have the same essential information visibly available.
 
 Production checks cover nested/sibling/portaled layers, native modal portals, touch outside press, RTL, narrow/resized viewports, long scrolling panels and CSS zoom. These are automated browser checks, not physical mobile-keyboard or assistive-technology certification. See [W3C hover/focus guidance](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR39) and [Floating UI observer lifecycle](https://floating-ui.com/docs/autoupdate).
@@ -53,4 +55,4 @@ Default-open children choose an enclosing native dialog even before its open att
 
 ## Version and reproduction
 
-Reference version **0.6.1** (candidate until published). [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.1/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Overlays 0.6.1](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Overlays&version=0.6.1), using the [public minimal reproduction](examples/reproduction) and synthetic data.
+Reference version **0.6.2**. A source version does not establish publication; check the npm registry for availability. [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.2/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Overlays 0.6.2](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Overlays&version=0.6.2), using the [public minimal reproduction](examples/reproduction) and synthetic data.

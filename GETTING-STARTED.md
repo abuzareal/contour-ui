@@ -60,7 +60,7 @@ Copy [OptionalSmoothScroll.tsx](examples/optional/OptionalSmoothScroll.tsx) and 
 
 Supported evidence names the exact pair: Next 16.4.0 App Router, React/React DOM 19.3.0, webpack production build, plus its separate optional lazy Three fixture. Turbopack, Pages Router, Next Lenis, static nonce export and arbitrary third-party modal interoperability are not promoted to supported configurations. Vite starter pins 8.3.2 with React 18.3.1. Server-safe helper imports, client directives, declarations and hydration are checked independently; SSR rendering alone does not prove hydration.
 
-Copy [the public reproduction folder](examples/reproduction), reduce it to the failing interaction, and include exact package/browser versions and keyboard steps. Its [issue link](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Integration%200.6.1%3A%20&component=Integration&version=0.6.1) contains version/component, not private data. Report only synthetic records and public reproducible source. [Documentation coverage and limits](DOCS.md).
+Copy [the public reproduction folder](examples/reproduction), reduce it to the failing interaction, and include exact package/browser versions and keyboard steps. Its [issue link](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Integration%200.6.2%3A%20&component=Integration&version=0.6.2) contains version/component, not private data. Report only synthetic records and public reproducible source. [Documentation coverage and limits](DOCS.md).
 
 ## JavaScript and TypeScript examples
 
