@@ -1,4 +1,8 @@
 import ts from "typescript";
+import {
+  loadComponentGuides,
+  renderComponentGuides,
+} from "./component-guides.mjs";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFile, writeFile, mkdtemp, rm, access } from "node:fs/promises";
@@ -62,7 +66,9 @@ function reference(row) {
     return file === "motion" ? "HOOKS.md#motion" : "HELPERS.md";
   }
   if (row.path.includes("components/"))
-    return row.kind === "type" ? "PROP-REFERENCE.md" : "PUBLIC-API.md";
+    return row.kind === "type"
+      ? "PROP-REFERENCE.md"
+      : "COMPONENT-GUIDES.md#" + row.name.toLowerCase();
   throw Error(`Undocumented public source: ${row.path}`);
 }
 const rows = inventory.exports.map((row) => ({
@@ -100,15 +106,34 @@ const options = ts.parseJsonConfigFileContent(
   ts.sys,
   process.cwd(),
 ).options;
-const program = ts.createProgram([resolve("dist/index.d.ts")], {
-  ...options,
-  noEmit: true,
-  rootDir: undefined,
-});
+const declarationEntries = {
+  ".": "dist/index.d.ts",
+  "./three": "dist/three.d.ts",
+  "./scroll": "dist/scroll.d.ts",
+  "./theme-bootstrap": "dist/lib/themeBootstrap.d.ts",
+};
+const program = ts.createProgram(
+  Object.values(declarationEntries).map((path) => resolve(path)),
+  {
+    ...options,
+    noEmit: true,
+    rootDir: undefined,
+  },
+);
 const checker = program.getTypeChecker();
-const file = program.getSourceFile(resolve("dist/index.d.ts"));
-const module = checker.getSymbolAtLocation(file);
-const exports = checker.getExportsOfModule(module);
+const symbols = new Map();
+for (const [entry, path] of Object.entries(declarationEntries)) {
+  const file = program.getSourceFile(resolve(path));
+  const module = checker.getSymbolAtLocation(file);
+  for (const symbol of checker.getExportsOfModule(module))
+    symbols.set(
+      `${entry}:${symbol.name}`,
+      symbol.flags & ts.SymbolFlags.Alias
+        ? checker.getAliasedSymbol(symbol)
+        : symbol,
+    );
+}
+const authored = await loadComponentGuides();
 const selections = {
   Checkbox: [
     "label",
@@ -222,26 +247,76 @@ const metadata = {
   version: pkg.version,
   compiler: ts.version,
   scope:
-    "Selected authored contracts from emitted declarations; inherited prop names and all call signatures retained. Runtime defaults are extracted from source parameter initializers; absence is not a native default inference.",
+    "All exported component contracts from emitted declarations, including call/construct signatures and authored/inherited prop names. Selected prop types include authored guide fields, owned fields and native integration attributes. Only explicit source parameter initializers are defaults; absence is not a browser default inference.",
   components: {},
 };
-for (const [name, props] of Object.entries(selections)) {
-  const symbol = exports.find((item) => item.name === name);
+const components = rows.filter(
+  (row) => row.kind === "runtime" && row.path.includes("/components/"),
+);
+const nativeIntegration = [
+  "id",
+  "name",
+  "form",
+  "value",
+  "defaultValue",
+  "checked",
+  "defaultChecked",
+  "required",
+  "disabled",
+  "type",
+  "onChange",
+  "ref",
+  "className",
+  "aria-describedby",
+];
+for (const row of components) {
+  const { name } = row;
+  const symbol = symbols.get(`${row.entry}:${name}`);
   assert.ok(symbol, name);
   const declaration = symbol.declarations[0];
   const type = checker.getTypeOfSymbolAtLocation(symbol, declaration);
-  const signatures = type.getCallSignatures();
-  assert.ok(signatures.length, `${name} is callable`);
+  const calls = type.getCallSignatures(),
+    constructors = type.getConstructSignatures();
+  const signatures = [...calls, ...constructors];
+  assert.ok(signatures.length, `${name} has a component signature`);
   const param = signatures[0].parameters[0];
-  const propType = checker.getTypeOfSymbolAtLocation(
-    param,
-    param.valueDeclaration ?? declaration,
-  );
-  const all = checker.getPropertiesOfType(propType);
+  const propType = param
+    ? checker.getTypeOfSymbolAtLocation(
+        param,
+        param.valueDeclaration ?? declaration,
+      )
+    : undefined;
+  const all = propType ? checker.getPropertiesOfType(propType) : [];
+  const documented =
+    authored.components
+      .find((guide) => guide.name === name)
+      ?.props.flatMap(([names]) =>
+        names.includes("show(") ||
+        (name === "ToastProvider" && names === "tone")
+          ? []
+          : names.split(" / "),
+      ) ?? [];
+  const own = all
+    .filter((prop) =>
+      prop.declarations?.some((node) =>
+        node.getSourceFile().fileName.includes("/dist/components/"),
+      ),
+    )
+    .map((prop) => prop.name);
+  const props = [
+    ...new Set([
+      ...(selections[name] ?? []),
+      ...documented,
+      ...own,
+      ...nativeIntegration.filter((key) =>
+        all.some((prop) => prop.name === key),
+      ),
+    ]),
+  ].sort();
   const defaults = {};
   const source = ts.createSourceFile(
     name + ".tsx",
-    await readFile(`src/components/ui/${name}.tsx`, "utf8"),
+    await readFile(row.path, "utf8"),
     ts.ScriptTarget.Latest,
     true,
     ts.ScriptKind.TSX,
@@ -262,13 +337,22 @@ for (const [name, props] of Object.entries(selections)) {
   }
   visit(source);
   metadata.components[name] = {
-    callSignatures: signatures.map((sig) =>
+    callSignatures: calls.map((sig) =>
       checker.signatureToString(
         sig,
         undefined,
         ts.TypeFormatFlags.NoTruncation,
       ),
     ),
+    constructSignatures: constructors.map((sig) =>
+      checker.signatureToString(
+        sig,
+        declaration,
+        ts.TypeFormatFlags.NoTruncation,
+      ),
+    ),
+    entry: row.entry,
+    source: row.path,
     inheritedAndAuthoredPropNames: all.map((prop) => prop.name).sort(),
     selectedProps: props.map((propName) => {
       const prop = all.find((item) => item.name === propName);
@@ -299,6 +383,10 @@ async function output(path, content) {
       `Stale reference: ${path}; inspect declaration/source changes then run --write`,
     );
 }
+await output(
+  "COMPONENT-GUIDES.md",
+  renderComponentGuides(authored, pkg.version),
+);
 await output("REFERENCE.md", docs);
 await output(
   "docs/prop-metadata.json",
