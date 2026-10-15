@@ -236,7 +236,8 @@ test("tooltip focus survives pointer leave, Escape suppresses the hint, and chil
   await act(() => new Promise((resolve) => setTimeout(resolve, 180)));
   assert.ok(view.getByRole("tooltip").classList.contains("is-open"));
   fireEvent.keyDown(document, { key: "Escape" });
-  assert.equal(view.getByRole("tooltip").classList.contains("is-open"), false);
+  assert.equal(view.queryByRole("tooltip"), null);
+  assert.equal(view.getByRole("tooltip", { hidden: true }).hidden, true);
   assert.match(trigger.getAttribute("aria-describedby"), /^existing /);
   fireEvent.blur(trigger);
   fireEvent.focus(trigger);

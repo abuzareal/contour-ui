@@ -1,5 +1,5 @@
 {
-  "version": "0.6.1",
+  "version": "0.6.2",
   "compiler": "5.9.3",
   "scope": "Selected authored contracts from emitted declarations; inherited prop names and all call signatures retained. Runtime defaults are extracted from source parameter initializers; absence is not a native default inference.",
   "components": {

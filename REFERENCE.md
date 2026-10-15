@@ -1,6 +1,6 @@
 # Export reference register
 
-Generated for 0.6.1 from actual source/runtime declarations and the manifest. This register maps all symbols and CSS/data entry points; it does not promote every component page. Human behavior guidance lives in the linked references. Source and exact types remain in [PUBLIC-API.md](PUBLIC-API.md). Run npm run check:reference; newly added hook/helper sources need an authored mapping before this register can update.
+Generated for 0.6.2 from actual source/runtime declarations and the manifest. This register maps all symbols and CSS/data entry points; it does not promote every component page. Human behavior guidance lives in the linked references. Source and exact types remain in [PUBLIC-API.md](PUBLIC-API.md). Run npm run check:reference; newly added hook/helper sources need an authored mapping before this register can update.
 
 | Entry | Symbol | Kind | Reference |
 | --- | --- | --- | --- |
