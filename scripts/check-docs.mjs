@@ -1,4 +1,5 @@
 import ts from "typescript";
+import { loadComponentGuides } from "./component-guides.mjs";
 import assert from "node:assert/strict";
 import { readFile, writeFile, access } from "node:fs/promises";
 const source = await readFile("src/index.ts", "utf8");
@@ -49,12 +50,14 @@ const groups = {
   "RECIPES.md": ["DataTable", "Table"],
   "COMBOBOX.md": ["Combobox"],
 };
+const authored = await loadComponentGuides();
+assert.deepEqual(
+  authored.components.map((guide) => guide.name).sort(),
+  names,
+  "Every core component needs an authored guide, not only discovered props",
+);
 const rows = names.map((name) => {
-  const guide =
-    Object.entries(groups).find(([, items]) => items.includes(name))?.[0] ??
-    "PUBLIC-API.md";
-  const complete = ["Combobox", "Table"].includes(name);
-  return `| ${name} | [${guide}](${guide}) | ${complete ? "New component contract covered" : "Shared; promotion pending"} |`;
+  return `| ${name} | [Component guide](COMPONENT-GUIDES.md#${name.toLowerCase()}) | Authored public contract; catalogue release is separate |`;
 });
 let docs = await readFile("DOCS.md", "utf8");
 const start = "<!-- component-coverage:start -->",
@@ -79,6 +82,8 @@ for (const name of names)
 for (const target of [
   ...Object.keys(groups),
   "PUBLIC-API.md",
+  "COMPONENT-GUIDES.md",
+  "docs/component-guides.json",
   "DOCS.md",
   "FOUNDATION.md",
   "NEXTJS.md",
@@ -104,5 +109,50 @@ for (const guide of [
   assert.ok(text.includes(`version=${pkg.version}`), `${guide} issue version`);
 }
 console.log(
-  `${names.length} public UI component references covered; unpromoted guide gaps remain explicit.`,
+  `${names.length} authored public core guides covered; optional entries and manual evidence remain separately bounded.`,
+);
+
+// Compile the exact public modules displayed/copied by the catalogue; discovery is
+// not allowed to substitute for a runnable example using the documented export.
+const options = {
+  target: ts.ScriptTarget.ES2022,
+  module: ts.ModuleKind.NodeNext,
+  moduleResolution: ts.ModuleResolutionKind.NodeNext,
+  jsx: ts.JsxEmit.ReactJSX,
+  strict: true,
+  noEmit: true,
+  skipLibCheck: false,
+};
+const examples = authored.families.map((family) => family.example);
+const exampleProgram = ts.createProgram(examples, options);
+const diagnostics = ts.getPreEmitDiagnostics(exampleProgram);
+assert.equal(
+  diagnostics.length,
+  0,
+  ts.formatDiagnosticsWithColorAndContext(diagnostics, {
+    getCurrentDirectory: () => process.cwd(),
+    getCanonicalFileName: (file) => file,
+    getNewLine: () => "\n",
+  }),
+);
+for (const guide of authored.components) {
+  const family = authored.families.find((item) => item.id === guide.family);
+  const file = exampleProgram.getSourceFile(family.example);
+  let rendered = false;
+  function inspect(node) {
+    if (
+      (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
+      node.tagName.getText(file) === guide.name
+    )
+      rendered = true;
+    ts.forEachChild(node, inspect);
+  }
+  inspect(file);
+  assert.ok(
+    rendered,
+    `${guide.name} must render in its exact advertised family source`,
+  );
+}
+console.log(
+  `${examples.length} public family examples compile and render all ${authored.components.length} documented exports.`,
 );

@@ -6,6 +6,10 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 No changes recorded.
 
+## 0.6.3
+
+Documentation and adoption patch candidate. Publish 54 authored core component guides with one canonical human-authored dataset and 17 executable family examples; complete the 39 previously shared-only PAGE contracts without adding new components. Expand emitted metadata to 56 existing component exports, including class constructors, native inherited props and explicit source defaults; guard declaration/default/source/example drift. The catalogue consumes its own exact published release and is not silently upgraded by this source. No runtime API, dependency, token or CSS changes; optional/deferred capabilities and manual/external evidence remain out of scope/pending. Source version headings do not establish npm publication.
+
 ## 0.6.2
 
 Compatible Tooltip correction. A closed portalled tooltip now uses native hidden state so fallback right/bottom positioning cannot enlarge a standards-mode document. Opening still uses collision-aware placement; Escape/blur close it and accessible descriptions remain linked. No public API, dependency, token or theme changes. Production regressions cover both legacy/scoped styles, light/dark, LTR/RTL and narrow/desktop viewports. Source version headings do not establish npm publication.

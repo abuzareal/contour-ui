@@ -15,3 +15,7 @@ Update the README and Unreleased changelog when public behavior changes. Keep do
 A pull request should name the concrete behavior change, why it helps, which checks passed and any remaining limitation. Review public exports, packed files and dependency changes. No publish, deploy or merge is implied by opening a pull request. Consumers adopt an exact published release with a lockfile update; local source edits do not update them.
 
 Public API changes must follow [the compatibility policy](CONTRACTS.md#change-deprecation-and-migration-policy) and update [the maturity register](PUBLIC-API.md). Preserve native semantics and optional entry isolation; an experimental or legacy label does not authorize an undocumented removal.
+
+## Component guide source
+
+Edit authored behavior in `docs/component-guides.json` and its linked `examples/catalogue` TSX module. Preserve component-specific limits, native form/ref ownership, keyboard behavior and loading/error/locale responsibilities; generated type discovery does not replace those explanations. After building, review `node scripts/check-reference.mjs --write` and `node scripts/check-docs.mjs --write`, then run the normal checks. These commands regenerate `COMPONENT-GUIDES.md`, metadata and the coverage register. The catalogue consumes the released public contracts and exact example modules; do not maintain a second behavior description in a private repository.

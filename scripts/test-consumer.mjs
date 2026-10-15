@@ -180,6 +180,11 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
     join(temporary, "onboarding"),
     { recursive: true },
   );
+  await cp(
+    join(temporary, "node_modules/@abuzareal/contour-ui/examples/catalogue"),
+    join(temporary, "catalogue"),
+    { recursive: true },
+  );
   await writeFile(
     join(temporary, "tsconfig.json"),
     JSON.stringify({
@@ -204,6 +209,7 @@ createRoot(document.getElementById('root')!).render(<main data-motion="off"><Ref
         "getting-started-*.tsx",
         "onboarding/*",
         "reference/*",
+        "catalogue/*",
         "NativeSettingsForm.tsx",
         "settings.ts",
         "useSubmission.ts",

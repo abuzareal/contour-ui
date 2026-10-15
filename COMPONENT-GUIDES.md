@@ -1,0 +1,3535 @@
+# Component guides
+
+Authored contracts for 0.6.3, generated from [docs/component-guides.json](docs/component-guides.json). All 54 existing core component guides share the same maintained source with the catalogue. Types/defaults and executable family examples are checked against the emitted release. This is pre-1.0 documentation, not a new stability or accessibility certification. Optional scene exports retain [THREE.md](THREE.md).
+
+## Setup
+
+Import scoped.css once and render inside contour-root or ThemeScope; system fonts need no extra import. Reset/fonts/providers are opt-in by need. Copy a linked complete TSX family example into your React application; its actions/data are local illustrations. No private catalogue source is required. Existing JavaScript onboarding remains in [GETTING-STARTED.md](GETTING-STARTED.md).
+
+```tsx
+import { Button } from "@abuzareal/contour-ui";
+import "@abuzareal/contour-ui/scoped.css";
+export default function Example() {
+  return <div className="contour-root"><Button>Example action</Button></div>;
+}
+```
+
+## Index
+
+- [Alert](#alert)
+- [Avatar](#avatar)
+- [Badge](#badge)
+- [BrandMark](#brandmark)
+- [Breadcrumbs](#breadcrumbs)
+- [Button](#button)
+- [Card](#card)
+- [Checkbox](#checkbox)
+- [Combobox](#combobox)
+- [CountUp](#countup)
+- [DataTable](#datatable)
+- [DepthButton](#depthbutton)
+- [Dialog](#dialog)
+- [Disclosure](#disclosure)
+- [Divider](#divider)
+- [DropdownMenu](#dropdownmenu)
+- [EmptyState](#emptystate)
+- [ExternalLink](#externallink)
+- [Field](#field)
+- [FlipCard](#flipcard)
+- [GitHubIcon](#githubicon)
+- [IconButton](#iconbutton)
+- [Kbd](#kbd)
+- [LinkedInIcon](#linkedinicon)
+- [Magnetic](#magnetic)
+- [Marquee](#marquee)
+- [Pagination](#pagination)
+- [Popover](#popover)
+- [ProgressBar](#progressbar)
+- [RadioGroup](#radiogroup)
+- [Reveal](#reveal)
+- [RevealHeading](#revealheading)
+- [SceneBoundary](#sceneboundary)
+- [ScrollProgress](#scrollprogress)
+- [SectionLabel](#sectionlabel)
+- [SegmentedControl](#segmentedcontrol)
+- [SelectField](#selectfield)
+- [Skeleton](#skeleton)
+- [Slider](#slider)
+- [Spinner](#spinner)
+- [Stat](#stat)
+- [Stepper](#stepper)
+- [Switch](#switch)
+- [Table](#table)
+- [Tabs](#tabs)
+- [Tag](#tag)
+- [TextArea](#textarea)
+- [TextField](#textfield)
+- [ThemeScope](#themescope)
+- [ThemeToggle](#themetoggle)
+- [TiltCard](#tiltcard)
+- [Timeline](#timeline)
+- [ToastProvider](#toastprovider)
+- [Tooltip](#tooltip)
+
+## Alert
+
+A status or urgent alert with tone, title, optional action and dismiss request.
+
+### Import and runnable source
+
+`import { Alert } from "@abuzareal/contour-ui";`
+
+[Complete feedback TSX example](examples/catalogue/feedback.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| title / children | string / ReactNode | Title required; body omitted | Explain the actual outcome and next step. |
+| tone / layout | AlertTone / inline \| banner | neutral / inline | Tone also determines alert versus status semantics. |
+| action | ReactNode | Omitted | Use a separately labelled native action. |
+| onDismiss / dismissLabel | () => void / string | Omitted / Dismiss | Parent removes it; translate the accessible dismiss label. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for meaningful inline or banner feedback. Reserve warning/danger for urgency; use nearby field errors for invalid inputs and do not fabricate successful requests.
+
+### Anatomy and parts
+
+Root role is alert for warning/danger and status otherwise. Decorative tone icon, strong title, optional body/action and dismiss button form the message; banner is the same component layout.
+
+### State ownership
+
+Parent owns visibility and service status. onDismiss requests removal; the component does not hide itself. tone defaults neutral and layout inline.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-alert and tone/layout hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Show pending, service/permission failure and retry truthfully. Long titles/actions must wrap; do not use color alone or hide persistent actionable errors only in a toast.
+
+### RTL and localization
+
+Translate title/body/action/dismissLabel. Direction and text length are application context; test actual live-region announcements manually.
+
+### Keyboard and focus
+
+Message content is not a tab stop. Native action and dismiss buttons retain keyboard activation; the application owns focus after removing a focused message.
+
+### Limits and evidence
+
+No auto-dismiss, fetching, retry engine, native form value or external root props/ref. Repeated urgent announcements can be disruptive.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Alert 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Alert&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Avatar
+
+A name-based image/initials display with an optional labelled presence dot.
+
+### Import and runnable source
+
+`import { Avatar } from "@abuzareal/contour-ui";`
+
+[Complete metadata TSX example](examples/catalogue/metadata.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| name | string | Required | Nonempty identity name; image alt/initials accessible label. |
+| initials / src | string | Derived initials / omitted | No automatic failed-image-to-initials switch. |
+| size | sm \| md \| lg \| xl | md | Visual size only. |
+| status / statusLabel | online \| away / string | Omitted / Online or Away | Status is app data; translate/customize the dot description. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for identity context. Do not use initials or a presence color as the sole explanation of a person/action; put actionable behavior on a separate native control.
+
+### Anatomy and parts
+
+Wrapper holds an img with alt=name or a role=img initials span; optional presence dot has its own accessible label.
+
+### State ownership
+
+src chooses image versus initials. initials overrides a basic first-two-space-separated-name-parts derivation. size defaults md; status is caller-supplied online/away.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-avatar, size and presence hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+If an image fails, native alt text remains; the app must remove/change src to select initials. Test empty/long names and unavailable status without inventing live presence.
+
+### RTL and localization
+
+Supply explicit initials for scripts/emoji/name order that basic splitting cannot handle. Translate statusLabel and keep full accessible names meaningful.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No upload/presence service, fallback on image-error, arbitrary native image props or forwarded ref. Initial derivation is not locale/grapheme-aware.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Avatar 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Avatar&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Badge
+
+A compact textual status label with optional dot or icon.
+
+### Import and runnable source
+
+`import { Badge } from "@abuzareal/contour-ui";`
+
+[Complete metadata TSX example](examples/catalogue/metadata.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Include readable status text. |
+| tone | BadgeTone | accent | accent/neutral/invert/success/info/warning/danger. |
+| dot / icon | boolean / ReactNode | false / omitted | A dot is decorative; caller icon semantics remain caller-owned. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for short metadata/status text. Use an action button for interaction and Alert for a meaningful announced service message; color alone is insufficient.
+
+### Anatomy and parts
+
+Inline span with tone class, optional decorative dot, caller icon and text children. It has no automatic live-region role.
+
+### State ownership
+
+Pure display; tone defaults accent, dot false. Parent updates the actual status.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-badge and tone/dot hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check long text and contrast in every used tone, both themes and forced colors; business failure/loading remains parent-owned.
+
+### RTL and localization
+
+Translate visible labels and optional icon descriptions where needed. Stable data status values should not depend on translated labels.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No click/dismiss/selection behavior, root attributes/ref or automatic announcements. Icons and tone must not be the sole status explanation.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Badge 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Badge&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## BrandMark
+
+A fixed legacy aa. monogram rendered as a safe anchor.
+
+### Import and runnable source
+
+`import { BrandMark } from "@abuzareal/contour-ui";`
+
+[Complete identity TSX example](examples/catalogue/identity.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Accessible name explains the actual legacy brand/link. |
+| href | string | #hero | Supply a real destination/anchor for your page. |
+| onClick | () => void | Omitted | No MouseEvent parameter/veto API is declared. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use only when that existing mark is appropriate. It is not a customizable brand/logo system or the catalogue C mark; use your own labelled native logo link for another identity.
+
+### Anatomy and parts
+
+Native anchor displays literal aa plus a dot, with caller aria-label, safe href and onClick callback.
+
+### State ownership
+
+No state; href defaults#hero. The target anchor and application navigation remain caller-owned.
+
+### Native forms and reset
+
+Native navigation link, not a form value/submit/reset control.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-brand with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Verify the default#hero actually exists or supply another destination. No loading/error/selection behavior is added.
+
+### RTL and localization
+
+Translate label where appropriate; literal legacy lettering does not localize or change from props.
+
+### Keyboard and focus
+
+Native anchor Enter/modified-click behavior applies when href is valid. Keep the accessible name and actual target meaningful.
+
+### Limits and evidence
+
+Fixed aa. content, not a logo slot. No target/rel/native-props forwarding, configurable mark or ref; unsafe href is rejected.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report BrandMark 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=BrandMark&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Breadcrumbs
+
+A native breadcrumb navigation list with a current-page item.
+
+### Import and runnable source
+
+`import { Breadcrumbs } from "@abuzareal/contour-ui";`
+
+[Complete navigation TSX example](examples/catalogue/navigation.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| items | {label:string;href?:string}[] | Required | Supply hierarchy in reading order; last item is current. |
+| label | string | Breadcrumb | Translate the navigation name. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for hierarchy context. Use a page heading and primary navigation separately; this is not a client router or application history manager.
+
+### Anatomy and parts
+
+Named nav contains an ordered list. The final item is a span with aria-current=page; earlier items with href use safe native anchors.
+
+### State ownership
+
+Pure caller-owned items; item labels serve as React keys and should be unique in a trail. Missing href means noninteractive text.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-breadcrumbs and [aria-current=page] with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check empty/single-item and lengthy trails, both themes and narrow wrapping. Failed data loading belongs outside this static navigation.
+
+### RTL and localization
+
+Translate labels and navigation name; preserve hierarchy order with surrounding dir rather than reversing the array for appearance.
+
+### Keyboard and focus
+
+Only actual anchors enter Tab order and retain native modified-click behavior. The current page is text rather than an unnecessary link.
+
+### Limits and evidence
+
+No router element slot, generated destinations, native root props/ref or automatic label deduplication. safeHref does not verify a destination exists.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Breadcrumbs 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Breadcrumbs&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Button
+
+A native action button with loading, icon slots and explicit native refs.
+
+### Import and runnable source
+
+`import { Button } from "@abuzareal/contour-ui";`
+
+[Complete buttons TSX example](examples/catalogue/buttons.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| variant | primary \| accent \| secondary \| ghost \| danger | primary | Visual emphasis; navigation remains an anchor. |
+| size | sm \| md \| lg | md | Choose size while retaining useful targets. |
+| loading / loadingLabel | boolean / string | false / Loading | Loading disables activation and exposes a named spinner. |
+| leadingIcon / icon | ReactNode | Omitted | Before/after the label; decorative icons should be hidden from AT. |
+| type / disabled / ref | Native button props and ref | type=button | Use type=submit deliberately; ref targets HTMLButtonElement. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an application action. Use ExternalLink or a styled anchor for navigation; a button that looks like a link still has button semantics.
+
+### Anatomy and parts
+
+Native button contains a label span, optional leadingIcon or loading spinner, and optional trailing icon. Native attributes/handlers and the composed ref remain attached to the button.
+
+### State ownership
+
+loading defaults false and disables the button along with disabled. loadingLabel defaults Loading. The component starts no request and never invents success. Variants default primary and sizes default md through buttonClassName.
+
+### Native forms and reset
+
+Default type is button. Set submit/reset explicitly, and use native name/value/form when appropriate. The application owns save validation, pending guards and outcome messages.
+
+### Ref target
+
+Forwarded ref targets HTMLButtonElement in React 18/19. Render through React; the ref-enabled export is not an ordinary callable function.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Do not put nested controls inside the label or icon slots. Check long labels and narrow rows, show a truthful pending label, and retain failure recovery beside the task.
+
+### RTL and localization
+
+Translate children/loadingLabel and ensure icons are decorative or separately named. Button labels are not translated by a global provider; verify RTL icon order in the composition.
+
+### Keyboard and focus
+
+Native Tab focus and Enter/Space activation. Disabled or loading buttons cannot activate.
+
+### Limits and evidence
+
+No polymorphic as prop or routing integration. Use a styled native anchor or the pinned Next Link recipe for navigation.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Button 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Button&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Card
+
+A semantic article container with optional slots and three visual tones.
+
+### Import and runnable source
+
+`import { Card } from "@abuzareal/contour-ui";`
+
+[Complete content TSX example](examples/catalogue/content.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| title / children | string / ReactNode | Title required; body omitted | Fit the fixed h3 into your hierarchy. |
+| eyebrow / footer / icon | string / ReactNode / ReactNode | Omitted | Use meaningful content and independently labelled actions. |
+| tone / interactive | surface \| ink \| acid / boolean | surface / false | Hover appearance does not add keyboard or navigation semantics. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to group related content. interactive adds hover styling only; compose real anchors/buttons for actions instead of making the article behave like a control.
+
+### Anatomy and parts
+
+Article contains optional eyebrow/icon row, fixed h3 title, optional body and footer. Children/footer are content slots, not implicit links.
+
+### State ownership
+
+Pure display; tone defaults surface and interactive false. No selection, expansion or request state is stored.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-card, tone hooks and slot hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep long body/footer/actions readable in both themes; handle loading/errors with actual content states. A lift effect is not a focus/activation contract.
+
+### RTL and localization
+
+Translate all authored text and preserve heading order; slots may contain localized content and native controls.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No href/onClick/root native props, selected state or forwarded ref. Do not nest conflicting controls in an artificial full-card hit area.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Card 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Card&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Checkbox
+
+A labelled native checkbox with optional description, error and an indeterminate appearance.
+
+### Import and runnable source
+
+`import { Checkbox } from "@abuzareal/contour-ui";`
+
+[Complete choices TSX example](examples/catalogue/choices.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Use a clear action or setting name. |
+| checked / defaultChecked / onChange | Native input props | Uncontrolled when checked is omitted | Read event.currentTarget.checked. Use one state-ownership model. |
+| name / value / form | Native input props | Native defaults | Checked controls contribute to FormData. The application owns validation and submission. |
+| description / error | string | Omitted | Use error for the installed component's linked validation message. |
+| indeterminate | boolean | false | Set the mixed appearance explicitly; it does not choose child values or replace checked. |
+| disabled / required | boolean | false | Native disabled and required behavior. Disable only when the action is unavailable. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an independent binary choice or multi-selection. Use RadioGroup for exactly one option, or Switch for an immediately applicable setting.
+
+### Anatomy and parts
+
+Label wraps a native checkbox with a visual mark and text. Description/error IDs merge with caller aria-describedby. Caller id is retained.
+
+### State ownership
+
+checked/onChange is controlled; defaultChecked is uncontrolled. indeterminate defaults false and does not calculate a mixed selection or replace checked.
+
+### Native forms and reset
+
+Checked, enabled, named controls submit value (native default on). Unchecked controls are omitted. required uses native validity. Reset restores defaultChecked; a controlled owner changes its own state explicitly; the library restores the parent-controlled value after reset.
+
+### Ref target
+
+Forwarded ref targets HTMLInputElement for focus and form controllers.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Disabled controls cannot activate. Keep long descriptions readable; display business errors with error and retain values on service failure. Indeterminate and disabled together still need an understandable label.
+
+### RTL and localization
+
+Translate the label, description and error. Native checkbox interaction follows the browser; check RTL order and long translations in the application.
+
+### Keyboard and focus
+
+Tab focuses the checkbox; Space toggles it. Its visible label also activates the control. A disabled checkbox is not keyboard-focusable.
+
+### Limits and evidence
+
+Native input refs and caller id are supported. Caller aria-describedby is merged with description/error IDs. Checked named controls submit; unchecked/disabled controls are omitted. Native reset restores defaults; controlled values stay parent-owned until the application resets state. Indeterminate does not calculate mixed selection or replace checked.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Checkbox 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Checkbox&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Combobox
+
+Searchable allowed-value selection with native submission, reset and independent query state.
+
+### Import and runnable source
+
+`import { Combobox } from "@abuzareal/contour-ui";`
+
+[Complete selection TSX example](examples/catalogue/combobox.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label / options | string / readonly ComboboxOption[] | Required | Options use unique value/label records; disabled is optional. |
+| value / defaultValue / onValueChange | string \| null / callback | Uncontrolled when value is omitted | The selection is separate from inputValue/onInputValueChange query state. |
+| name / form / required / disabled | Native form ownership | Optional | Submit the selected value, not arbitrary typed text. |
+| loading / searchError / onRetry | boolean / string / callback | Optional | Application-owned fetching and recovery. |
+| ref | React.Ref<HTMLInputElement> | Omitted | Focus the visible input. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for searchable allowed-value selection. Use TextField for free text or SelectField when native selection is enough. Multi-select and custom values are not supported.
+
+### Anatomy and parts
+
+Label, visible input/trigger, hidden submitted value and labelled listbox/options. inputProps/rootProps/popupProps target parts. Portal geometry is shared with floating layers; no popup focus trap is used.
+
+### State ownership
+
+Selected value, query and open state have separate controlled/default APIs. A query is not a selected value. Missing selected options retain explicit missing-value behavior; disabled options cannot be newly chosen.
+
+### Native forms and reset
+
+name/form submit the selected allowed value. required validates selection, not typed text. Native reset restores default selection/query while controlled owners explicitly reset their own state; use the forms reference for exact semantics.
+
+### Ref target
+
+Forwarded ref targets the visible HTMLInputElement. The hidden value is not the focus target.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+loading/searchError/onRetry/emptyText describe application fetching; filteredOptions opts into external filtering. Debounce, abort and stale-result protection live in the async recipe. Open-state automated axe passes in 0.6.1; manual AT review remains pending.
+
+### RTL and localization
+
+Translate label, loadingText, emptyText, retryLabel, triggerLabel and missingValueText. Test RTL and long options; search matching and remote result ordering remain your responsibility.
+
+### Keyboard and focus
+
+Arrow keys navigate enabled options; Enter selects. Escape dismisses the deepest open layer. Tab closes without consuming normal focus navigation. Query and selected value are separate.
+
+### Limits and evidence
+
+Single allowed value only; no free text, multi-select or virtualized list. Remote fetching/filtering is application-owned. Manual VoiceOver/NVDA review remains pending.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Combobox 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Combobox&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## CountUp
+
+A decorative one-time numeric count with a static accessible final value.
+
+### Import and runnable source
+
+`import { CountUp } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| to | number | Required | Supply a finite meaningful final value; no validation is added. |
+| duration / digits / suffix | number / number / string | 1400 / 0 / empty string | Milliseconds, minimum digit padding and suffix. |
+| formatValue | (value:number)=>string | Omitted | Formats both visual and accessible values; replaces padding/suffix formatting. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use only when animation adds useful emphasis. Do not present illustrative counts as live measurements or repeatedly announce each animation frame.
+
+### Anatomy and parts
+
+Root span contains aria-hidden animated text and a visually hidden final value. An observer activates requestAnimationFrame; cleanup disconnects/cancels.
+
+### State ownership
+
+to is caller data; duration defaults to 1400 ms, digits0, suffix empty. Reduced/paused motion, nonpositive duration or missing observer goes straight to final value. Custom formatValue replaces default padding/suffix output.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-count-up and visually-hidden final value with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Label source/units/timestamp outside the count. Test zero/negative values, long formatted strings, missing data and reduced motion; never fabricate a known value to make animation work.
+
+### RTL and localization
+
+Use formatValue for localized numerals/units; default String/padStart is not locale-aware. Supply an adjacent meaningful quantity label.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+Decorative integer-rounded animation, not streaming data, locale parsing or an alert/live region. No forwarded ref/reset API; prop changes can start a new effect.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report CountUp 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=CountUp&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## DataTable
+
+A semantic table with bounded local sorting of scalar records.
+
+### Import and runnable source
+
+`import { DataTable } from "@abuzareal/contour-ui";`
+
+[Complete data-table TSX example](examples/catalogue/data-table.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| caption | string | Required | Accessible caption is visually hidden by the Table composition. |
+| columns | TableColumn<Row>[] | Required | key/header plus optional align/sortable/compare/render; headers must be meaningful. |
+| rows / rowKey | Row[] / keyof Row & string | Required | Unique stable row keys; rows extend Record<string,string \| number>. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for small local scalar datasets. Use Table plus a mature engine for controlled remote query/page/sort; neither this component nor its row count is an enterprise grid.
+
+### Anatomy and parts
+
+Table supplies a caption and scroll wrapper; native thead/tbody/tr/th/td render columns/rows. Sortable headers contain buttons and aria-sort.
+
+### State ownership
+
+Rows/columns are application data; local sort starts null and toggles ascending/descending. A compare function overrides scalar comparison. Sorting copies rows instead of mutating the input.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-data-table wrapper/table and native header controls with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Own loading, empty dataset, no matches and service/permission errors outside the table. Keep stable row identity, long-cell scroll and a text/table data equivalent rather than masking errors as empty success.
+
+### RTL and localization
+
+Translate captions/headers/cells. Supply compare for locale-aware order; built-in scalar comparison is not a locale collation service.
+
+### Keyboard and focus
+
+Native header buttons activate sorting with Enter/Space. The table uses semantic reading navigation, not grid arrow-key focus or cell editing.
+
+### Limits and evidence
+
+Internal local sorting only; no controlled sorting, pagination, selection, virtualization, requests, built-in empty/error state or forwarded table ref. Object/date/nested records are outside its scalar generic contract.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report DataTable 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DataTable&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## DepthButton
+
+A native action button with CSS depth and a pressed face.
+
+### Import and runnable source
+
+`import { DepthButton } from "@abuzareal/contour-ui";`
+
+[Complete buttons TSX example](examples/catalogue/buttons.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Provide an understandable accessible action name. |
+| type | Native button type | button | Opt into submit only deliberately. |
+| disabled / onClick / className | Native button props | Native defaults | Caller owns pending/error and disabled policy. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an intentional prominent action, preserving the same native activation contract as a button. Use an anchor for navigation; CSS depth needs no Three.js.
+
+### Anatomy and parts
+
+Native button contains a visual face span. className appends to public root hooks; children supply the action name.
+
+### State ownership
+
+No request/loading state. Native type defaults button; disabled and event handlers remain native caller props.
+
+### Native forms and reset
+
+Native type=button avoids accidental submit; type=submit/name/value/form work when explicitly supplied. Disabled controls follow native successful-control rules.
+
+### Ref target
+
+Forwarded HTMLButtonElement, including focus access.
+
+### CSS and tokens
+
+Use .contour-depth-button and .contour-depth-button-face with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep long labels readable, including translated pending/error messages nearby. Use native disabled and adjacent request feedback; no built-in loader is promised.
+
+### RTL and localization
+
+Translate action text. Verify RTL and long labels; geometric depth is visual rather than a directional navigation cue.
+
+### Keyboard and focus
+
+Enter/Space activate the native button; disabled prevents interaction. Keep a visible focus indication and sufficient target size.
+
+### Limits and evidence
+
+No Button variant/size/loading API or polymorphic navigation mode. Decorative depth must not displace or clip the focused hit target.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report DepthButton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DepthButton&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Dialog
+
+A controlled native modal or side drawer with focus return and background scroll locking.
+
+### Import and runnable source
+
+`import { Dialog } from "@abuzareal/contour-ui";`
+
+[Complete dialogs TSX example](examples/catalogue/dialogs.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| open | boolean | Required | Your application owns visibility. |
+| onClose | () => void | Required | Update open to false on Escape, close button or backdrop dismissal. |
+| title / description | string | Title required | Name the task and optionally explain its scope. |
+| children / footer | ReactNode | Children required; footer optional | Keep actions, pending and error states inside the modal. |
+| placement | "center" \| "left" \| "right" | "center" | Choose a modal or drawer composition. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a task that needs modal focus confinement; placement left/right is the drawer composition. Use Popover for nonmodal supplementary content.
+
+### Anatomy and parts
+
+Native dialog contains panel, heading/description, close button, scrollable body and optional footer. panelProps/bodyProps/footerProps/closeButtonProps customize typed parts; preserve owned semantics.
+
+### State ownership
+
+open/onClose is controlled. Escape, close button and backdrop request closure; the application changes open. initialFocus selects a mounted descendant; onOpenAutoFocus can cancel that explicit override, not native showModal autofocus.
+
+### Native forms and reset
+
+Dialog is not a form. Compose a form or use external form attributes for footer actions. Pending, validation, unsaved changes and destructive confirmation remain application-owned.
+
+### Ref target
+
+Forwarded ref targets HTMLDialogElement. Part props can expose their native refs. There is no Dialog onCloseAutoFocus prop.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Native top-layer focus confinement and nested background-scroll locks are supported. Portalled child layers stay inside the modal. Check short screens, long content and removed openers; keep a workflow focus fallback if the opener is removed.
+
+### RTL and localization
+
+Translate title, description, actions and closeButtonProps accessible label. Placement is physical left/right; select it deliberately for RTL. Verify your complete keyboard/AT flow.
+
+### Keyboard and focus
+
+Focus enters the native modal; Tab remains within it. Escape requests onClose. Focus returns to the opener when the modal closes.
+
+### Limits and evidence
+
+Does not confirm business operations, fetch content or prevent dismissal of unsaved data automatically. Browser native-dialog support is required; test your complete composition and nested overlays.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Dialog 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Dialog&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Disclosure
+
+Native details/summary with an expandable body and decorative plus icon.
+
+### Import and runnable source
+
+`import { Disclosure } from "@abuzareal/contour-ui";`
+
+[Complete content TSX example](examples/catalogue/content.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| className / summary / children | string / ReactNode / ReactNode | Required | Keep summary a clear textual disclosure control. |
+| defaultOpen | boolean | false | Initial native open value; not a controlled state API. |
+| iconSize / iconStrokeWidth | number | 23 / 1.25 | Decorative icon geometry. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for supplementary content a user can expand. Do not hide essential instructions or place competing interactive controls inside summary.
+
+### Anatomy and parts
+
+Native details contains summary, decorative icon and children. Caller className is required; ccx adds public hooks.
+
+### State ownership
+
+defaultOpen defaults false and is passed to native details.open at render. Browser owns user toggling; no controlled open/onToggle API is exposed.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-disclosure and native [open] with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep long summary/body content readable. Applications own loading/error/retry and any state persistence; repeated rerender should not be treated as a controlled accordion contract.
+
+### RTL and localization
+
+Translate summary/body. Browser supplies native summary semantics; preserve logical reading order and test long RTL content.
+
+### Keyboard and focus
+
+Native summary toggles with Enter/Space and participates in Tab order; expanded children retain native behavior. No extra button is needed inside summary.
+
+### Limits and evidence
+
+No root ref or forwarded native props, async request model, controlled open callback or accordion single-open coordination.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Disclosure 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Disclosure&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Divider
+
+A native horizontal rule, or a labelled separator presentation.
+
+### Import and runnable source
+
+`import { Divider } from "@abuzareal/contour-ui";`
+
+[Complete content TSX example](examples/catalogue/content.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Omitted | Optional centered visible text; not a heading. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to separate related content areas. Do not replace headings/navigation or use a visual rule as an interactive resize handle.
+
+### Anatomy and parts
+
+Without label renders hr; with label renders role=separator containing label text.
+
+### State ownership
+
+Pure presentation; omitted/empty label chooses the native hr variant.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-divider and labelled hook with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check contrast, narrow/long labels and surrounding spacing. Loading/error/form state is not applicable to a separator.
+
+### RTL and localization
+
+Translate label and preserve reading order; the labelled variant does not create a section heading.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No vertical/orientation control, resize behavior, arbitrary root attributes or forwarded ref.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Divider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Divider&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## DropdownMenu
+
+A button-triggered local action menu with focus movement and dismissal.
+
+### Import and runnable source
+
+`import { DropdownMenu } from "@abuzareal/contour-ui";`
+
+[Complete floating TSX example](examples/catalogue/floating.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Accessible trigger and menu name. |
+| items | {id?, label, onSelect, icon?, danger?, disabled?}[] | Required | Supply stable ids when labels can repeat or change. Disabled items cannot be selected; decorative icons need aria-hidden. |
+| align | "start" \| "center" \| "end" | "start" | Align against the trigger within its container. |
+| open / defaultOpen / onOpenChange | boolean / boolean / (open: boolean) => void | Uncontrolled; defaultOpen is false | Provide open and update it from onOpenChange for controlled visibility. defaultOpen is only the initial uncontrolled state. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a short list of actions. Use SelectField/Combobox for a submitted value and links for navigation semantics.
+
+### Anatomy and parts
+
+Wrapper, native trigger button and portalled menu/items. triggerProps/panelProps and renderTrigger customize typed parts; render exactly one ref-forwarding button with supplied props.
+
+### State ownership
+
+open/onOpenChange is controlled or defaultOpen initializes local state. Stable item IDs and disabled entries are supported. Selection invokes your callback and requests closure.
+
+### Native forms and reset
+
+Default trigger is type=button, not a selection field. Menu actions perform application commands; no named form value or reset is supplied.
+
+### Ref target
+
+Root ref targets the div; triggerProps.ref targets its button and panelProps.ref its panel. Do not treat the root as the trigger.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Portal defaults true with collision-aware placement and native-dialog containment. First Escape dismisses the deepest layer; Tab dismisses without consuming navigation. No general submenus. Changing portal containers can remount child state.
+
+### RTL and localization
+
+Translate label/actions and use stable IDs rather than labels as identity. Alignment is logical in RTL; typeahead searches labels. Test long labels at the viewport edge.
+
+### Keyboard and focus
+
+Enter/Space open the trigger; ArrowDown/ArrowUp open at the first/last enabled item. Arrow keys and Home/End skip disabled items. Typing searches enabled labels. Escape dismisses with focus return; Tab dismisses and continues navigation.
+
+### Limits and evidence
+
+Portal positioning, collision handling and native-dialog integration are supported. triggerProps targets the native button; renderTrigger composes one ref-forwarding button. There is no general submenu contract. Keep controlled or uncontrolled visibility consistent and verify focus return in the complete composition.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report DropdownMenu 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DropdownMenu&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## EmptyState
+
+An icon, heading, explanation and optional recovery action for a labelled empty situation.
+
+### Import and runnable source
+
+`import { EmptyState } from "@abuzareal/contour-ui";`
+
+[Complete content TSX example](examples/catalogue/content.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| icon / title / message | ReactNode / string / string | Required | State the actual situation and useful next step. |
+| action | ReactNode | Omitted | Use a labelled native button/anchor with application behavior. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to explain a genuinely empty result, not to hide a failed request. Differentiate no saved data, no filter matches, permissions and service failure in parent state.
+
+### Anatomy and parts
+
+Decorative icon span, h3 title, message paragraph and optional action slot; no implicit live-region or request behavior.
+
+### State ownership
+
+Pure display. Caller decides when to show each state and owns retry/create/filter-reset actions.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-empty-state and semantic text/action tokens with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Do not claim a successful response when permissions/network failed. Keep long copy/actions readable; avoid a dead primary action.
+
+### RTL and localization
+
+Translate title/message/action and verify heading order/RTL. Decorative icon supplies no accessible name; visible text carries meaning.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No automatic loading/error classification, alert role, title-level prop, forwarding ref or data service. Its fixed h3 must fit the surrounding heading hierarchy.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report EmptyState 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=EmptyState&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ExternalLink
+
+A safe native anchor that opens an external destination in a new tab.
+
+### Import and runnable source
+
+`import { ExternalLink } from "@abuzareal/contour-ui";`
+
+[Complete buttons TSX example](examples/catalogue/buttons.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| href / children | Native anchor props | Omitted | Use an allowed destination and a clear link name. |
+| className / onClick / aria-label | Native anchor props | Native defaults | Preserve modified clicks and label icon-only links. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for off-site navigation where a new tab is appropriate. Use native anchors/router links for in-app destinations; do not implement navigation with a button.
+
+### Anatomy and parts
+
+Forwarded native anchor retains caller attributes/children. safeHref validates href; target=_blank and rel=noopener noreferrer are owned.
+
+### State ownership
+
+No selection/request state. Destination and accessible name are application content; rejected URLs do not become a working link.
+
+### Native forms and reset
+
+Navigation is not a successful form control or submit button; no native reset contract.
+
+### Ref target
+
+Forwarded HTMLAnchorElement for focus and compatible semantic link integrations.
+
+### CSS and tokens
+
+Use Caller anchor class plus semantic link/focus tokens with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Handle missing/unsafe destinations by presenting useful text or another valid action. Do not imply a disabled or loading-link prop exists.
+
+### RTL and localization
+
+Translate the link name/new-tab explanation and test mixed-direction URLs. Icon children need an accessible name on the link.
+
+### Keyboard and focus
+
+Native anchor Enter and modified/middle clicks retain browser behavior. Explain new-tab behavior when it matters; no custom keyboard interception.
+
+### Limits and evidence
+
+target/rel are deliberately excluded from caller props. URL validation is not a server authorization/security boundary or destination availability check.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ExternalLink 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ExternalLink&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Field
+
+A label/supporting-text frame for an application-owned native control.
+
+### Import and runnable source
+
+`import { Field } from "@abuzareal/contour-ui";`
+
+[Complete field TSX example](examples/catalogue/field.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| id / label / children | string / string / ReactNode | Required | Give the actual child the same id; children own native attributes. |
+| hint / error / counter | string | Omitted | Connect descriptions with fieldDescribedBy; counter is caller-provided text. |
+| required / hideLabel / disabled | boolean | Omitted | These affect the frame; set required/disabled on the child too. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use when composing a control that TextField/SelectField do not already cover. Prefer those wrappers for their existing native wiring; Field does not validate or clone its child.
+
+### Anatomy and parts
+
+Frame renders label htmlFor=id, optional required marker, child slot and footer. Label ID is id-label; footer exposes id-hint or id-error and optional counter.
+
+### State ownership
+
+Pure presentation. Parent owns value, errors, counters and any hidden-label/disabled appearance. Error takes precedence over hint.
+
+### Native forms and reset
+
+The frame does not submit. Give the child id/name/form/required/disabled and native reset semantics explicitly; use fieldDescribedBy and aria-invalid for the child.
+
+### Ref target
+
+Attach a ref to the actual native child; Field forwards none.
+
+### CSS and tokens
+
+Use .contour-field, .contour-field-label and footer states with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Business/server errors and pending states are application-owned. Test long hints/errors/counters and empty content; do not rely on the required asterisk as validation.
+
+### RTL and localization
+
+Translate label/hint/error/counter. Use suitable native inputMode/autoComplete/dir on the actual control and sensible localized count wording.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No automatic child aria-invalid/aria-describedby/required/disabled wiring, no input state or forwarded ref. hideLabel hides visually rather than removing the accessible name.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Field 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Field&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## FlipCard
+
+A two-face CSS card with an explicit accessible toggle.
+
+### Import and runnable source
+
+`import { FlipCard } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| front / back | ReactNode | Required | Use meaningful face content and valid focusable children. |
+| label | string | Required | A clear toggle name; aria-pressed exposes the flipped state. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for supplementary paired content, keeping essential information discoverable. Do not require hover or hide critical form instructions on the reverse.
+
+### Anatomy and parts
+
+Front/back faces sit inside a flipped-state card; a separate native toggle remains stationary. Inactive face receives aria-hidden and inert in React18/19-compatible form.
+
+### State ownership
+
+Internal boolean starts front-visible; toggle changes it. No controlled flipped prop or animation engine is exposed.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-flip-card, visible-state and face/toggle hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check long faces, fixed toggle position, reduced motion and inactive face focus/reading exclusion. A flip animation does not prove data loading/success.
+
+### RTL and localization
+
+Translate label/face content and verify RTL reading order. A single label is used for both states with aria-pressed.
+
+### Keyboard and focus
+
+Tab reaches the native toggle; Enter/Space flips. Hidden-face interactive content is inert. Caller should keep focus on the stable toggle rather than programmatically focus an inactive face.
+
+### Limits and evidence
+
+No controlled flip/ref/hover-only contract. React18/19 inert behavior is deliberately supported; manual screen-reader review remains separate.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report FlipCard 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=FlipCard&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## GitHubIcon
+
+A decorative GitHub brand SVG for a separately labelled link.
+
+### Import and runnable source
+
+`import { GitHubIcon } from "@abuzareal/contour-ui";`
+
+[Complete identity TSX example](examples/catalogue/identity.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| size | number | 17 | Caller chooses sensible finite SVG dimensions. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use only to identify the GitHub destination. A logo is not a link or accessible name; pair it with a native labelled anchor and appropriate brand attribution.
+
+### Anatomy and parts
+
+Fixed SVG viewBox/path uses currentColor and aria-hidden=true. size sets equal width/height; no link is created.
+
+### State ownership
+
+Pure vector display; size defaults to 17. No interaction/state or network integration.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use The SVG inherits currentColor from its labelled parent with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep a suitable link target size/focus indication independent of icon dimensions; test contrast/forced colors and never use logo color alone.
+
+### RTL and localization
+
+The vector is fixed; translate the surrounding link label or explanatory text. The GitHub brand name remains an identity.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No children/title/aria-label/native SVG props/ref, social API request or automatic profile destination. The surrounding link supplies the name.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report GitHubIcon 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=GitHubIcon&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## IconButton
+
+A native icon-only button with a mandatory accessible label and native ref.
+
+### Import and runnable source
+
+`import { IconButton } from "@abuzareal/contour-ui";`
+
+[Complete buttons TSX example](examples/catalogue/buttons.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label / children | string / ReactNode | Required | The label supplies the accessible name; children supply the icon. |
+| variant | outline \| solid \| accent | outline | Visual emphasis. |
+| size / spin | sm \| md \| lg / boolean | md / false | Spin is optional decorative hover feedback. |
+| type / title / ref | Native button props and ref | button / label / omitted | Caller title is preserved; the ref targets HTMLButtonElement. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a familiar compact action with a clear accessible label. Prefer Button text for an unfamiliar or consequential action.
+
+### Anatomy and parts
+
+One native circular button contains caller icon children. label owns aria-label; title defaults to label unless caller title is supplied. Native props/ref stay on the button.
+
+### State ownership
+
+variant defaults outline, size md and spin false. Disabled is native. Decorative spin does not indicate pending or successful work.
+
+### Native forms and reset
+
+Default type is button. Use native submit/reset deliberately and keep form validation/application requests outside the component.
+
+### Ref target
+
+Forwarded ref targets HTMLButtonElement. Do not nest a button/anchor inside its children.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+label is mandatory even when the icon seems obvious. Check target size, disabled contrast and focus in both themes. Essential meaning cannot depend on rotation or hover title.
+
+### RTL and localization
+
+Translate label and optional title. Consider direction-specific icon meaning and preserve a useful name when the visual is mirrored.
+
+### Keyboard and focus
+
+Native button keyboard behavior. The icon's accessible label remains available without a tooltip or hover.
+
+### Limits and evidence
+
+No anchor or arbitrary-element polymorphism. Keep decorative spin separate from essential state.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report IconButton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=IconButton&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Kbd
+
+A native keyboard-key text treatment.
+
+### Import and runnable source
+
+`import { Kbd } from "@abuzareal/contour-ui";`
+
+[Complete metadata TSX example](examples/catalogue/metadata.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Use understandable platform-appropriate key names. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to describe an actual shortcut/key. Do not imply that displaying a key registers a shortcut or makes a noninteractive element operable.
+
+### Anatomy and parts
+
+Native kbd wraps caller children with a visual keycap class.
+
+### State ownership
+
+Pure text display, with no key listeners or shortcut registry.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-kbd with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep chord instructions readable and provide a real keyboard interaction separately; loading/error states do not apply to a key label.
+
+### RTL and localization
+
+Translate key/instruction text and distinguish platform conventions such as Control versus Command. A drawn symbol may need nearby explanation.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No activation, key handling, platform detection, forwarded props or ref.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Kbd 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Kbd&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## LinkedInIcon
+
+A decorative LinkedIn brand SVG for a separately labelled link.
+
+### Import and runnable source
+
+`import { LinkedInIcon } from "@abuzareal/contour-ui";`
+
+[Complete identity TSX example](examples/catalogue/identity.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| size | number | 17 | Caller chooses sensible finite SVG dimensions. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use only to identify the LinkedIn destination. A logo is not a link or accessible name; pair it with a native labelled anchor and appropriate brand attribution.
+
+### Anatomy and parts
+
+Fixed SVG viewBox/path uses currentColor and aria-hidden=true. size sets equal width/height; no link is created.
+
+### State ownership
+
+Pure vector display; size defaults to 17. No interaction/state or network integration.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use The SVG inherits currentColor from its labelled parent with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep a suitable link target size/focus indication independent of icon dimensions; test contrast/forced colors and never use logo color alone.
+
+### RTL and localization
+
+The vector is fixed; translate the surrounding link label or explanatory text. The LinkedIn brand name remains an identity.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No children/title/aria-label/native SVG props/ref, social API request or automatic profile destination. The surrounding link supplies the name.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report LinkedInIcon 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=LinkedInIcon&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Magnetic
+
+A CSS pointer-follow wrapper that leaves native child semantics intact.
+
+### Import and runnable source
+
+`import { Magnetic } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Use a real labelled native control when interactive. |
+| strength | number | 0.35 | Choose a sensible finite fractional displacement. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for optional motion around a real control. Do not make essential targets depend on pointer movement or move them so far they become difficult to activate.
+
+### Anatomy and parts
+
+Span wrapper writes a magnet CSS custom property from mouse offset and resets it on pointer leave. Children retain their native semantics.
+
+### State ownership
+
+strength defaults to 0.35 of pointer offset. Only mouse movement with enabled motion applies displacement; no state/persistence/service is owned.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-magnetic and its --magnet geometry variable with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep target usability, focus indication and surrounding hit areas stable; test reduced/paused motion, long labels and narrow screens.
+
+### RTL and localization
+
+Children supply language/direction; pointer displacement has no semantic directional meaning.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No click/drag/key interaction, forwarded ref or touch/pen magnet. The presentation wrapper is not a new control.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Magnetic 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Magnetic&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Marquee
+
+A labelled repeating visual ticker with one accessible item sequence.
+
+### Import and runnable source
+
+`import { Marquee } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| items / label | string[] / string | Required | Unique items and a meaningful region name. |
+| duration | number | 28 | Seconds per loop; validate a sensible positive finite value. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for nonessential repeated metadata. Keep essential content available statically and provide an application pause control for ongoing motion.
+
+### Anatomy and parts
+
+Named region contains two list tracks for seamless motion; the duplicated track is aria-hidden and decorative icons carry no meaning.
+
+### State ownership
+
+Caller owns unique string items and positive duration (default 28 seconds). CSS handles hover/system reduction and surrounding app pause.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-marquee, track hooks and --marquee-duration with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Pause ongoing motion from the app, test reduced/paused states and long items. Loading/error/empty data belongs outside the ticker.
+
+### RTL and localization
+
+Translate label/items and verify RTL visual direction/reading order. Do not treat track motion as navigation.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No built-in pause button, live updates/announcements, arbitrary children or root ref. Do not imply the decorative duplicate is another dataset.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Marquee 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Marquee&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Pagination
+
+Controlled one-based page navigation with translated labels and condensed page buttons.
+
+### Import and runnable source
+
+`import { Pagination } from "@abuzareal/contour-ui";`
+
+[Complete navigation TSX example](examples/catalogue/navigation.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| page / pageCount / onChange | number / number / (page:number)=>void | Required | Supply1 <= page <= pageCount and update state after requests as appropriate. |
+| label / previousLabel / nextLabel | string | Pagination / Previous page / Next page | Translate navigation and button names. |
+| pageLabel / formatPage | (page:number)=>string | Page N / formatIndex | Accessible names and visual numeral formatting are separate. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to move through known result pages. Own URL/data loading separately; hide pagination or show an empty state when no pages exist.
+
+### Anatomy and parts
+
+Named nav contains previous/next buttons and an ordered condensed list; current page has aria-current=page. Gaps are decorative.
+
+### State ownership
+
+page and pageCount are caller-owned positive finite integers. onChange requests another one-based page; component neither clamps invalid inputs nor fetches rows.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-pagination, native buttons and [aria-current=page] with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Preserve current results/query on request failure; show retry/loading in the application. Check large page counts, narrow width and long translations.
+
+### RTL and localization
+
+Use all label callbacks and formatPage for localized numerals. Verify RTL previous/next meaning with logical order and your product convention.
+
+### Keyboard and focus
+
+Tab reaches native enabled buttons; Enter/Space requests a page. First/last boundaries disable previous/next. No grid/radio arrow model or automatic result focus is added.
+
+### Limits and evidence
+
+No zero-page/invalid-number sanitization, router hrefs, pending/disabled prop or server operation. Callback success does not establish fetched data.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Pagination 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Pagination&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Popover
+
+A nonmodal floating panel with collision-aware portals and typed focus/trigger composition.
+
+### Import and runnable source
+
+`import { Popover } from "@abuzareal/contour-ui";`
+
+[Complete floating TSX example](examples/catalogue/floating.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| trigger / title / children | ReactNode / string / ReactNode | Required | Default trigger content must not be another button. |
+| open / defaultOpen / onOpenChange | boolean / boolean / callback | Uncontrolled / false | Keep one ownership model. |
+| portal / side / align | boolean / top \| bottom \| left \| right / start \| center \| end | true / bottom / start | Placement follows collision bounds and logical alignment. |
+| renderTrigger / triggerProps / panelProps | Typed button renderer / native part props | Omitted | Spread supplied props into one ref-forwarding button. |
+| initialFocus | ref \| false | Panel focus on entry | Override entry deliberately and retain a usable close path. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for supplementary interactive content that leaves the background available. Use Tooltip only for noninteractive hints and Dialog for a modal task.
+
+### Anatomy and parts
+
+Root wrapper and button trigger own the panel relationship. Panel is a named nonmodal dialog. Typed triggerProps/panelProps expose parts; renderTrigger spreads owned attributes/handlers/ref into one button.
+
+### State ownership
+
+Use open/onOpenChange or defaultOpen. Default portal is true; side bottom, align start and sideOffset/collisionPadding eight pixels. initialFocus=false preserves trigger focus. Cancelable focus/dismiss events permit explicit workflow ownership.
+
+### Native forms and reset
+
+The trigger defaults type=button. Popover is not a form; portal movement can change DOM form ancestry, so use explicit form association when required.
+
+### Ref target
+
+Root ref targets HTMLDivElement; triggerProps.ref and panelProps.ref target their native parts. Portals can detach/reattach panel refs when the container changes.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Native-dialog containment keeps the panel in the modal top layer. Collision observers update on scroll/resize and clean up on close. No focus trap; portalled DOM order may require an application focus policy. Changing containers may remount unsaved children.
+
+### RTL and localization
+
+Translate title and trigger content. Alignment follows inherited RTL; physical side remains an explicit choice. Check long content, small viewports and a usable dismissal path.
+
+### Keyboard and focus
+
+Nonmodal panel entry focuses its panel or requested target. Escape closes the deepest layer and returns focus; outside press keeps destination focus. Tab is not trapped.
+
+### Limits and evidence
+
+Portals affect DOM Tab order. No arbitrary link trigger or modal focus trap. Use Dialog when background interaction must be blocked.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Popover 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Popover&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ProgressBar
+
+Labelled determinate or indeterminate progress for work managed by your application.
+
+### Import and runnable source
+
+`import { ProgressBar } from "@abuzareal/contour-ui";`
+
+[Complete feedback TSX example](examples/catalogue/feedback.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Describe the operation being reported. |
+| value | number | Omitted: indeterminate | Supply a finite number from 0 to 100 only when progress is known. Validate and bound it before rendering. |
+| tone | "accent" \| "success" \| "danger" | "accent" | Use text as well as color to explain completion or failure. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for measured completion or unknown-duration work. Use Spinner for a compact indicator; do not imply measured progress when the total is unknown.
+
+### Anatomy and parts
+
+A named progressbar, visual track/fill and visible rounded percentage when determinate. No interactive parts or native input ref.
+
+### State ownership
+
+Omitted value is indeterminate. Caller supplies a finite 0–100 value; tone defaults accent and also supports success/danger. The component does not clamp invalid input or calculate progress.
+
+### Native forms and reset
+
+Informational output: no successful form control, required constraint or reset behavior. The application resets its progress state.
+
+### Ref target
+
+No native ref contract. Put pause/cancel/retry in separate labelled controls.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Unknown, stalled and failed requests need truthful adjacent status. An animation does not prove success. Check 0 and 100, long labels, both themes and reduced motion.
+
+### RTL and localization
+
+Translate label/status text. The built-in rounded percent is not a locale formatting service; use adjacent localized wording when needed.
+
+### Keyboard and focus
+
+Progress is informational and does not take focus. Put cancel, retry or pause actions in separate labelled controls.
+
+### Limits and evidence
+
+The component does not start work, calculate percentages or clamp invalid inputs. Omit value for unknown progress. An indeterminate animation is not evidence that a request is succeeding; applications own status, recovery and cancellation.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ProgressBar 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ProgressBar&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## RadioGroup
+
+A named native radio set with a legend, controlled/default selection and per-option input access.
+
+### Import and runnable source
+
+`import { RadioGroup } from "@abuzareal/contour-ui";`
+
+[Complete choices TSX example](examples/catalogue/choices.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| legend / options | string / option records | Required | Supply a meaningful group name and unique value/label pairs. |
+| value / defaultValue / onChange | Value / Value / (value: Value) => void | Uncontrolled if value omitted | Callback receives the selected string, not an event. |
+| name / form / required / disabled | Native fieldset and group props | Generated name; other props omitted | Supply a caller name for stable FormData and form for an external owner. |
+| inline | boolean | false | Changes layout, not radio semantics. |
+| description / error | string | Omitted | Keep validation linked and visible. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for one choice from a visible list. Use independent Checkbox controls for multiple choices, or SelectField/Combobox when a popup is more appropriate.
+
+### Anatomy and parts
+
+Fieldset and legend contain labelled native radio inputs. description/error IDs merge with caller descriptions; each option may have its own description, disabled flag and inputProps.
+
+### State ownership
+
+value/onChange controls selection; otherwise defaultValue captures an uncontrolled initial selection. Keep unique stable string values. No singular root focus ref is exposed.
+
+### Native forms and reset
+
+A named checked enabled radio submits its string value; required uses native validity. Disabled values are omitted. Native/external form reset restores captured defaults; controlled owners reset their state and cancelled reset is respected.
+
+### Ref target
+
+Use options[index].inputProps.ref for HTMLInputElement. No forwarded fieldset or aggregate native-input ref.
+
+### CSS and tokens
+
+Use .contour-radio-group and .contour-choice with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Show request failure/loading/empty choices outside the group. Keep long legends/descriptions readable and do not replace selection silently when choices change.
+
+### RTL and localization
+
+Translate legend, labels, descriptions and errors. Native browser validation and radio key behavior vary by platform; test RTL and long labels.
+
+### Keyboard and focus
+
+Tab enters the native radio set; arrow/Space behavior follows the browser. options.inputProps.ref targets each native input for focus/blur integration. Disabled choices cannot activate.
+
+### Limits and evidence
+
+Native radios, not a custom listbox. No multi-select, asynchronous loading model or root forwarded ref; values must remain unique and stable.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report RadioGroup 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RadioGroup&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Reveal
+
+A one-time observer-driven entrance wrapper with a static reduced-motion path.
+
+### Import and runnable source
+
+`import { Reveal } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Keep native content semantics inside the wrapper. |
+| className / delay | string / number | empty string / 0 | Append scoped classes and optional millisecond visual stagger. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for optional presentation around already meaningful content. Essential content must remain usable without animation; do not use entrance timing as a loading state.
+
+### Anatomy and parts
+
+Div wrapper observes entry, adds public visible state hooks and disconnects. className appends; delay sets transition delay.
+
+### State ownership
+
+One-time viewport activation; className defaults empty and delay 0 ms. If IntersectionObserver is missing, visible hooks are applied immediately. System/app motion styling controls the animation.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-reveal and .contour-is-visible with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check static/reduced-motion/no-observer visibility, unmount cleanup and long content. Avoid stacking large delays on essential controls.
+
+### RTL and localization
+
+Text is caller content; translate normally and preserve source reading order regardless of stagger.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No enter/exit lifecycle API, repeated visibility callback, forwarded ref or data-loading orchestration.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Reveal 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Reveal&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## RevealHeading
+
+A fixed h2 whose line spans can animate inside a Reveal.
+
+### Import and runnable source
+
+`import { RevealHeading } from "@abuzareal/contour-ui";`
+
+[Complete identity TSX example](examples/catalogue/identity.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| id / lines | string / {text:ReactNode;accent?:boolean}[] | Required | Keep a unique heading id and meaningful text in semantic order. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an actual second-level section heading. Use native headings of the appropriate level elsewhere rather than forcing every heading into this visual style.
+
+### Anatomy and parts
+
+h2 with caller id contains line spans and inner type-run spans; each line accepts ReactNode text and optional accent.
+
+### State ownership
+
+Pure heading data. Reveal or app state controls entrance styling; this component adds no observer or animation state itself.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-type-line, .contour-type-run and accent hook with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Long lines and rich text must remain readable at narrow widths. Reduced-motion/static visibility belongs to the surrounding reveal/style contract.
+
+### RTL and localization
+
+Translate lines without using decorative line breaks to change reading order. Test scripts/RTL that wrap differently.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+Always h2; no as/heading-level prop, controlled animation, root class/ref or arbitrary native attributes.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report RevealHeading 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RevealHeading&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## SceneBoundary
+
+An error boundary that hides a failed optional child without removing surrounding content.
+
+### Import and runnable source
+
+`import { SceneBoundary } from "@abuzareal/contour-ui";`
+
+[Complete scene-boundary TSX example](examples/catalogue/scene-boundary.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Keep a usable static fallback and any retry control outside the boundary. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use around an optional scene/rendering child with a useful static fallback outside it. Do not use it to hide essential UI failures or silently imply a failed operation succeeded.
+
+### Anatomy and parts
+
+React class error boundary renders children or null after a caught descendant render/lifecycle error. It renders no wrapper DOM and owns no renderer resources.
+
+### State ownership
+
+Internal failed=false becomes true after a caught error. A caller key/remount resets the boundary; no reset/fallback/callback prop is exposed.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+A React class ref is an instance, not a native focus target; no public focus/retry command is defined.
+
+### CSS and tokens
+
+No component-specific visual wrapper contract. Style application content with released semantic tokens; preserve its native semantics and meaningful fallback.
+
+### Loading, errors and long content
+
+Test missing/failed lazy modules, render failures and unmount. Dispose GPU work in the scene owner and keep honest external fallback text; remounting must not imply a service recovered.
+
+### RTL and localization
+
+Translate app-owned static fallback/retry/status text. The boundary supplies no user-facing strings itself.
+
+### Keyboard and focus
+
+No added focus behavior or control. Keep fallback/retry in native labelled controls and restore useful focus in the application when replacing interactive children.
+
+### Limits and evidence
+
+Not a catch-all for event-handler, asynchronous callback, server-render or network errors. No automatic retry/fallback slot, loading state or GPU disposal. Existing optional3D APIs remain experimental.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report SceneBoundary 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SceneBoundary&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ScrollProgress
+
+A decorative page-scroll progress line without interactive semantics.
+
+### Import and runnable source
+
+`import { ScrollProgress } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+No component props. State and geometry are derived from the surrounding document.
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use as a supplemental document-position cue. Keep real navigation/headings and reading order; this is not measured upload/task completion.
+
+### Anatomy and parts
+
+aria-hidden div is fixed by CSS; a frame-coalesced listener reads document scroll height/window scroll and writes its progress variable.
+
+### State ownership
+
+No props. Initial measurement plus scroll/resize updates; non-scrollable documents yield 0. Cleanup removes listeners and pending frame.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-scroll-progress and --scroll-progress with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check non-scrollable/long documents, resize/unmount and layout changes. It does not observe every asynchronous content-height change unless scroll/resize updates occur.
+
+### RTL and localization
+
+No text; keep accessible document navigation separate and verify surrounding direction/styles.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+Document/window scope, not nested-scroll containers. No progress label, callback/ref, controlled value or business completion semantics.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ScrollProgress 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ScrollProgress&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## SectionLabel
+
+A numbered eyebrow using section metadata and a secondary note.
+
+### Import and runnable source
+
+`import { SectionLabel } from "@abuzareal/contour-ui";`
+
+[Complete identity TSX example](examples/catalogue/identity.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| section | Section | Required | Supply id/number/label/title; only number/title are displayed. |
+| aside | string | Required | Secondary nonessential note; may be hidden on small screens. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use as supporting section context beside a real heading. It is not itself a heading, anchor, scroll-spy target or navigation control.
+
+### Anatomy and parts
+
+Div contains formatIndex(section.number) plus section.title, and an aside span that may hide at narrow widths.
+
+### State ownership
+
+Pure section/aside data. Section id/label remain caller metadata; this component does not create that section anchor.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-section-label with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep actual section anchors/headings in application markup and long section text bounded. No request/form lifecycle is supplied.
+
+### RTL and localization
+
+Translate title/aside. formatIndex uses the library two-digit representation; localized numbering is not a prop.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No configurable heading level, formatting callback, forwarded ref or automatic navigation. The aside must not contain essential instructions.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report SectionLabel 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SectionLabel&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## SegmentedControl
+
+A controlled single-choice button group with radio semantics and roving focus.
+
+### Import and runnable source
+
+`import { SegmentedControl } from "@abuzareal/contour-ui";`
+
+[Complete choices TSX example](examples/catalogue/choices.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label / options | string / {value,label}[] | Required | Name the group and keep options nonempty with unique values. |
+| value / onChange | Value / (value:Value)=>void | Required | Update the selected value; no default/uncontrolled API. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a small mutually exclusive view/filter choice. Use native RadioGroup for successful form inputs and required validation; this does not create a global density/theme API.
+
+### Anatomy and parts
+
+Named radiogroup contains native button role=radio for each option. Selected item is the tab stop and has aria-checked.
+
+### State ownership
+
+value and onChange are required controlled state; options use unique stable string values. Caller must keep value present in the set.
+
+### Native forms and reset
+
+Buttons are type=button and are not submitted. Use RadioGroup or an application-owned successful control if the selection must be in FormData.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-segmented and [aria-checked] buttons with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Own pending/error and keep query/results stable while a view changes. Long labels should wrap rather than create offscreen controls.
+
+### RTL and localization
+
+Translate group/options and supply dir. Stable IDs survive translation; do not use translated labels as selection identity.
+
+### Keyboard and focus
+
+Tab enters the selected button. Arrows/Home/End move and select with RTL-aware horizontal navigation; Enter/Space uses native button activation.
+
+### Limits and evidence
+
+No name/form/required serialization, disabled-option support, async state or forwarded aggregate ref. An absent selected value leaves no selected tab stop; validate it in the parent.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report SegmentedControl 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SegmentedControl&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## SelectField
+
+A native select with a visible label, linked supporting text and a native ref.
+
+### Import and runnable source
+
+`import { SelectField } from "@abuzareal/contour-ui";`
+
+[Complete text-inputs TSX example](examples/catalogue/text-inputs.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label / options | string / {value: string; label: string}[] | Required | Supply unique values and understandable labels. |
+| value / defaultValue / onChange | Native select props | Uncontrolled when value is omitted | Read event.currentTarget.value. Keep controlled state in the application. |
+| placeholder | string | Omitted | Adds a disabled empty option. Use an empty initial value when the visitor must choose. |
+| hint / error | string | Omitted | Messages are linked to the select; error sets aria-invalid. |
+| id / name / form / ref | Native select props and React.Ref<HTMLSelectElement> | Generated id | Use a name for FormData and a ref for focus. Caller descriptions are preserved. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a short native allowed-value list. Use Combobox for search or remote results; no free-text selection is offered here.
+
+### Anatomy and parts
+
+Field connects label and supporting text to a native select; options are value/label records. Placeholder renders a disabled empty option.
+
+### State ownership
+
+Native value/onChange or defaultValue ownership. Loading, unavailable data and failed requests belong outside the select.
+
+### Native forms and reset
+
+name/form participate in native FormData and external form ownership. Native reset restores defaults; controlled owners restore their value. Use required and an empty initial value when a choice is mandatory.
+
+### Ref target
+
+Forwarded ref targets HTMLSelectElement. Caller id and descriptions are preserved.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Use unique option values. Explain empty or failed option sources rather than presenting a disabled select as a successful response. Native popup geometry and styling vary by platform.
+
+### RTL and localization
+
+Translate labels/options and test long translations. Browser/OS supply native popup keys and localized validation; verify your target platforms.
+
+### Keyboard and focus
+
+The platform supplies native select keyboard behavior. Tab enters and leaves the control; selection and popup keys follow the browser and operating system.
+
+### Limits and evidence
+
+No searchable list, asynchronous option fetching or grouped-option contract. Supply loading, failed and empty option states in the surrounding application. Native styling and popup behavior vary by platform.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report SelectField 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SelectField&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Skeleton
+
+A hidden-from-assistive-tech visual placeholder with line, block or circle shape.
+
+### Import and runnable source
+
+`import { Skeleton } from "@abuzareal/contour-ui";`
+
+[Complete feedback TSX example](examples/catalogue/feedback.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| shape | line \| block \| circle | line | Match the expected visual footprint. |
+| width / height | CSS length strings | Omitted | Caller-owned dimensions; ensure narrow layouts remain bounded. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use while real content loads. Pair with an accessible loading/status description; use a truthful empty/error state if work ends without content.
+
+### Anatomy and parts
+
+Noninteractive aria-hidden span takes width/height CSS strings and shape hooks. It contains no actual data or accessible text.
+
+### State ownership
+
+Pure visual placeholder. shape defaults line; caller owns when it disappears and any aria-busy state on the content region.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-skeleton and shape hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Reserve sensible layout space without clipping; make completion/error visible outside the skeleton. Motion may stop under reduced motion.
+
+### RTL and localization
+
+Shape has no translatable text. Translate the surrounding real loading/error status and check direction/width on translated content.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No text label, data fetch, role=status, automatic layout measurement or forwarded ref. A placeholder is not content or an error recovery flow.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Skeleton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Skeleton&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Slider
+
+A native range input with numeric callbacks, formatted value text and reset-aware readout.
+
+### Import and runnable source
+
+`import { Slider } from "@abuzareal/contour-ui";`
+
+[Complete choices TSX example](examples/catalogue/choices.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Provide the quantity name and nearby units. |
+| value / defaultValue / onChange | number / number / (value: number) => void | Uncontrolled native-sanitized midpoint | Callback is numeric, not a native event. |
+| min / max / step | number / number / number \| "any" | 0 / 100 / 1 | Provide finite consistent bounds and a valid positive step. |
+| format | (value: number) => string | String | Readout and aria-valuetext formatting, not submission parsing. |
+| name / form / disabled | Native input props | Omitted | Native successful-control and external form ownership. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a bounded approximate numeric choice. Use a native number/text input for precise typed entry or locale-sensitive parsing; this is not NumberField.
+
+### Anatomy and parts
+
+Visible label/output accompany input type=range and linked hint/error. The native range owns sanitization, min/max/step and keyboard interaction.
+
+### State ownership
+
+value/onChange controls a number; defaultValue captures the initial uncontrolled value. If omitted, the initial midpoint is (min + max(min,max))/2 and the browser sanitizes it. format customizes readout/accessible text.
+
+### Native forms and reset
+
+name/form support native and external-owner submission as a numeric string; disabled omits the control. required is deliberately not supported by range. Reset restores uncontrolled input/readout or the parent-controlled value, and cancellation is respected.
+
+### Ref target
+
+Forwarded HTMLInputElement for the visible native range.
+
+### CSS and tokens
+
+Use .contour-slider wrapper and its native range/output with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Check bounds, step, zero-length/reversed inputs in your application and keep long formatted readouts readable. Request loading/failure and reset of controlled state belong to the parent.
+
+### RTL and localization
+
+Use format for localized units/value text. Native serialized value remains a numeric string; verify RTL range behavior and real mobile controls.
+
+### Keyboard and focus
+
+Native range arrows/Home/End/Page keys follow the browser and direction. The forwarded input ref supports focus. Do not replace keyboard interaction with a drag-only wrapper.
+
+### Limits and evidence
+
+One scalar range only; no multi-thumb/rich numeric parsing/required constraint. Display formatting does not change FormData serialization or native sanitization.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Slider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Slider&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Spinner
+
+A decorative spinning mark with an accessible status label.
+
+### Import and runnable source
+
+`import { Spinner } from "@abuzareal/contour-ui";`
+
+[Complete feedback TSX example](examples/catalogue/feedback.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| size | sm \| md \| lg | md | Icon sizes16/24/40; no percentage meaning. |
+| label | string | Loading | Name the actual task and translate it. |
+| className | string | Omitted | Append scoped styling without removing the status label. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for unknown-duration ongoing work, with context. Use ProgressBar for real measured completion and adjacent errors/retry for failed work.
+
+### Anatomy and parts
+
+Root span role=status contains a hidden label and decorative asterisk. Size controls icon geometry; className appends root hooks.
+
+### State ownership
+
+Pure indication of caller-owned work; size defaults md and label Loading. The animation is not evidence of request success.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-spinner and size hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Show truthful pending/failed/retry states. Reduced-motion appearance may be static; retain a meaningful textual status and avoid duplicate live announcements.
+
+### RTL and localization
+
+Translate label and related status/error/action text. Actual live-region behavior requires manual platform checks.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No request lifecycle, progress value, cancellation control or forwarded ref. Do not leave a permanent spinner when a failure is known.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Spinner 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Spinner&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Stat
+
+A value, optional suffix and descriptive label without automatic animation.
+
+### Import and runnable source
+
+`import { Stat } from "@abuzareal/contour-ui";`
+
+[Complete metadata TSX example](examples/catalogue/metadata.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| value / label | ReactNode / string | Required | Explain the quantity and its source/period nearby. |
+| suffix | string | Omitted | Units/suffix are visual text, not numeric parsing. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a meaningful measured value with units/context. Label illustrative counts and estimates; use CountUp only when decorative numeric animation is appropriate.
+
+### Anatomy and parts
+
+Container holds a strong value/optional suffix and a mono label. It is not a live region or a chart.
+
+### State ownership
+
+Pure caller-owned value; no calculation, data source, formatting or refresh lifecycle.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-stat and suffix hook with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Show unavailable/stale/error state honestly instead of a fabricated value. Check long values/units, both themes and responsive overflow.
+
+### RTL and localization
+
+Format the value/units with application locale APIs before rendering; suffix does not automatically pluralize or format numbers.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No calculation, CountUp behavior, invalid-number validation, automatic live announcement or external root ref.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Stat 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stat&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Stepper
+
+A read-only ordered progress sequence with one zero-based current step.
+
+### Import and runnable source
+
+`import { Stepper } from "@abuzareal/contour-ui";`
+
+[Complete navigation TSX example](examples/catalogue/navigation.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| steps / current | step records[] / number | Required | Unique labels and a valid zero-based current index. |
+| label | string | Progress | Translate the ordered-list accessible name. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to describe progress through known stages. Supply separate real navigation controls; it is not a wizard engine or clickable step navigation.
+
+### Anatomy and parts
+
+Ordered list with named progress, decorative number/check markers, labels/descriptions and aria-current=step on the current item.
+
+### State ownership
+
+Caller supplies steps/current; current is a zero-based index. Previous items are complete, following items upcoming; no validation or transitions are owned.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-stepper and current/complete/upcoming hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Show failed/pending business state beside the steps rather than claiming completion. Keep long descriptions/narrow layouts and zero/last step correct.
+
+### RTL and localization
+
+Translate label/step text. Hidden state suffixes are currently English and numbers use formatIndex; do not claim complete localization.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No onChange, disabled/async/error state, clicking or current-range sanitization. Built-in hidden state words complete/current/upcoming and numeric formatting are not configurable.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Stepper 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stepper&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Switch
+
+A button-based switch with native checkbox-backed submission, validation and reset.
+
+### Import and runnable source
+
+`import { Switch } from "@abuzareal/contour-ui";`
+
+[Complete choices TSX example](examples/catalogue/choices.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Use an understandable setting name. |
+| checked / defaultChecked / onChange | boolean / boolean / (checked: boolean) => void | Uncontrolled false | Choose controlled or default ownership. |
+| name / form / value | string | value="on"; name/form omitted | Checked, enabled backing input submits this value. |
+| required / requiredMessage | boolean / string | Message: Turn on this option to continue. | Native invalid feedback focuses the visible button unless caller owns onInvalid. |
+| description / error / onInvalid | string / string / native invalid handler | Omitted | Preserve linked supporting text and caller-owned validation. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an on/off setting. Use Checkbox when the user is selecting an item or acknowledging a statement; a switch does not perform a backend operation by itself.
+
+### Anatomy and parts
+
+Visible button role=switch links to its label, description and error. A hidden native checkbox supplies form participation; it is not the focus target.
+
+### State ownership
+
+checked/onChange is controlled; defaultChecked captures initial uncontrolled state, otherwise false. onChange receives the next boolean. A caller onClick may prevent activation.
+
+### Native forms and reset
+
+Named checked enabled state submits value (default "on"); unchecked/disabled is omitted. form supports external owners; required uses the backing checkbox with visible-button feedback. Native reset restores uncontrolled defaults without synthetic change callbacks; controlled owners reset explicitly.
+
+### Ref target
+
+Forwarded HTMLButtonElement, not the hidden HTMLInputElement.
+
+### CSS and tokens
+
+Use .contour-switch, .contour-switch-track and checked/invalid states with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Expose pending/save failure without claiming a successful setting change. Keep the label and validation visible; loading is an application composition rather than a Switch prop.
+
+### RTL and localization
+
+Translate label/description/error/requiredMessage. RTL follows surrounding direction; browser validation and actual announcements still require platform checks.
+
+### Keyboard and focus
+
+The native button toggles on Enter/Space. Its role and aria-checked communicate state; disabled prevents activation. The forwarded button ref supports programmatic focus.
+
+### Limits and evidence
+
+The ref is a button, not the hidden checkbox. Callback is boolean, not a native change event. Persistence, service errors and immediate-save policy remain application-owned.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Switch 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Switch&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Table
+
+Semantic table styling for native rows, cells and application-owned table engines.
+
+### Import and runnable source
+
+`import { Table } from "@abuzareal/contour-ui";`
+
+[Complete selection TSX example](examples/catalogue/combobox.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| caption / children | string / ReactNode | Required | Supply semantic table children; the component owns caption. |
+| showCaption | boolean | false | Caption remains accessible when visually hidden. |
+| scrollProps | NativePartProps<div> | Omitted | Configure the scroll wrapper, including its native ref. |
+| ref | React.Ref<HTMLTableElement> | Omitted | Targets the table, not its wrapper. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for semantic application-owned rows/cells or a table-engine integration. DataTable provides a bounded local-sort convenience API. Neither is a virtualized grid.
+
+### Anatomy and parts
+
+Scrollable wrapper contains native table and an owned caption. Supply thead/tbody/tr/th/td with correct scopes; do not add a second caption. scrollProps customizes the wrapper.
+
+### State ownership
+
+Table has no fetching, sorting, pagination or selection state. showCaption defaults false while the caption remains accessible. The remote recipe owns its query and results.
+
+### Native forms and reset
+
+Not a form control. Place explicit labelled controls in cells where needed and own selection/submission separately.
+
+### Ref target
+
+Forwarded ref targets HTMLTableElement; scrollProps.ref targets the wrapper div.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Provide truthful loading, empty, no-match, permission and service-failure states. Stable row IDs, remote totals, cancellation and stale-result protection are application contracts. Long cells can scroll at narrow widths.
+
+### RTL and localization
+
+Translate caption/headings/status and format numbers/dates using your application locale. Use appropriate th scope and check RTL horizontal scrolling; a visual sort arrow alone is insufficient.
+
+### Keyboard and focus
+
+Native table reading order. Interactive cell controls retain native keyboard behavior; Table adds no grid roving focus.
+
+### Limits and evidence
+
+No built-in data model, remote fetch, pagination, selection or virtualization. Compose the public recipe for controlled TanStack table integration.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Table 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Table&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Tabs
+
+Automatic-selection horizontal tabs for switching related local views.
+
+### Import and runnable source
+
+`import { Tabs } from "@abuzareal/contour-ui";`
+
+[Complete navigation TSX example](examples/catalogue/navigation.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Accessible name of the tab list. |
+| tabs | {id, label, content}[] | Required | Use stable, unique ids and keep content relevant to the same task. |
+| defaultTabId | string | First available tab | Initial selection. Invalid ids fall back to the first tab; an empty list renders no selected tab. |
+| activeTabId / onTabChange | string / (id: string) => void | Uncontrolled when activeTabId is omitted | Update activeTabId in response to onTabChange for controlled selection. The application owns persistence and URL synchronization. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for related local views. Use anchors/navigation for routes, and avoid automatic activation for panels with expensive work that should require confirmation.
+
+### Anatomy and parts
+
+Root div contains a named tablist and matched tab/button-panel IDs. listProps and each item's buttonProps/panelProps target typed native parts.
+
+### State ownership
+
+activeTabId/onTabChange is controlled; defaultTabId initializes uncontrolled selection. Stable IDs survive reorder. Invalid selection falls back to an available tab; empty arrays have no selected panel.
+
+### Native forms and reset
+
+Tab buttons are type=button and do not submit a form. Tabs does not reset application panel state or synchronize URL/history.
+
+### Ref target
+
+Forwarded ref targets the root div; part refs target list, tab buttons and panels.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+There is no disabled-tab contract. Keep ownership consistent and preserve important panel state explicitly. Loading/error belong inside the relevant panel; test long labels without clipped navigation.
+
+### RTL and localization
+
+Translate the list name and labels. Left/Right follows inherited RTL; Home/End choose endpoints. Check your panel reading direction and mixed-language labels.
+
+### Keyboard and focus
+
+Left/Right select and focus the adjacent tab. Home/End move to first/last. The active panel follows the focused tab.
+
+### Limits and evidence
+
+No disabled-tab contract or automatic URL synchronization. Use stable ids, and keep controlled or uncontrolled ownership consistent.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Tabs 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tabs&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Tag
+
+Text metadata that optionally exposes a native remove action.
+
+### Import and runnable source
+
+`import { Tag } from "@abuzareal/contour-ui";`
+
+[Complete metadata TSX example](examples/catalogue/metadata.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | string | Required | Readable tag text and default removal-name input. |
+| onRemove | () => void | Omitted | Supplying it renders the remove button; update parent data. |
+| removeLabel | string | Remove plus tag text | Translate/customize the accessible action name. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a tag or removable chosen item. This is not a searchable multi-select, command chip or toggle button.
+
+### Anatomy and parts
+
+Without onRemove it is a text span. With onRemove it includes a type=button remove control named from removeLabel or Remove plus children.
+
+### State ownership
+
+Parent owns the tag collection and actually removes items. No internal selected/removed state or focus-reassignment policy.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-tag and .contour-tag-remove with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Keep long names/remove targets usable; preserve data on service failure and label optimistic state if used. Removing the DOM node does not automatically focus its neighbor.
+
+### RTL and localization
+
+Translate removeLabel; the default Remove prefix is English. Keep stable record IDs independent of display text.
+
+### Keyboard and focus
+
+Only a present remove button is focusable; Enter/Space requests removal. Parent chooses useful focus after deleting the focused tag.
+
+### Limits and evidence
+
+No arbitrary children, selection semantics, keyboard chip-list model, input parsing or successful-control serialization.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Tag 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tag&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## TextArea
+
+A labelled multiline control with optional growth and a character count.
+
+### Import and runnable source
+
+`import { TextArea } from "@abuzareal/contour-ui";`
+
+[Complete text-inputs TSX example](examples/catalogue/text-inputs.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Visible accessible label; do not replace it with placeholder text. |
+| value / defaultValue | Native control props | Uncontrolled when value is omitted | Use value with onChange for application-controlled state. Keep one ownership model. |
+| id / name / form | string | Generated id; native form association | Supply name for FormData and a stable id when other content describes the field. |
+| hint / error | string | Omitted | Descriptions are linked to the control; error also sets aria-invalid. |
+| maxLength | number | Omitted | Native limit plus a counter, including a zero limit. Uncontrolled counters synchronize after native form.reset(). |
+| disabled / required / onChange | Native control props | Native defaults | Supply business validation, loading state and change handling in your application. |
+| ref | React.Ref<HTMLTextAreaElement> | Omitted | Access the native textarea for focus or a form controller. |
+| autoResize | boolean | false | Grows with content; check long values and constrained containers. |
+| rows | number | 3 | Native initial row count. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for native text entry. Use SelectField or Combobox when only an allowed value is valid; TextArea is not a rich-text editor.
+
+### Anatomy and parts
+
+Field renders the label, control slot and linked hint/error/counter. The actual input or textarea owns native attributes and focus. Error takes precedence over hint.
+
+### State ownership
+
+value/onChange controls the value; otherwise defaultValue initializes native state. Do not switch ownership after mount. Disabled and readOnly retain their native meanings.
+
+### Native forms and reset
+
+Set name to include the value in FormData, and form for an external form owner. Uncontrolled native reset restores value, counter and textarea measurement. Controlled owners must restore their state; reset cancellation is respected.
+
+### Ref target
+
+The forwarded ref targets the native input (TextField) or textarea (TextArea), not the Field wrapper.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+maxLength=0 is a real limit. Keep lengthy labels, errors and counters readable at narrow widths. Application loading, server validation and retry are separate; retain valid input after a failed save.
+
+### RTL and localization
+
+Translate labels, hints and errors; use inputMode, autoComplete and dir where appropriate. The counter is not a locale-aware grapheme validator. Check mixed-direction values and your own formatting.
+
+### Keyboard and focus
+
+Native multiline editing, selection and Tab order.
+
+### Limits and evidence
+
+Native reset restores uncontrolled values, counters and auto-resized height. Controlled values require an application state reset. Auto-resize measures the rendered control; verify constrained containers and long text.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report TextArea 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextArea&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## TextField
+
+A labelled native input with linked hint, error and character count.
+
+### Import and runnable source
+
+`import { TextField } from "@abuzareal/contour-ui";`
+
+[Complete text-inputs TSX example](examples/catalogue/text-inputs.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| label | string | Required | Visible accessible label; do not replace it with placeholder text. |
+| value / defaultValue | Native control props | Uncontrolled when value is omitted | Use value with onChange for application-controlled state. Keep one ownership model. |
+| id / name / form | string | Generated id; native form association | Supply name for FormData and a stable id when other content describes the field. |
+| hint / error | string | Omitted | Descriptions are linked to the control; error also sets aria-invalid. |
+| maxLength | number | Omitted | Native limit plus a counter, including a zero limit. Uncontrolled counters synchronize after native form.reset(). |
+| disabled / required / onChange | Native control props | Native defaults | Supply business validation, loading state and change handling in your application. |
+| ref | React.Ref<HTMLInputElement> | Omitted | Access the native input for focus or a form controller. |
+| leadingIcon / trailing | ReactNode | Omitted | Decorative icons need aria-hidden; interactive content needs its own label. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for native text entry. Use SelectField or Combobox when only an allowed value is valid; TextArea is not a rich-text editor.
+
+### Anatomy and parts
+
+Field renders the label, control slot and linked hint/error/counter. The actual input or textarea owns native attributes and focus. Error takes precedence over hint.
+
+### State ownership
+
+value/onChange controls the value; otherwise defaultValue initializes native state. Do not switch ownership after mount. Disabled and readOnly retain their native meanings.
+
+### Native forms and reset
+
+Set name to include the value in FormData, and form for an external form owner. Uncontrolled native reset restores value, counter and textarea measurement. Controlled owners must restore their state; reset cancellation is respected.
+
+### Ref target
+
+The forwarded ref targets the native input (TextField) or textarea (TextArea), not the Field wrapper.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+maxLength=0 is a real limit. Keep lengthy labels, errors and counters readable at narrow widths. Application loading, server validation and retry are separate; retain valid input after a failed save.
+
+### RTL and localization
+
+Translate labels, hints and errors; use inputMode, autoComplete and dir where appropriate. The counter is not a locale-aware grapheme validator. Check mixed-direction values and your own formatting.
+
+### Keyboard and focus
+
+Native input editing and Tab order. Errors are descriptions, not a focus manager.
+
+### Limits and evidence
+
+Business validation and submission remain application-owned. Native reset updates uncontrolled values and counters; controlled fields require your application to reset state. Keep one ownership model for the lifetime of the field.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report TextField 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextField&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ThemeScope
+
+An independently controlled theme boundary for embedded Contour components and their portals.
+
+### Import and runnable source
+
+`import { ThemeScope } from "@abuzareal/contour-ui";`
+
+[Complete selection TSX example](examples/catalogue/combobox.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| theme | light \| dark | Required | Explicit independent theme. |
+| onThemeChange | (theme: Theme) => void | Omitted | Caller accepts embedded theme requests and owns persistence. |
+| children / dir / lang | Native div props | Optional | Compose content and direction inside the scope. |
+| ref | React.Ref<HTMLDivElement> | Omitted | Access the scope root. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use to embed a light/dark Contour surface inside a host that owns its own theme. A document-wide theme control can use useTheme without a scope.
+
+### Anatomy and parts
+
+A div with contour-root and explicit theme tokens supplies context to descendants and owned portalled layers. Use scoped.css for isolated component selectors.
+
+### State ownership
+
+theme is required and controlled. onThemeChange allows embedded useTheme/ThemeToggle to request a new value; omitting it makes those controls read-only. Persistence is caller-owned.
+
+### Native forms and reset
+
+No form value, validation or reset contract. A theme change does not submit the enclosing form.
+
+### Ref target
+
+Forwarded ref targets HTMLDivElement. ThemeScope does not supply a motion setting or storage-key prop.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Check both light-in-dark and dark-in-light, nested scopes and portalled overlays. scoped.css does not rename the host's generic classes. Do not import the global reset unless its document-wide effect is intended.
+
+### RTL and localization
+
+Native dir/lang attributes can be applied to the root. Translate toggle labels separately; theme selection does not determine language or direction.
+
+### Keyboard and focus
+
+The root adds no keyboard control. Descendant theme buttons are type=button and keep their own focus behavior.
+
+### Limits and evidence
+
+Use scoped.css. Omitting onThemeChange makes embedded theme controls read-only. No motion or persistence prop is supplied.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ThemeScope 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeScope&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ThemeToggle
+
+A native button that toggles the current theme owner when it is writable.
+
+### Import and runnable source
+
+`import { ThemeToggle } from "@abuzareal/contour-ui";`
+
+[Complete theme-copy TSX example](examples/catalogue/theme-copy.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| animate | boolean | Required | False switches instantly; system reduction/pause still governs motion. |
+| darkLabel / lightTitle / darkTitle | string | Dark theme / Switch to light theme / Switch to dark theme | Translate button name and action titles. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a document preference or a writable ThemeScope. A controlled read-only scope cannot toggle itself; the owner must supply its change handler.
+
+### Anatomy and parts
+
+Native button with decorative moon/sun icons uses aria-pressed for dark state, an accessible darkLabel and a direction-specific title.
+
+### State ownership
+
+useTheme(animate) resolves the nearest theme owner; animate is required. Root integration owns aa-theme/storage/meta behavior; scoped owners own their state instead.
+
+### Native forms and reset
+
+Native type=button never submits a form; no name/value/reset contract. Theme state resets only through its owner.
+
+### Ref target
+
+Forwarded HTMLButtonElement.
+
+### CSS and tokens
+
+Use .contour-theme-toggle and aria-pressed with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Handle blocked storage in root integration and verify nested scopes/portals. A theme change must not imply data was saved; actual animation depends on browser/reduced-motion support.
+
+### RTL and localization
+
+Translate all supplied strings; surrounding dir governs layout. Verify both themes, focus/forced colors and read-only scope behavior.
+
+### Keyboard and focus
+
+Native Enter/Space activation and visible button focus. Disabled when the nearest scope is read-only; aria-pressed communicates dark state.
+
+### Limits and evidence
+
+No native arbitrary button props or separate persistence namespace API. The accessible name is darkLabel in both states; title describes the next action.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ThemeToggle 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeToggle&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## TiltCard
+
+A CSS depth wrapper reacting to mouse movement with a glare highlight.
+
+### Import and runnable source
+
+`import { TiltCard } from "@abuzareal/contour-ui";`
+
+[Complete motion TSX example](examples/catalogue/motion.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Meaningful content stays usable without tilt. |
+| maxTilt | number | 12 | Caller chooses a sensible finite rotation bound. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for optional visual emphasis. Put essential content/actions in native children; do not make pointer tilt necessary to discover or use them.
+
+### Anatomy and parts
+
+Outer stage contains inner tilt card, children and decorative glare span; pointer geometry writes CSS custom properties.
+
+### State ownership
+
+maxTilt defaults to 12 degrees. Mouse movement applies tilt unless motion is disabled; pointer leave removes tilt/glare overrides. Touch/pen do not drive the effect.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-tilt-stage, .contour-tilt-card and glare hook with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Test long content, stationary focus targets, touch/reduced/paused motion and both themes. Overflow/glare must not cover essential controls.
+
+### RTL and localization
+
+Children carry all language/direction. Tilt is decorative; do not reinterpret its direction as navigation.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No gesture navigation, keyboard activation, forwarded ref or scene/GPU dependency. This is CSS, not a Three.js primitive.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report TiltCard 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TiltCard&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Timeline
+
+A read-only ordered list of dated descriptions.
+
+### Import and runnable source
+
+`import { Timeline } from "@abuzareal/contour-ui";`
+
+[Complete content TSX example](examples/catalogue/content.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| entries | {date,title,body?,current?}[] | Required | Provide correctly ordered entries and meaningful date/time context. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for an explicit chronological sequence. Dates are display strings; sort/parse/time-zone and factual versus illustrative provenance remain application-owned.
+
+### Anatomy and parts
+
+Ordered list contains date, title, optional body and current class. Keys combine date/title; they must be unique and stable.
+
+### State ownership
+
+Pure supplied entries; current is a visual flag, not automatic time comparison or native navigation.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-timeline and current-entry hook with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Distinguish an empty history from failed loading. Keep long titles/descriptions readable; duplicate date/title combinations are unsupported identity.
+
+### RTL and localization
+
+Format date strings with explicit application calendar/time-zone rules; translate text and verify long RTL sequences.
+
+### Keyboard and focus
+
+Not a keyboard control and does not add a tab stop. Interactive children retain their native behavior; do not use this display as a substitute for a button or link.
+
+### Limits and evidence
+
+No date parser, sorting/time-zone conversion, semantic time datetime prop, async loading or event interaction.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Timeline 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Timeline&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## ToastProvider
+
+A notification region and useToast().show() for outcomes your application has already established.
+
+### Import and runnable source
+
+`import { ToastProvider } from "@abuzareal/contour-ui";`
+
+[Complete toasts TSX example](examples/catalogue/toasts.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| children | ReactNode | Required | Wrap components that call useToast(). |
+| show({title, message, tone}) | useToast() command | Title required; message optional | Report actual outcomes. A notification does not perform or persist the operation. |
+| tone | "neutral" \| "accent" \| "info" \| "success" \| "warning" \| "danger" | "neutral" | Match the result; do not use success before a request completes. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for brief established outcomes. Keep actionable errors beside the task; use an in-page alert for a failure that needs sustained attention.
+
+### Anatomy and parts
+
+Provider owns a polite notification region with up to the latest three messages and dismiss buttons. Descendants call useToast().show({title,message?,tone?}).
+
+### State ownership
+
+The queue auto-dismisses after five seconds and pauses while hovered/focused. show reports an outcome; it does not run an operation. There are no IDs, update commands, undo or durable inbox.
+
+### Native forms and reset
+
+No native form value or reset contract. Notify only after a real save result, and preserve field validation in the form.
+
+### Ref target
+
+No native provider ref. Calling useToast outside the provider throws; mount a provider around actual consumers.
+
+### CSS and tokens
+
+Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md.
+
+### Loading, errors and long content
+
+Rapid messages displace older entries. Do not put the only record of a failure in a temporary toast. Respect focus/motion and test translated long messages.
+
+### RTL and localization
+
+Set label and dismissLabel on the provider and translate each title/message. Manual screen-reader announcement review remains pending; polite markup is not proof of every announcement.
+
+### Keyboard and focus
+
+The close control is keyboard accessible. Messages appear in a polite live region; essential failures should also remain beside the task.
+
+### Limits and evidence
+
+Notifications are temporary. This is not a durable inbox, async request controller or undo mechanism. Calling useToast outside the provider throws.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report ToastProvider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ToastProvider&version=0.6.3) using the [public reproduction](examples/reproduction).
+
+## Tooltip
+
+Supplemental noninteractive text associated with one focusable child.
+
+### Import and runnable source
+
+`import { Tooltip } from "@abuzareal/contour-ui";`
+
+[Complete floating TSX example](examples/catalogue/floating.tsx) uses the same public components as this guide. The family may compose several exports; it is not another package component.
+
+### Props and explicit defaults
+
+| Prop | Type | Default | Responsibility |
+| --- | --- | --- | --- |
+| content / children | string / one focusable ReactElement | Required | Supply supplemental text and a child that accepts its description attribute. |
+| placement / align | top \| bottom \| left \| right / start \| center \| end | top / center | Collision placement may flip/shift. |
+| sideOffset / collisionPadding | number | 10 / 8 | Spacing and viewport collision padding. |
+| portal / container | boolean / HTMLElement | true / inferred owner target | Same-document custom container; disabling portals changes clipping/ancestor behavior. |
+
+The emitted declaration is authoritative; [metadata](PROP-REFERENCE.md) preserves inherited props and call/construct signatures without inventing browser defaults.
+
+### Purpose and alternatives
+
+Use for a short nonessential hint. Keep essential instructions visible; use Popover/Dialog for interactive content and never use a tooltip as the only label.
+
+### Anatomy and parts
+
+Anchor wraps one React element and merges its aria-describedby with the hint ID. The noninteractive tooltip portal uses owner-body/native-dialog placement and collision handling.
+
+### State ownership
+
+Hover/focus opens; pointer travel between anchor and content retains the hint. Escape suppresses it until the current hover/focus session ends. Closed portals are hidden in 0.6.2 and later without losing trigger description linkage.
+
+### Native forms and reset
+
+Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.
+
+### Ref target
+
+No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.
+
+### CSS and tokens
+
+Use .contour-tooltip and placement/state hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract.
+
+### Loading, errors and long content
+
+Test edge/long content, clipped ancestors, nested native dialogs, pointer corridors and description merging. Keep a usable visible explanation if the hint cannot display.
+
+### RTL and localization
+
+Translate content and child label; use surrounding dir for logical alignment. Long translations may wrap and collision positioning may change side.
+
+### Keyboard and focus
+
+Focus the child with its native keyboard mechanism. Escape dismisses only the active topmost layer; the hint is not a focus target. Interactive hint content is unsupported.
+
+### Limits and evidence
+
+One focusable child and string content; no interactive popup, validation message replacement or focus trap. Manual screen-reader announcements remain pending.
+
+[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
+
+[Report Tooltip 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tooltip&version=0.6.3) using the [public reproduction](examples/reproduction).
+

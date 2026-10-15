@@ -1,11 +1,11 @@
-# Adopt Contour — 0.6.1
+# Adopt Contour — 0.6.3
 
 Use [the standalone Vite starter](examples/starters/vite), [Next App Router starter](examples/starters/next), or add one component to an existing app. Each folder is public and independent; no private catalogue source, repository aliases, provider stack or application layout is required. Direct dependencies are exact; generate and commit your application's lockfile, then use npm ci. Candidate source requires an archive until its matching version is published.
 
 ## Existing application
 
 ```sh
-npm install --save-exact @abuzareal/contour-ui@0.6.1
+npm install --save-exact @abuzareal/contour-ui@0.6.3
 ```
 
 Install matching react/react-dom versions in the supported ranges (^18.3.1 or ^19.0.0). React 18.3.1, 19.0.0 and 19.3.0 have independent packed consumer checks; a peer range is not a claim of every framework configuration. Native form/overlay APIs are client interactions. Use the library's emitted declarations instead of a copied API from an old catalogue.
@@ -60,7 +60,7 @@ Copy [OptionalSmoothScroll.tsx](examples/optional/OptionalSmoothScroll.tsx) and 
 
 Supported evidence names the exact pair: Next 16.4.0 App Router, React/React DOM 19.3.0, webpack production build, plus its separate optional lazy Three fixture. Turbopack, Pages Router, Next Lenis, static nonce export and arbitrary third-party modal interoperability are not promoted to supported configurations. Vite starter pins 8.3.2 with React 18.3.1. Server-safe helper imports, client directives, declarations and hydration are checked independently; SSR rendering alone does not prove hydration.
 
-Copy [the public reproduction folder](examples/reproduction), reduce it to the failing interaction, and include exact package/browser versions and keyboard steps. Its [issue link](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Integration%200.6.2%3A%20&component=Integration&version=0.6.2) contains version/component, not private data. Report only synthetic records and public reproducible source. [Documentation coverage and limits](DOCS.md).
+Copy [the public reproduction folder](examples/reproduction), reduce it to the failing interaction, and include exact package/browser versions and keyboard steps. Its [issue link](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&title=Integration%200.6.3%3A%20&component=Integration&version=0.6.3) contains version/component, not private data. Report only synthetic records and public reproducible source. [Documentation coverage and limits](DOCS.md).
 
 ## JavaScript and TypeScript examples
 
