@@ -100,5 +100,5 @@ export function renderComponentGuides(data, version) {
       text += `### ${title}\n\n${guide.detail[key]}\n\n`;
     text += `### Keyboard and focus\n\n${guide.keyboard}\n\n### Limits and evidence\n\n${guide.limits}\n\n[Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.\n\n[Report ${guide.name} ${version}](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=${encodeURIComponent(guide.name)}&version=${version}) using the [public reproduction](examples/reproduction).\n\n`;
   }
-  return text;
+  return text.trimEnd() + "\n";
 }

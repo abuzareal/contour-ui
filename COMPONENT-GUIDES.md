@@ -3532,4 +3532,3 @@ One focusable child and string content; no interactive popup, validation message
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
 [Report Tooltip 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tooltip&version=0.6.3) using the [public reproduction](examples/reproduction).
-
