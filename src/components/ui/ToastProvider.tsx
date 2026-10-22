@@ -30,7 +30,17 @@ function Toast({
   onDismiss: (id: number) => void;
   dismissLabel: string;
 }) {
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const paused = hovered || focused || hidden;
+
+  useEffect(() => {
+    const update = () => setHidden(document.visibilityState === "hidden");
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -44,10 +54,13 @@ function Toast({
   return (
     <li
       className={ccx("toast", `toast-${toast.tone ?? "neutral"}`)}
-      onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFocused(false);
+      }}
     >
       <span className={ccx("toast-bar")} aria-hidden="true" />
       <div className={ccx("toast-content")}>

@@ -151,7 +151,7 @@ A name-based image/initials display with an optional labelled presence dot.
 | Prop | Type | Default | Responsibility |
 | --- | --- | --- | --- |
 | name | string | Required | Nonempty identity name; image alt/initials accessible label. |
-| initials / src | string | Derived initials / omitted | No automatic failed-image-to-initials switch. |
+| initials / src | string | Derived initials / omitted | Failed images fall back to initials. Changing src attempts the new image. |
 | size | sm \| md \| lg \| xl | md | Visual size only. |
 | status / statusLabel | online \| away / string | Omitted / Online or Away | Status is app data; translate/customize the dot description. |
 
@@ -167,7 +167,7 @@ Wrapper holds an img with alt=name or a role=img initials span; optional presenc
 
 ### State ownership
 
-src chooses image versus initials. initials overrides a basic first-two-space-separated-name-parts derivation. size defaults md; status is caller-supplied online/away.
+src chooses image versus initials. initials overrides a first-two-whitespace-separated-name-parts derivation. size defaults md; status is caller-supplied online/away.
 
 ### Native forms and reset
 
@@ -183,7 +183,7 @@ Use .contour-avatar, size and presence hooks with released semantic color/line/s
 
 ### Loading, errors and long content
 
-If an image fails, native alt text remains; the app must remove/change src to select initials. Test empty/long names and unavailable status without inventing live presence.
+A failed image falls back to explicit initials or initials derived from the name. A new src attempts a new image. Supply a new URL to retry a previously failed source.
 
 ### RTL and localization
 
@@ -2357,11 +2357,11 @@ Translate group/options and supply dir. Stable IDs survive translation; do not u
 
 ### Keyboard and focus
 
-Tab enters the selected button. Arrows/Home/End move and select with RTL-aware horizontal navigation; Enter/Space uses native button activation.
+Tab enters the selected button. Arrows/Home/End move and select with RTL-aware horizontal navigation; Enter/Space uses native button activation. If value is absent from the options, the first option remains reachable with Tab without silently changing the controlled value.
 
 ### Limits and evidence
 
-No name/form/required serialization, disabled-option support, async state or forwarded aggregate ref. An absent selected value leaves no selected tab stop; validate it in the parent.
+No name/form/required serialization, disabled-option support, async state or forwarded aggregate ref. An absent value remains unselected; the first option stays keyboard reachable. Reconcile application state in the parent.
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
@@ -3434,7 +3434,7 @@ Provider owns a polite notification region with up to the latest three messages 
 
 ### State ownership
 
-The queue auto-dismisses after five seconds and pauses while hovered/focused. show reports an outcome; it does not run an operation. There are no IDs, update commands, undo or durable inbox.
+The queue auto-dismisses after five seconds and pauses while hovered, focused or in a hidden document. show reports an outcome; it does not run an operation. There are no IDs, update commands, undo or durable inbox.
 
 ### Native forms and reset
 
@@ -3450,7 +3450,7 @@ Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. 
 
 ### Loading, errors and long content
 
-Rapid messages displace older entries. Do not put the only record of a failure in a temporary toast. Respect focus/motion and test translated long messages.
+Dismissal pauses while the toast is hovered, contains keyboard focus, or the document is hidden. Once all pause conditions clear, a fresh five-second reading period begins. The queue retains up to three notifications.
 
 ### RTL and localization
 

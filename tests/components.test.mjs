@@ -36,6 +36,10 @@ const React = (await import("react")).default;
 const { render, renderHook, fireEvent, cleanup, act } =
   await import("@testing-library/react");
 const {
+  Avatar,
+  SegmentedControl,
+  ToastProvider,
+  useToast,
   Button,
   IconButton,
   DepthButton,
@@ -1164,4 +1168,110 @@ test("part customization cannot overwrite owned roles, selected/hidden state or 
   assert.equal(trigger.getAttribute("aria-controls"), "actual-panel");
   assert.equal(popup.getByText("Details").hidden, true);
   assert.equal(popup.getByText("Details").getAttribute("role"), "dialog");
+});
+
+test("avatar recovers from an image failure and attempts a changed source", () => {
+  const view = render(
+    React.createElement(Avatar, { name: "  Ada   Lovelace ", src: "/bad.png" }),
+  );
+  fireEvent.error(view.getByRole("img", { name: "Ada Lovelace" }));
+  assert.equal(view.container.querySelector("img"), null);
+  assert.equal(
+    view.getByRole("img", { name: "Ada Lovelace" }).textContent,
+    "AL",
+  );
+  view.rerender(
+    React.createElement(Avatar, { name: "Ada Lovelace", src: "/new.png" }),
+  );
+  assert.equal(
+    view.container.querySelector("img").getAttribute("src"),
+    "/new.png",
+  );
+});
+
+test("segmented control preserves a tab stop when the selected option is removed", () => {
+  const changes = [];
+  const options = [
+    { value: "a", label: "Alpha" },
+    { value: "b", label: "Beta" },
+  ];
+  const view = render(
+    React.createElement(SegmentedControl, {
+      label: "Filter",
+      value: "b",
+      options,
+      onChange: (next) => changes.push(next),
+    }),
+  );
+  view.rerender(
+    React.createElement(SegmentedControl, {
+      label: "Filter",
+      value: "b",
+      options: [options[0]],
+      onChange: (next) => changes.push(next),
+    }),
+  );
+  const alpha = view.getByRole("radio", { name: "Alpha" });
+  assert.equal(alpha.tabIndex, 0);
+  assert.equal(alpha.getAttribute("aria-checked"), "false");
+  assert.deepEqual(changes, []);
+  fireEvent.keyDown(alpha, { key: "ArrowRight" });
+  assert.deepEqual(changes, ["a"]);
+});
+
+test("toast pointer leave cannot restart dismissal while keyboard focus remains", () => {
+  const pending = new Map();
+  let id = 0;
+  const originalSet = window.setTimeout,
+    originalClear = window.clearTimeout;
+  window.setTimeout = (callback) => {
+    pending.set(++id, callback);
+    return id;
+  };
+  window.clearTimeout = (timer) => pending.delete(timer);
+  function Example() {
+    const toast = useToast();
+    return React.createElement(
+      "button",
+      { onClick: () => toast.show({ title: "Saved" }) },
+      "Notify",
+    );
+  }
+  try {
+    const view = render(
+      React.createElement(ToastProvider, null, React.createElement(Example)),
+    );
+    fireEvent.click(view.getByText("Notify"));
+    const toast = view.getByText("Saved").closest("li");
+    const close = view.getByRole("button", { name: "Dismiss notification" });
+    assert.equal(pending.size, 1);
+    fireEvent.focus(close);
+    fireEvent.pointerEnter(toast);
+    fireEvent.pointerLeave(toast);
+    assert.equal(pending.size, 0);
+    fireEvent.blur(close, { relatedTarget: document.body });
+    assert.equal(pending.size, 1);
+    Object.defineProperty(document, "visibilityState", {
+      configurable: true,
+      value: "hidden",
+    });
+    fireEvent(document, new Event("visibilitychange"));
+    assert.equal(pending.size, 0);
+    fireEvent.focus(close);
+    Object.defineProperty(document, "visibilityState", {
+      configurable: true,
+      value: "visible",
+    });
+    fireEvent(document, new Event("visibilitychange"));
+    assert.equal(pending.size, 0);
+    fireEvent.blur(close, { relatedTarget: document.body });
+    assert.equal(pending.size, 1);
+    act(() => [...pending.values()][0]());
+    assert.equal(view.queryByText("Saved"), null);
+    view.unmount();
+  } finally {
+    window.setTimeout = originalSet;
+    window.clearTimeout = originalClear;
+    delete document.visibilityState;
+  }
 });
