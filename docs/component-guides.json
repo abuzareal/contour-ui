@@ -64,7 +64,7 @@
           "initials / src",
           "string",
           "Derived initials / omitted",
-          "No automatic failed-image-to-initials switch."
+          "Failed images fall back to initials. Changing src attempts the new image."
         ],
         ["size", "sm | md | lg | xl", "md", "Visual size only."],
         [
@@ -80,10 +80,10 @@
       "detail": {
         "use": "Use for identity context. Do not use initials or a presence color as the sole explanation of a person/action; put actionable behavior on a separate native control.",
         "anatomy": "Wrapper holds an img with alt=name or a role=img initials span; optional presence dot has its own accessible label.",
-        "state": "src chooses image versus initials. initials overrides a basic first-two-space-separated-name-parts derivation. size defaults md; status is caller-supplied online/away.",
+        "state": "src chooses image versus initials. initials overrides a first-two-whitespace-separated-name-parts derivation. size defaults md; status is caller-supplied online/away.",
         "forms": "Not a successful form control: no name, required constraint or native reset behavior. Reset any application-owned content/request state separately.",
         "ref": "No public native-element ref is forwarded. Keep focus on actual native interactive children rather than making the presentation wrapper focusable.",
-        "edgeCases": "If an image fails, native alt text remains; the app must remove/change src to select initials. Test empty/long names and unavailable status without inventing live presence.",
+        "edgeCases": "A failed image falls back to explicit initials or initials derived from the name. A new src attempts a new image. Supply a new URL to retry a previously failed source.",
         "localization": "Supply explicit initials for scripts/emoji/name order that basic splitting cannot handle. Translate statusLabel and keep full accessible names meaningful.",
         "reference": "props",
         "styling": "Use .contour-avatar, size and presence hooks with released semantic color/line/spacing tokens. Preserve native structure, visible labels and owned state/ARIA; visual customization does not change the interaction contract."
@@ -1344,8 +1344,8 @@
           "Update the selected value; no default/uncontrolled API."
         ]
       ],
-      "keyboard": "Tab enters the selected button. Arrows/Home/End move and select with RTL-aware horizontal navigation; Enter/Space uses native button activation.",
-      "limits": "No name/form/required serialization, disabled-option support, async state or forwarded aggregate ref. An absent selected value leaves no selected tab stop; validate it in the parent.",
+      "keyboard": "Tab enters the selected button. Arrows/Home/End move and select with RTL-aware horizontal navigation; Enter/Space uses native button activation. If value is absent from the options, the first option remains reachable with Tab without silently changing the controlled value.",
+      "limits": "No name/form/required serialization, disabled-option support, async state or forwarded aggregate ref. An absent value remains unselected; the first option stays keyboard reachable. Reconcile application state in the parent.",
       "tasks": "A controlled single-choice button group with radio semantics and roving focus. Use for a small mutually exclusive view/filter choice. Use native RadioGroup for successful form inputs and required validation; this does not create a global density/theme API.",
       "detail": {
         "use": "Use for a small mutually exclusive view/filter choice. Use native RadioGroup for successful form inputs and required validation; this does not create a global density/theme API.",
@@ -2088,10 +2088,10 @@
       "detail": {
         "use": "Use for brief established outcomes. Keep actionable errors beside the task; use an in-page alert for a failure that needs sustained attention.",
         "anatomy": "Provider owns a polite notification region with up to the latest three messages and dismiss buttons. Descendants call useToast().show({title,message?,tone?}).",
-        "state": "The queue auto-dismisses after five seconds and pauses while hovered/focused. show reports an outcome; it does not run an operation. There are no IDs, update commands, undo or durable inbox.",
+        "state": "The queue auto-dismisses after five seconds and pauses while hovered, focused or in a hidden document. show reports an outcome; it does not run an operation. There are no IDs, update commands, undo or durable inbox.",
         "forms": "No native form value or reset contract. Notify only after a real save result, and preserve field validation in the form.",
         "ref": "No native provider ref. Calling useToast outside the provider throws; mount a provider around actual consumers.",
-        "edgeCases": "Rapid messages displace older entries. Do not put the only record of a failure in a temporary toast. Respect focus/motion and test translated long messages.",
+        "edgeCases": "Dismissal pauses while the toast is hovered, contains keyboard focus, or the document is hidden. Once all pause conditions clear, a fresh five-second reading period begins. The queue retains up to three notifications.",
         "localization": "Set label and dismissLabel on the provider and translate each title/message. Manual screen-reader announcement review remains pending; polite markup is not proof of every announcement.",
         "reference": "hooks",
         "styling": "Use the released scoped CSS and semantic tokens inside contour-root/ThemeScope. Preserve native semantics, public part/state hooks and geometry ownership; see the component-specific anatomy and STYLING.md."

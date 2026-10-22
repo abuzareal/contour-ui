@@ -21,6 +21,11 @@ export default function SegmentedControl<Value extends string>({
 }: SegmentedControlProps<Value>) {
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
 
+  const focusIndex = Math.max(
+    0,
+    options.findIndex((option) => option.value === value),
+  );
+
   return (
     <div className={ccx("segmented")} role="radiogroup" aria-label={label}>
       {options.map((option, index) => {
@@ -34,7 +39,7 @@ export default function SegmentedControl<Value extends string>({
             type="button"
             role="radio"
             aria-checked={selected}
-            tabIndex={selected ? 0 : -1}
+            tabIndex={index === focusIndex ? 0 : -1}
             className={ccx("segmented-option")}
             onClick={() => onChange(option.value)}
             onKeyDown={(event) => {

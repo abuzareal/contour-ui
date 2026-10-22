@@ -4,7 +4,11 @@ Changes to the published `@abuzareal/contour-ui` package. Version headings refer
 
 ## Unreleased
 
-No changes recorded.
+- Update development tooling and public Vite starter/reproduction manifests to patched Vite 8.3.5.
+
+- Avatar recovers from failed image loads with initials and retries when its source changes.
+- SegmentedControl keeps a keyboard entry point when its controlled value is no longer in the options, without selecting a replacement for the application.
+- Toast dismissal stays paused until hover, keyboard focus and background-tab conditions have all cleared. Returning gives the user a fresh reading period.
 
 ## 0.6.3
 
