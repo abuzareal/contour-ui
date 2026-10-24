@@ -1,6 +1,6 @@
 # Component guides
 
-Authored contracts for 0.6.3, generated from [docs/component-guides.json](docs/component-guides.json). All 54 existing core component guides share the same maintained source with the catalogue. Types/defaults and executable family examples are checked against the emitted release. This is pre-1.0 documentation, not a new stability or accessibility certification. Optional scene exports retain [THREE.md](THREE.md).
+Authored contracts for 0.6.4, generated from [docs/component-guides.json](docs/component-guides.json). All 54 existing core component guides share the same maintained source with the catalogue. Types/defaults and executable family examples are checked against the emitted release. This is pre-1.0 documentation, not a new stability or accessibility certification. Optional scene exports retain [THREE.md](THREE.md).
 
 ## Setup
 
@@ -134,7 +134,7 @@ No auto-dismiss, fetching, retry engine, native form value or external root prop
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Alert 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Alert&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Alert 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Alert&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Avatar
 
@@ -199,7 +199,7 @@ No upload/presence service, fallback on image-error, arbitrary native image prop
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Avatar 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Avatar&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Avatar 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Avatar&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Badge
 
@@ -263,7 +263,7 @@ No click/dismiss/selection behavior, root attributes/ref or automatic announceme
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Badge 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Badge&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Badge 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Badge&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## BrandMark
 
@@ -327,7 +327,7 @@ Fixed aa. content, not a logo slot. No target/rel/native-props forwarding, confi
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report BrandMark 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=BrandMark&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report BrandMark 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=BrandMark&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Breadcrumbs
 
@@ -390,7 +390,7 @@ No router element slot, generated destinations, native root props/ref or automat
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Breadcrumbs 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Breadcrumbs&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Breadcrumbs 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Breadcrumbs&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Button
 
@@ -456,7 +456,7 @@ No polymorphic as prop or routing integration. Use a styled native anchor or the
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Button 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Button&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Button 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Button&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Card
 
@@ -520,7 +520,7 @@ No href/onClick/root native props, selected state or forwarded ref. Do not nest 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Card 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Card&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Card 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Card&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Checkbox
 
@@ -587,7 +587,7 @@ Native input refs and caller id are supported. Caller aria-describedby is merged
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Checkbox 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Checkbox&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Checkbox 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Checkbox&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Combobox
 
@@ -653,7 +653,7 @@ Single allowed value only; no free text, multi-select or virtualized list. Remot
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Combobox 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Combobox&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Combobox 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Combobox&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## CountUp
 
@@ -717,7 +717,7 @@ Decorative integer-rounded animation, not streaming data, locale parsing or an a
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report CountUp 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=CountUp&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report CountUp 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=CountUp&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## DataTable
 
@@ -781,7 +781,7 @@ Internal local sorting only; no controlled sorting, pagination, selection, virtu
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report DataTable 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DataTable&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report DataTable 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DataTable&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## DepthButton
 
@@ -845,7 +845,7 @@ No Button variant/size/loading API or polymorphic navigation mode. Decorative de
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report DepthButton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DepthButton&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report DepthButton 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DepthButton&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Dialog
 
@@ -911,7 +911,7 @@ Does not confirm business operations, fetch content or prevent dismissal of unsa
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Dialog 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Dialog&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Dialog 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Dialog&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Disclosure
 
@@ -975,7 +975,7 @@ No root ref or forwarded native props, async request model, controlled open call
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Disclosure 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Disclosure&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Disclosure 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Disclosure&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Divider
 
@@ -1037,7 +1037,7 @@ No vertical/orientation control, resize behavior, arbitrary root attributes or f
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Divider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Divider&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Divider 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Divider&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## DropdownMenu
 
@@ -1102,7 +1102,7 @@ Portal positioning, collision handling and native-dialog integration are support
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report DropdownMenu 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DropdownMenu&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report DropdownMenu 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=DropdownMenu&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## EmptyState
 
@@ -1165,7 +1165,7 @@ No automatic loading/error classification, alert role, title-level prop, forward
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report EmptyState 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=EmptyState&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report EmptyState 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=EmptyState&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ExternalLink
 
@@ -1228,7 +1228,7 @@ target/rel are deliberately excluded from caller props. URL validation is not a 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ExternalLink 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ExternalLink&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ExternalLink 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ExternalLink&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Field
 
@@ -1292,7 +1292,7 @@ No automatic child aria-invalid/aria-describedby/required/disabled wiring, no in
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Field 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Field&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Field 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Field&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## FlipCard
 
@@ -1355,7 +1355,7 @@ No controlled flip/ref/hover-only contract. React18/19 inert behavior is deliber
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report FlipCard 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=FlipCard&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report FlipCard 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=FlipCard&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## GitHubIcon
 
@@ -1417,7 +1417,7 @@ No children/title/aria-label/native SVG props/ref, social API request or automat
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report GitHubIcon 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=GitHubIcon&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report GitHubIcon 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=GitHubIcon&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## IconButton
 
@@ -1482,7 +1482,7 @@ No anchor or arbitrary-element polymorphism. Keep decorative spin separate from 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report IconButton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=IconButton&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report IconButton 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=IconButton&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Kbd
 
@@ -1544,7 +1544,7 @@ No activation, key handling, platform detection, forwarded props or ref.
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Kbd 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Kbd&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Kbd 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Kbd&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## LinkedInIcon
 
@@ -1606,7 +1606,7 @@ No children/title/aria-label/native SVG props/ref, social API request or automat
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report LinkedInIcon 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=LinkedInIcon&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report LinkedInIcon 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=LinkedInIcon&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Magnetic
 
@@ -1669,7 +1669,7 @@ No click/drag/key interaction, forwarded ref or touch/pen magnet. The presentati
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Magnetic 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Magnetic&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Magnetic 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Magnetic&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Marquee
 
@@ -1732,7 +1732,7 @@ No built-in pause button, live updates/announcements, arbitrary children or root
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Marquee 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Marquee&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Marquee 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Marquee&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Pagination
 
@@ -1796,7 +1796,7 @@ No zero-page/invalid-number sanitization, router hrefs, pending/disabled prop or
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Pagination 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Pagination&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Pagination 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Pagination&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Popover
 
@@ -1862,7 +1862,7 @@ Portals affect DOM Tab order. No arbitrary link trigger or modal focus trap. Use
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Popover 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Popover&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Popover 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Popover&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ProgressBar
 
@@ -1926,7 +1926,7 @@ The component does not start work, calculate percentages or clamp invalid inputs
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ProgressBar 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ProgressBar&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ProgressBar 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ProgressBar&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## RadioGroup
 
@@ -1992,7 +1992,7 @@ Native radios, not a custom listbox. No multi-select, asynchronous loading model
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report RadioGroup 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RadioGroup&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report RadioGroup 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RadioGroup&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Reveal
 
@@ -2055,7 +2055,7 @@ No enter/exit lifecycle API, repeated visibility callback, forwarded ref or data
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Reveal 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Reveal&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Reveal 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Reveal&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## RevealHeading
 
@@ -2117,7 +2117,7 @@ Always h2; no as/heading-level prop, controlled animation, root class/ref or arb
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report RevealHeading 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RevealHeading&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report RevealHeading 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=RevealHeading&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## SceneBoundary
 
@@ -2179,7 +2179,7 @@ Not a catch-all for event-handler, asynchronous callback, server-render or netwo
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report SceneBoundary 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SceneBoundary&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report SceneBoundary 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SceneBoundary&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ScrollProgress
 
@@ -2239,7 +2239,7 @@ Document/window scope, not nested-scroll containers. No progress label, callback
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ScrollProgress 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ScrollProgress&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ScrollProgress 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ScrollProgress&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## SectionLabel
 
@@ -2302,7 +2302,7 @@ No configurable heading level, formatting callback, forwarded ref or automatic n
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report SectionLabel 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SectionLabel&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report SectionLabel 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SectionLabel&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## SegmentedControl
 
@@ -2365,7 +2365,7 @@ No name/form/required serialization, disabled-option support, async state or for
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report SegmentedControl 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SegmentedControl&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report SegmentedControl 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SegmentedControl&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## SelectField
 
@@ -2431,7 +2431,7 @@ No searchable list, asynchronous option fetching or grouped-option contract. Sup
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report SelectField 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SelectField&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report SelectField 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=SelectField&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Skeleton
 
@@ -2494,7 +2494,7 @@ No text label, data fetch, role=status, automatic layout measurement or forwarde
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Skeleton 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Skeleton&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Skeleton 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Skeleton&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Slider
 
@@ -2560,7 +2560,7 @@ One scalar range only; no multi-thumb/rich numeric parsing/required constraint. 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Slider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Slider&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Slider 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Slider&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Spinner
 
@@ -2624,7 +2624,7 @@ No request lifecycle, progress value, cancellation control or forwarded ref. Do 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Spinner 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Spinner&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Spinner 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Spinner&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Stat
 
@@ -2687,7 +2687,7 @@ No calculation, CountUp behavior, invalid-number validation, automatic live anno
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Stat 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stat&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Stat 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stat&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Stepper
 
@@ -2750,7 +2750,7 @@ No onChange, disabled/async/error state, clicking or current-range sanitization.
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Stepper 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stepper&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Stepper 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Stepper&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Switch
 
@@ -2816,7 +2816,7 @@ The ref is a button, not the hidden checkbox. Callback is boolean, not a native 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Switch 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Switch&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Switch 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Switch&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Table
 
@@ -2881,7 +2881,7 @@ No built-in data model, remote fetch, pagination, selection or virtualization. C
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Table 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Table&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Table 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Table&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Tabs
 
@@ -2946,7 +2946,7 @@ No disabled-tab contract or automatic URL synchronization. Use stable ids, and k
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Tabs 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tabs&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Tabs 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tabs&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Tag
 
@@ -3010,7 +3010,7 @@ No arbitrary children, selection semantics, keyboard chip-list model, input pars
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Tag 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tag&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Tag 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tag&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## TextArea
 
@@ -3080,7 +3080,7 @@ Native reset restores uncontrolled values, counters and auto-resized height. Con
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report TextArea 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextArea&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report TextArea 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextArea&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## TextField
 
@@ -3149,7 +3149,7 @@ Business validation and submission remain application-owned. Native reset update
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report TextField 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextField&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report TextField 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TextField&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ThemeScope
 
@@ -3214,7 +3214,7 @@ Use scoped.css. Omitting onThemeChange makes embedded theme controls read-only. 
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ThemeScope 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeScope&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ThemeScope 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeScope&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ThemeToggle
 
@@ -3277,7 +3277,7 @@ No native arbitrary button props or separate persistence namespace API. The acce
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ThemeToggle 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeToggle&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ThemeToggle 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ThemeToggle&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## TiltCard
 
@@ -3340,7 +3340,7 @@ No gesture navigation, keyboard activation, forwarded ref or scene/GPU dependenc
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report TiltCard 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TiltCard&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report TiltCard 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=TiltCard&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Timeline
 
@@ -3402,7 +3402,7 @@ No date parser, sorting/time-zone conversion, semantic time datetime prop, async
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Timeline 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Timeline&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Timeline 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Timeline&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## ToastProvider
 
@@ -3466,7 +3466,7 @@ Notifications are temporary. This is not a durable inbox, async request controll
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report ToastProvider 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ToastProvider&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report ToastProvider 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=ToastProvider&version=0.6.4) using the [public reproduction](examples/reproduction).
 
 ## Tooltip
 
@@ -3531,4 +3531,4 @@ One focusable child and string content; no interactive popup, validation message
 
 [Support and pending manual checks](SUPPORT.md), [migration](MIGRATION.md), [defining source/types](PUBLIC-API.md). Validate the actual application, platform, content and request flow; automated fixtures are not universal WCAG/device evidence.
 
-[Report Tooltip 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tooltip&version=0.6.3) using the [public reproduction](examples/reproduction).
+[Report Tooltip 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Tooltip&version=0.6.4) using the [public reproduction](examples/reproduction).

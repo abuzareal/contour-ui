@@ -7,7 +7,7 @@ import {
 
 export default function PreferencesAndCopy({
   animate = true,
-  command = "npm install @abuzareal/contour-ui@0.6.3 --save-exact",
+  command = "npm install @abuzareal/contour-ui@0.6.4 --save-exact",
 }: {
   animate?: boolean;
   command?: string;

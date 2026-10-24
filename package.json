@@ -1,6 +1,6 @@
 {
   "name": "@abuzareal/contour-ui",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "private": false,
   "description": "Editorial React components, themes, restrained motion, and optional Three.js objects.",
   "type": "module",

@@ -17,7 +17,7 @@ import { build, preview } from "vite";
 import { chromium } from "@playwright/test";
 import { packedArchive } from "./packed-archive.mjs";
 import { sizeFixtures, selectiveStyles } from "./size-fixtures.mjs";
-const nextVersion = "16.4.0",
+const nextVersion = "16.4.3",
   reactVersion = "19.3.0";
 const temporary = await mkdtemp(join(tmpdir(), "contour-size-"));
 const output = resolve(

@@ -37,4 +37,4 @@ Use one stage owner per host, stable setup and deliberate size. Product controls
 
 ## Version and reproduction
 
-Reference version **0.6.3**. A source version does not establish publication; check the npm registry for availability. [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.3/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Three 0.6.3](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Three&version=0.6.3), using the [public minimal reproduction](examples/reproduction) and synthetic data.
+Reference version **0.6.4**. A source version does not establish publication; check the npm registry for availability. [Versioned source](https://github.com/abuzareal/contour-ui/tree/v0.6.4/src) and [emitted type inventory](PUBLIC-API.md) describe this contract; tag links resolve after release. [Report Three 0.6.4](https://github.com/abuzareal/contour-ui/issues/new?template=bug_report.yml&component=Three&version=0.6.4), using the [public minimal reproduction](examples/reproduction) and synthetic data.

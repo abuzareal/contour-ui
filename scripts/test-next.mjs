@@ -7,7 +7,7 @@ import { chromium, expect } from "@playwright/test";
 import { packedArchive } from "./packed-archive.mjs";
 
 // Exact framework pair. This is an App Router check, not a promise for every Next version.
-const nextVersion = "16.4.0";
+const nextVersion = "16.4.3";
 const reactVersion = "19.3.0";
 const optional = process.env.CONTOUR_NEXT_OPTIONAL === "1";
 const temporary = await mkdtemp(join(tmpdir(), "contour-next-"));

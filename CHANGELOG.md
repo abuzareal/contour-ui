@@ -2,7 +2,11 @@
 
 Changes to the published `@abuzareal/contour-ui` package. Version headings refer to package versions, not catalogue or application versions. Consumer projects pin their own version and update separately.
 
-## Unreleased
+## 0.6.4
+
+- Update the public Next.js starter and framework verification fixtures to Next 16.4.3.
+
+- Refresh the jsdom test dependency lock to patched undici 8.12.3.
 
 - Update development tooling and public Vite starter/reproduction manifests to patched Vite 8.3.5.
 

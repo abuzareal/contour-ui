@@ -8,7 +8,7 @@ Use it when you want this visual style with typed controls, feedback, navigation
 
 [Complete core component guides](COMPONENT-GUIDES.md) are maintained in a public authored dataset with runnable [family examples](examples/catalogue); they cover actual behavior as well as emitted props.
 
-This source checkout targets **0.6.3**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
+This source checkout targets **0.6.4**. Package publication and application upgrades are separate; check the npm registry for release availability and each application's manifest for its installed version. Catalogue examples include application patterns as well as package components. Check the exports below before treating an example as an importable component.
 
 [Public API and maturity register](PUBLIC-API.md) · [Architecture, scope and compatibility](CONTRACTS.md)
 
@@ -25,7 +25,7 @@ Version 0.6 adds a single-select [Combobox](COMBOBOX.md) backed by pinned Base U
 Use an existing React application with a bundler that resolves package CSS imports. Contour ships ESM and TypeScript declarations. The package declares Node.js 22 or newer; repository tooling uses Vite 8, which needs Node.js 22.12+ or 24+.
 
 ```sh
-npm install @abuzareal/contour-ui@0.6.3 --save-exact
+npm install @abuzareal/contour-ui@0.6.4 --save-exact
 ```
 
 Your app must provide matching `react` and `react-dom` versions: **18.3.1 or React 19**. The compatibility script covers 18.3.1, 19.0.0, and 19.3.0; it doesn't establish support for every framework or React Server Component setup. Put interactive components inside a client boundary when your framework requires one.
@@ -182,7 +182,7 @@ Give scenes a sized container and a usable static fallback. `SceneBoundary` hide
 **0.2.0** adds native field refs, controlled tabs and popover/menu open state, menu keyboard improvements, native reset synchronization, Three.js lifecycle fixes and a tested Next.js App Router integration. Existing uncontrolled defaults and React 18/19 support remain. `fonts-latin.css`, introduced in 0.1.2, now uses packaged relative font URLs for webpack resolution. `CHANGELOG.md` is included in the package archive and [npm's Code view](https://www.npmjs.com/package/@abuzareal/contour-ui?activeTab=code); it contains the upgrade details for each version.
 
 ```sh
-npm install @abuzareal/contour-ui@0.6.3 --save-exact
+npm install @abuzareal/contour-ui@0.6.4 --save-exact
 ```
 
 Commit your manifest and lockfile, run your application's checks, and review both themes, dialogs, forms, and motion before deploying. Version 0.1.1 includes a document scroll lock for dialogs and drawers. Review any app-level lock before removing it, including nested dialogs and short screens. Package publication doesn't update deployed consumers automatically.
@@ -250,7 +250,7 @@ export function AccountControls() {
 }
 ```
 
-Interactive module boundaries retain `use client` in the built package. The pinned Next.js App Router consumer checks the packed candidate archive. Follow [Next.js setup](NEXTJS.md) for the pinned Next.js 16.4.0 / React 19.3.0 pair. Pure URL/theme-bootstrap helpers remain usable from the server. A separate fixture mode checks lazy optional Three.js loading and navigation cleanup. Lenis integration, other Next versions and alternate bundlers remain separate compatibility questions.
+Interactive module boundaries retain `use client` in the built package. The pinned Next.js App Router consumer checks the packed candidate archive. Follow [Next.js setup](NEXTJS.md) for the pinned Next.js 16.4.3 / React 19.3.0 pair. Pure URL/theme-bootstrap helpers remain usable from the server. A separate fixture mode checks lazy optional Three.js loading and navigation cleanup. Lenis integration, other Next versions and alternate bundlers remain separate compatibility questions.
 
 Custom `useThreeStage` setup can register disposal through `context.onDispose?.(cleanup)` immediately after acquiring each resource, including resources allocated before setup returns. Registered resources are released on failed initialization and unmount; avoid also disposing the same resource in `StageScene.dispose`. A stage may implement `resize()` to reflow after aspect changes while motion is paused.
 

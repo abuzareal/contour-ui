@@ -1,6 +1,6 @@
 # Public documentation contract and coverage
 
-For Contour 0.6.3, the public package/repository is an independent source of installation, API, recipe and reproduction material. The separate catalogue can describe an older installed release; its visual demos are not proof that this source version is installed there. Catalogue editing and per-component website promotion are separate work.
+For Contour 0.6.4, the public package/repository is an independent source of installation, API, recipe and reproduction material. The separate catalogue can describe an older installed release; its visual demos are not proof that this source version is installed there. Catalogue editing and per-component website promotion are separate work.
 
 ## Contract for a promoted guide
 

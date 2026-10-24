@@ -1,5 +1,5 @@
 {
-  "version": "0.6.3",
+  "version": "0.6.4",
   "compiler": "5.9.3",
   "scope": "All exported component contracts from emitted declarations, including call/construct signatures and authored/inherited prop names. Selected prop types include authored guide fields, owned fields and native integration attributes. Only explicit source parameter initializers are defaults; absence is not a browser default inference.",
   "components": {
